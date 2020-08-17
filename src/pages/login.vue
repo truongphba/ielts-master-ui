@@ -1,0 +1,60 @@
+<template>
+  <q-layout view="hHh lpR fFf fit" class="login-bg">
+    <q-page-container class="absolute-center">
+      <div class="q-pa-md row items-start q-gutter-md">
+        <q-card class="my-card flex-center">
+          <img src="https://anhngumrvan.vn/dashboard/public/layout/images/Learntalk_BlogPosts_12-04-2017_IELTS.jpg">
+          <q-card-section>
+            <div class="text-h6">Login</div>
+          </q-card-section>
+          <q-card-section class="q-pt-none">
+            <q-form
+              @submit="onSubmit"
+              @reset="onReset"
+              class="q-gutter-md"
+            >
+              <q-input
+                filled
+                v-model="name"
+                label="Username *"
+              />
+
+              <q-input
+                filled
+                type="password"
+                v-model="password"
+                label="Password *"
+              />
+
+              <div>
+                <q-btn label="Login" type="submit" color="primary"/>
+                <q-btn label="Register" to="/register" color="primary" flat class="q-ml-sm" />
+              </div>
+            </q-form>
+          </q-card-section>
+        </q-card>
+      </div>
+    </q-page-container>
+  </q-layout>
+</template>
+<script>
+  export default {
+    data () {
+      return {
+
+      }
+    }
+  }
+</script>
+
+<style scoped>
+  .login-bg{
+    background: rgb(238,174,202);
+    background: radial-gradient(circle, rgba(238,174,202,1) 0%, rgba(148,187,233,1) 100%);
+  }
+  .my-card{
+    width: 100%;
+    max-width: 400px;
+  }
+
+</style>

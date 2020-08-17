@@ -18,7 +18,9 @@ const routes = [
       { path: 'calendar', component: () => import('pages/admin/calendar.vue') },
       { path: 'department', component: () => import('pages/admin/department.vue') }
     ]
-  }
+  },
+  { path: '/register', component: () => import('pages/register.vue') },
+  { path: '/', component: () => import('pages/login.vue') }
 ]
 
 // Always leave this as last one
