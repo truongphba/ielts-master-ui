@@ -3,54 +3,71 @@
     <q-page-container class="absolute-center">
       <div class="q-pa-md row items-start q-gutter-md">
         <q-card class="my-card flex-center">
-          <img src="https://anhngumrvan.vn/dashboard/public/layout/images/Learntalk_BlogPosts_12-04-2017_IELTS.jpg">
+          <img src="https://www.britishcouncil.vn/sites/default/files/ielts_red_-_new_ielts_landing_page_preview_image.png">
           <q-card-section>
             <div class="text-h6">Register</div>
           </q-card-section>
           <q-card-section class="q-pt-none">
             <q-form
               @submit="onSubmit"
-              @reset="onReset"
               class="q-gutter-md"
             >
-              <q-input
-                filled
-                v-model="name"
-                label="Username *"
-              />
-              <q-input
-                filled
-                v-model="email"
-                label="Email *"
-              />
-              <q-input
-                filled
-                v-model="fullName"
-                label="Full Name"
-              />
-              <q-input
-                filled
-                v-model="age"
-                label="Age"
-              />
+             <div class="row">
+               <div class="col">
+                 <q-input
+                   filled
+                   v-model="name"
+                   label="Username *"
+                 />
+               </div>
+               <div class="col">
+                 <q-input
+                   filled
+                   v-model="email"
+                   label="Email *"
+                 />
+               </div>
+             </div>
+              <div class="row">
+                <div class="col">
+                  <q-input
+                    filled
+                    v-model="fullName"
+                    label="Full Name"
+                  />
+                </div>
+                <div class="col">
+                  <q-input
+                    filled
+                    v-model="age"
+                    label="Age"
+                  />
+                </div>
+              </div>
               <q-input v-if="isLecturer"
                 v-model="certificate"
                 filled
                 type="textarea"
                 label="Certificate *"
               />
-              <q-input
-                filled
-                type="password"
-                v-model="password"
-                label="Password *"
-              />
-              <q-input
-                filled
-                type="password"
-                v-model="rePassword"
-                label="Confirm Password *"
-              />
+              <div class="row">
+                <div class="col">
+                  <q-input
+                    filled
+                    type="password"
+                    v-model="password"
+                    label="Password *"
+                  />
+                </div>
+                <div class="col">
+                  <q-input
+                    filled
+                    type="password"
+                    v-model="rePassword"
+                    label="Confirm Password *"
+                  />
+                </div>
+              </div>
               <q-toggle
                 v-model="isLecturer"
                 checked-icon="check"
@@ -87,7 +104,7 @@
 
   .my-card {
     width: 100%;
-    max-width: 400px;
+    max-width: 700px;
   }
 
 </style>

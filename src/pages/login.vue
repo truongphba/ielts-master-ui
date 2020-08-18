@@ -3,7 +3,7 @@
     <q-page-container class="absolute-center">
       <div class="q-pa-md row items-start q-gutter-md">
         <q-card class="my-card flex-center">
-          <img src="https://anhngumrvan.vn/dashboard/public/layout/images/Learntalk_BlogPosts_12-04-2017_IELTS.jpg">
+          <img src="https://www.britishcouncil.vn/sites/default/files/ielts_red_-_new_ielts_landing_page_preview_image.png">
           <q-card-section>
             <div class="text-h6">Login</div>
           </q-card-section>

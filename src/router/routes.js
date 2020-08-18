@@ -20,7 +20,8 @@ const routes = [
     ]
   },
   { path: '/register', component: () => import('pages/register.vue') },
-  { path: '/', component: () => import('pages/login.vue') }
+  { path: '/', component: () => import('pages/login.vue') },
+  { path: '/home', component: () => import('pages/home.vue') }
 ]
 
 // Always leave this as last one
