@@ -1,6 +1,6 @@
 <template>
   <q-layout view="hHh lpR fFf fit" class="login-bg">
-    <q-page-container class="absolute-center">
+    <q-page-container>
       <div class="q-pa-md row items-start q-gutter-md">
         <q-card class="my-card flex-center">
           <img
@@ -9,46 +9,41 @@
             <div class="text-h6">Register</div>
           </q-card-section>
           <q-card-section class="q-pt-none">
-            <div class="error" v-if="errors && errors.length">
-           <span v-for="(err, index) in errors" :key="index">
-               {{ err }}
-           </span>
-              <hr>
-            </div>
             <q-form
               class="q-gutter-md"
             >
-              <div class="row">
-                <div class="col">
-                  <q-input
-                    filled
-                    v-model="user.name"
-                    label="Username *"
-                  />
-                </div>
-                <div class="col">
-                  <q-input
-                    filled
-                    v-model="user.email"
-                    label="Email *"
-                  />
-                </div>
+              <q-input
+                filled
+                v-model="user.name"
+                label="Username *"
+              />
+              <div class="error" v-if="errors.name && errors.name.length">
+                <span>{{errors.name[0]}}</span>
+                <hr>
               </div>
-              <div class="row">
-                <div class="col">
-                  <q-input
-                    filled
-                    v-model="user.full_name"
-                    label="Full Name"
-                  />
-                </div>
-                <div class="col">
-                  <q-input
-                    filled
-                    v-model="user.age"
-                    label="Age"
-                  />
-                </div>
+              <q-input
+                filled
+                v-model="user.email"
+                label="Email *"
+              />
+              <div class="error" v-if="errors.email && errors.email.length">
+                <span>{{errors.email[0]}}</span>
+                <hr>
+              </div>
+              <q-input
+                filled
+                v-model="user.full_name"
+                label="Full Name"
+              />
+              <q-input
+                filled
+                type="number"
+                v-model="user.age"
+                label="Age"
+              />
+              <div class="error" v-if="errors.age && errors.age.length">
+                <span>{{errors.age[0]}}</span>
+                <hr>
               </div>
               <q-input v-if="user.is_lecture"
                        v-model="user.certificate"
@@ -56,22 +51,19 @@
                        type="textarea"
                        label="Certificate *"
               />
-              <div class="row">
-                <div class="col">
-                  <q-input
-                    filled
-                    type="password"
-                    v-model="user.password"
-                    label="Password *"
-                  />
-                </div>
-                <div class="col">
-                  <q-input
-                    filled
-                    type="password"
-                    label="Confirm Password *"
-                  />
-                </div>
+              <div class="error" v-if="errors.certificate && errors.certificate.length">
+                <span>{{errors.certificate[0]}}</span>
+                <hr>
+              </div>
+              <q-input
+                filled
+                type="password"
+                v-model="user.password"
+                label="Password *"
+              />
+              <div class="error" v-if="errors.password && errors.password.length">
+                <span>{{errors.password[0]}}</span>
+                <hr>
               </div>
               <q-toggle
                 v-model="user.is_lecture"
@@ -105,7 +97,7 @@
     },
     methods: {
       register() {
-        axios.post( process.env.API_URL +'/register', {
+        axios.post(process.env.API_URL + '/register', {
           name: this.user.name,
           full_name: this.user.full_name,
           email: this.user.email,
@@ -118,7 +110,8 @@
             window.location.href = "/home"
           })
           .catch(error => {
-            this.errors = error.response.data.errors.email
+            console.log(error.response.data.errors)
+            this.errors = error.response.data.errors
           })
       }
     }
@@ -133,6 +126,7 @@
   .login-bg {
     background: rgb(238, 174, 202);
     background: radial-gradient(circle, rgba(238, 174, 202, 1) 0%, rgba(148, 187, 233, 1) 100%);
+    padding: 0 30%;
   }
 
   .my-card {
