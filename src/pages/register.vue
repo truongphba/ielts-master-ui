@@ -93,6 +93,7 @@
 </template>
 <script>
   import axios from 'axios';
+
   export default {
     data() {
       return {
@@ -104,8 +105,9 @@
     },
     methods: {
       register() {
-        axios.post('http://127.0.0.1:8000/api/register', {
+        axios.post( process.env.API_URL +'/register', {
           name: this.user.name,
+          full_name: this.user.full_name,
           email: this.user.email,
           password: this.user.password,
           age: this.user.age,
@@ -113,7 +115,7 @@
           is_lecture: this.user.is_lecture
         })
           .then(response => {
-            console.log(response.data.user)
+            window.location.href = "/home"
           })
           .catch(error => {
             this.errors = error.response.data.errors.email
