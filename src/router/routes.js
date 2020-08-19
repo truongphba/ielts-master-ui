@@ -19,9 +19,9 @@ const routes = [
       { path: 'department', component: () => import('pages/admin/department.vue') }
     ]
   },
-  { path: '/register', component: () => import('pages/register.vue') },
-  { path: '/', component: () => import('pages/login.vue') },
-  { path: '/home', component: () => import('pages/home.vue') }
+  { path: '/register', component: () => import('pages/register.vue')},
+  { path: '/login', component: () => import('pages/login.vue'), name : 'login' , meta: { auth : false}},
+  { path: '/home', component: () => import('pages/home.vue') , meta: { auth : true}}
 ]
 
 // Always leave this as last one

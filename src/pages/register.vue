@@ -1,5 +1,5 @@
 <template>
-  <q-layout view="hHh lpR fFf fit" class="login-bg">
+  <q-layout class="login-bg">
     <q-page-container>
       <div class="q-pa-md row items-start q-gutter-md">
         <q-card class="my-card flex-center">
@@ -9,7 +9,7 @@
             <div class="text-h6">Register</div>
           </q-card-section>
           <q-card-section class="q-pt-none">
-            <q-form
+            <q-form v-if="!success"
               class="q-gutter-md"
             >
               <q-input
@@ -59,6 +59,7 @@
                 filled
                 type="password"
                 v-model="user.password"
+                autocomplete="new-password"
                 label="Password *"
               />
               <div class="error" v-if="errors.password && errors.password.length">
@@ -77,6 +78,7 @@
                 <q-btn label="Back" to="/" color="primary" flat class="q-ml-sm"/>
               </div>
             </q-form>
+            <h4 v-if="success">Registration completed. You can now <router-link :to="{name:'login'}">sign in.</router-link></h4>
           </q-card-section>
         </q-card>
       </div>
@@ -90,14 +92,21 @@
     data() {
       return {
         user: {
-          is_lecture: false
+          name : '',
+          email : '',
+          full_name : '',
+          certificate : '',
+          age : '',
+          password : '',
+          is_lecture: false,
         },
+        success: false,
         errors: []
       }
     },
     methods: {
       register() {
-        axios.post(process.env.API_URL + '/register', {
+        axios.post(process.env.API_URL + '/auth/register', {
           name: this.user.name,
           full_name: this.user.full_name,
           email: this.user.email,
@@ -107,7 +116,7 @@
           is_lecture: this.user.is_lecture
         })
           .then(response => {
-            window.location.href = "/home"
+            this.success = true;
           })
           .catch(error => {
             console.log(error.response.data.errors)
