@@ -9,7 +9,7 @@
             <div class="text-h6">Login</div>
           </q-card-section>
           <q-card-section class="q-pt-none">
-              <p v-if="error" style="color: red">Sign in fail. Please try again!</p>
+              <p v-if="error" style="color: red;margin: 0">Sign in fail. Please try again!</p>
             <q-form
               class="q-gutter-md"
             >
@@ -49,22 +49,7 @@
       }
     },
     created() {
-      function getCookie(cname) {
-        var name = cname + "=";
-        var decodedCookie = decodeURIComponent(document.cookie);
-        var ca = decodedCookie.split(';');
-        for(var i = 0; i <ca.length; i++) {
-          var c = ca[i];
-          while (c.charAt(0) == ' ') {
-            c = c.substring(1);
-          }
-          if (c.indexOf(name) == 0) {
-            return c.substring(name.length, c.length);
-          }
-        }
-        return "";
-      }
-      if(getCookie('Authorization') != ''){
+      if (this.$getCookie('Authorization') != ''){
         window.location.href = '/home'
       }
     },
@@ -76,9 +61,10 @@
         })
           .then(response => {
             document.cookie = 'Authorization=Bearer '+ response.data.token +'; max-age=9000';
+            window.location.href = '/home'
           })
           .catch(error => {
-            console.log(error.response.data.token)
+            this.error = true
           })
       }
     }
