@@ -9,31 +9,26 @@
             <div class="text-h6">Login</div>
           </q-card-section>
           <q-card-section class="q-pt-none">
-            <div class="alert alert-danger" v-if="errors">
-              <p>Sign in fail. Please try again!</p>
-            </div>
-            <form
-              class="q-gutter-md" @submit.prevent="login" method="post"
+              <p v-if="error" style="color: red">Sign in fail. Please try again!</p>
+            <q-form
+              class="q-gutter-md"
             >
               <q-input
                 filled
                 v-model="user.email"
                 label="Email *"
               />
-
               <q-input
                 filled
                 type="password"
                 v-model="user.password"
                 label="Password *"
-                autocomplete="new-password"
               />
-
               <div>
-                <q-btn label="Login" type="submit" color="primary"/>
+                <q-btn label="Login" type="submit" @click="login" color="primary"/>
                 <q-btn label="Register" to="/register" color="primary" flat class="q-ml-sm"/>
               </div>
-            </form>
+            </q-form>
           </q-card-section>
         </q-card>
       </div>
@@ -41,6 +36,8 @@
   </q-layout>
 </template>
 <script>
+  import axios from "axios";
+
   export default {
     data() {
       return {
@@ -48,10 +45,42 @@
           email: '',
           password: '',
         },
-        errors: false
+        error: false
+      }
+    },
+    created() {
+      function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(';');
+        for(var i = 0; i <ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == ' ') {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+      if(getCookie('Authorization') != ''){
+        window.location.href = '/home'
       }
     },
     methods: {
+      login() {
+        axios.post(process.env.API_URL + '/login', {
+          email: this.user.email,
+          password: this.user.password,
+        })
+          .then(response => {
+            document.cookie = 'Authorization=Bearer '+ response.data.token +'; max-age=9000';
+          })
+          .catch(error => {
+            console.log(error.response.data.token)
+          })
+      }
     }
   }
 </script>

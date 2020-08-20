@@ -106,7 +106,7 @@
     },
     methods: {
       register() {
-        axios.post(process.env.API_URL + '/auth/register', {
+        axios.post(process.env.API_URL + '/register', {
           name: this.user.name,
           full_name: this.user.full_name,
           email: this.user.email,
