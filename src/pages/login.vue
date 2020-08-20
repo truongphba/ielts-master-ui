@@ -52,19 +52,6 @@
       }
     },
     methods: {
-      login: function () {
-        this.$auth.login({
-          params: {
-            email: this.user.email,
-            password: this.user.password
-          },
-          success: function (response) {
-          },
-          error: function () {
-            this.errors = true
-          },
-        })
-      }
     }
   }
 </script>
