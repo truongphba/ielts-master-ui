@@ -63,7 +63,7 @@
     <q-page-container>
       <q-page class="row no-wrap" style="background-color: #f2f2f2;">
         <div class="col">
-          <router-view/>
+          <router-view :user="user"/>
         </div>
       </q-page>
     </q-page-container>
