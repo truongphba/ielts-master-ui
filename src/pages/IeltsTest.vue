@@ -8,9 +8,9 @@
 
       <template v-slot:before>
         <div class="q-pa-md" style="max-width: 350px;">
-          <q-list separator v-for="user in users" :key="user.id">
+          <q-list separator>
             <q-item>
-              <q-item-section>Name: {{user.name}}</q-item-section>
+              <q-item-section>Name: {{user.full_name}}</q-item-section>
             </q-item>
             <q-item>
               <q-item-section>Email: {{user.email}}</q-item-section>
@@ -21,105 +21,130 @@
 
       <template v-slot:after>
         <div class="q-pa-md">
-          <q-card style="max-width: 1000px; margin: 30px auto;">
-            <q-tabs
-              v-model="tab"
-              dense
-              class="text-grey"
-              active-color="primary"
-              indicator-color="primary"
-              align="justify"
-              narrow-indicator
-            >
-              <q-tab name="listening" label="Listening"/>
-              <q-tab name="reading" label="Reading"/>
-              <q-tab name="writing" label="Writing"/>
-              <q-tab name="speaking" label="Speaking"/>
-            </q-tabs>
+          <div class="q-gutter-sm" style="display: inline-flex">
+            <q-card class="my-card">
+              <q-card-section horizontal>
+                <q-img
+                  class="col-5"
+                  src="https://open.http.mp.streamamg.com/p/3000401/sp/300040100/thumbnail/entry_id/0_1blsoyqr/version/100000/acv/172/width/372/height/209"
+                />
 
-            <q-separator/>
+                <q-card-section>
+                  <label style="text-transform: uppercase"><strong>Listening test</strong></label>
+                  <q-separator />
+                  The listening test will include 40 exercises, you will listen to 40 questions with different accents. In 30 minutes, you will have to answer the question to the examiner, who will be the judge to your points.
+                </q-card-section>
+              </q-card-section>
 
-            <q-tab-panels v-model="tab" animated>
-              <q-tab-panel name="listening">
-                <q-list separator >
-                  <q-item clickable v-ripple v-for="listen in getDataListen" :key="listen.id">{{listen.audio}}</q-item>
-                </q-list>
+              <q-separator />
 
-                <div class="q-pa-lg flex flex-center">
-                  <q-pagination
-                    v-model="page"
-                    :min="currentPage"
-                    :max="Math.ceil(list_listen.length/totalPages)"
-                    :input="true"
-                    input-class="text-blue-10"
-                  >
-                  </q-pagination>
-                </div>
+              <q-card-actions>
+                <q-btn flat round icon="event" />
+                <q-btn flat>
+                  5:30PM
+                </q-btn>
+                <q-btn flat>
+                  7:00PM
+                </q-btn>
+                <q-btn flat color="primary">
+                  Take an exam
+                </q-btn>
+              </q-card-actions>
+            </q-card>
 
-              </q-tab-panel>
+            <q-card class="my-card">
+              <q-card-section horizontal>
+                <q-img
+                  class="col-5"
+                  src="https://open.http.mp.streamamg.com/p/3000401/sp/300040100/thumbnail/entry_id/0_1blsoyqr/version/100000/acv/172/width/372/height/209"
+                />
 
-              <q-tab-panel name="reading">
-                <q-list separator>
-                  <q-item clickable v-ripple v-for="read in getDataRead" :key="read.id">{{ read.content }}</q-item>
-                </q-list>
+                <q-card-section>
+                  <label style="text-transform: uppercase"><strong>Reading test</strong></label>
+                  <q-separator />
+                  The reading test will take place in 40 minutes with 40 questions to test your reading skills.These skills include reading sections for the main grasping, reading for understanding key concepts, reading for detail memorization.
+                </q-card-section>
+              </q-card-section>
 
-                <div class="q-pa-lg flex flex-center">
-                  <q-pagination
-                    v-model="page"
-                    :min="currentPage"
-                    :max="Math.ceil(list_read.length/totalPages)"
-                    :input="true"
-                    input-class="text-blue-10"
-                  >
-                  </q-pagination>
-                </div>
+              <q-separator />
 
-              </q-tab-panel>
+              <q-card-actions>
+                <q-btn flat round icon="event" />
+                <q-btn flat>
+                  5:30PM
+                </q-btn>
+                <q-btn flat>
+                  7:00PM
+                </q-btn>
+                <q-btn flat color="primary">
+                  Take an exam
+                </q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
 
-              <q-tab-panel name="writing">
-                <q-list separator>
-                  <q-item clickable v-ripple v-for="write in getDataWrite" :key="write.id">{{write.content}}</q-item>
-                </q-list>
+          <div class="q-gutter-sm" style="display: inline-flex">
+            <q-card class="my-card">
+              <q-card-section horizontal>
+                <q-img
+                  class="col-5"
+                  src="https://open.http.mp.streamamg.com/p/3000401/sp/300040100/thumbnail/entry_id/0_1blsoyqr/version/100000/acv/172/width/372/height/209"
+                />
 
-                <div class="q-pa-lg flex flex-center">
-                  <q-pagination
-                    v-model="page"
-                    :min="currentPage"
-                    :max="Math.ceil(list_write.length/totalPages)"
-                    :input="true"
-                    input-class="text-blue-10"
-                  >
-                  </q-pagination>
-                </div>
+                <q-card-section>
+                  <label style="text-transform: uppercase"><strong>Writing test</strong></label>
+                  <q-separator />
+                  The writing test is divided into 2 tasks and you will have to complete it in 1 hour. Task 1 required your writing skills to describe charts, data or processes. In task 2, you will have to write about your opinion about
+                  arguments, opinions.
+                </q-card-section>
+              </q-card-section>
 
-              </q-tab-panel>
+              <q-separator />
 
-              <q-tab-panel name="speaking">
-                <q-list separator>
-                  <q-item clickable v-ripple v-for="speak in getDataSpeak" :key="speak.id">{{speak.content}}</q-item>
-                </q-list>
+              <q-card-actions>
+                <q-btn flat round icon="event" />
+                <q-btn flat>
+                  5:30PM
+                </q-btn>
+                <q-btn flat>
+                  7:00PM
+                </q-btn>
+                <q-btn flat color="primary">
+                  Take an exam
+                </q-btn>
+              </q-card-actions>
+            </q-card>
 
-                <div class="q-pa-lg flex flex-center">
-                  <q-pagination
-                    v-model="page"
-                    :min="currentPage"
-                    :max="Math.ceil(list_speak.length/totalPages)"
-                    :input="true"
-                    input-class="text-blue-10"
-                  >
-                  </q-pagination>
-                </div>
+            <q-card class="my-card">
+              <q-card-section horizontal>
+                <q-img
+                  class="col-5"
+                  src="https://open.http.mp.streamamg.com/p/3000401/sp/300040100/thumbnail/entry_id/0_1blsoyqr/version/100000/acv/172/width/372/height/209"
+                />
 
-              </q-tab-panel>
-            </q-tab-panels>
-          </q-card>
-          <q-table class="table"
-                   title="Test History"
-                   style="max-width: 1000px; margin: 50px auto;"
-                   :data="data"
-                   :columns="columns"
-                   row-key="name"
-          />
+                <q-card-section>
+                  <label style="text-transform: uppercase"><strong>Speaking test</strong></label>
+                  <q-separator />
+                  In the speaking test, you will interact 1 on 1 with an examiner. The examiner will also be the judge on your points. They will as you some question. Focus on your spelling and grammar while taking the test.
+                </q-card-section>
+              </q-card-section>
+
+              <q-separator />
+
+              <q-card-actions>
+                <q-btn flat round icon="event" />
+                <q-btn flat>
+                  5:30PM
+                </q-btn>
+                <q-btn flat>
+                  7:00PM
+                </q-btn>
+                <q-btn flat color="primary">
+                  Take an exam
+                </q-btn>
+              </q-card-actions>
+            </q-card>
+          </div>
         </div>
       </template>
 
@@ -134,173 +159,25 @@ export default {
   name: "IeltsTest",
   data() {
     return {
-      tab: 'listening',
       splitterModel: 20,
-      columns: [
-        {
-          name: 'id',
-          required: true,
-          label: 'STT',
-          align: 'left',
-          field: 'id',
-          sortable: true
-        },
-        {name: 'test_name', align: 'center', label: 'Tên bài test', field: 'test_name', sortable: true},
-        {name: 'point', label: 'Điểm', field: 'point', sortable: true},
-        {name: 'time', label: 'Ngày thi', field: 'time', sortable: true},
-        {name: 'lecturer_name', label: 'Người chấm', field: 'lecturer_name', sortable: true},
-        {name: 'comment', label: 'Nhận xét', field: 'comment'}
-      ],
-      data: [
-        { id: 1,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 2,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 3,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'deo co'
-        },
-        { id: 4,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 5,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 6,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 7,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 8,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 9,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-        { id: 10,
-          test_name: 'test1',
-          point: 10,
-          time: '20/10/2020',
-          lecturer_name: 'duc',
-          comment: 'ko co'
-        },
-      ],
-      page: 1,
-      currentPage:1,
-      nextPage: null,
-      totalPages:5,
-      users: [
-        { id: 1,
-          name: 'Duc',
-          email: 'duc@gmail.com'}
-      ],
-      errors: [],
-      list_listen: [],
-      list_read: [],
-      list_speak: [],
-      list_write: [],
-
+      lorem: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
     }
   },
-  computed:{
-    getDataListen(){
-      return this.list_listen.slice((this.page-1)*this.totalPages,(this.page-1)*this.totalPages+this.totalPages)
-    },
-    getDataRead(){
-      return 	this.list_read.slice((this.page-1)*this.totalPages,(this.page-1)*this.totalPages+this.totalPages)
-    },
-    getDataSpeak(){
-      return 	this.list_speak.slice((this.page-1)*this.totalPages,(this.page-1)*this.totalPages+this.totalPages)
-    },
-    getDataWrite(){
-      return 	this.list_write.slice((this.page-1)*this.totalPages,(this.page-1)*this.totalPages+this.totalPages)
-    },
-  },
+  props: ['user'],
+
   created() {
-    this.getListListen()
-    this.getListRead()
-    this.getListWrite()
-    this.getListSpeak()
+
   },
   methods: {
-    getListListen() {
-      axios.get('http://127.0.0.1:8000/api/ielts-test/listen')
-        .then(response => {
-          this.list_listen = response.data
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors.name
-        })
-    },
-    getListRead(){
-      axios.get('http://127.0.0.1:8000/api/ielts-test/read')
-      .then(response => {
-        this.list_read = response.data
-      })
-      .catch(error => {
-        this.errors = error.response.data.errors.name
-      })
-    },
-    getListSpeak(){
-      axios.get('http://127.0.0.1:8000/api/ielts-test/speak')
-        .then(response => {
-          this.list_speak = response.data
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors.name
-        })
-    },
-    getListWrite(){
-      axios.get('http://127.0.0.1:8000/api/ielts-test/write')
-        .then(response => {
-          this.list_write = response.data
-        })
-        .catch(error => {
-          this.errors = error.response.data.errors.name
-        })
-    }
+
   }
 }
 </script>
 
 <style scoped>
+.my-card{
+  max-width: 500px;
+  margin: 10px 50px 50px 50px;
+}
 
 </style>

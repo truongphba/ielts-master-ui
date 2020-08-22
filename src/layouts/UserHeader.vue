@@ -1,6 +1,6 @@
 <template>
   <q-layout view="lHh lpr lFf">
-    <q-header class="q-py-sm bg-indigo-7"  :style="'border-bottom: 2px solid '">
+    <q-header class="q-py-sm bg-indigo-7"  :style="'border-bottom: 2px solid;'">
       <q-toolbar>
         <span :style="'font-size: 35px;color:'" class="my-font text-h6 q-mr-md">LOGO</span>
         <q-space></q-space>
@@ -27,10 +27,11 @@
                 <q-item-label>about us</q-item-label>
               </q-item-section>
             </q-item>
+
           </q-list>
         </div>
-        <div class="q-pa-md q-gutter-sm">
-          <q-btn class="bg-indigo-7" v-if="user" >
+<!--        <div class="q-pa-md q-gutter-sm">-->
+          <q-btn flat class="bg-indigo-7" v-if="user" >
             <q-avatar>
               <img src="https://cdn.quasar.dev/img/avatar.png">
             </q-avatar>
@@ -56,14 +57,14 @@
             </q-menu>
           </q-btn>
           <q-btn v-else color="white" text-color="black" label="Login"/>
-        </div>
+<!--        </div>-->
       </q-toolbar>
     </q-header>
 
     <q-page-container>
       <q-page class="row no-wrap" style="background-color: #f2f2f2;">
         <div class="col">
-          <router-view/>
+          <router-view :user="user"/>
         </div>
       </q-page>
     </q-page-container>
