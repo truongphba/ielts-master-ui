@@ -1,71 +1,309 @@
 <template>
   <div>
-    <div class="q-banner text-center relative-position">
-      <div class="q-pa-md q-gutter-sm absolute-center">
-        <q-btn color="red" label="Get Exam" size="xl"/>
+    <!--    <div class="q-banner text-center relative-position">-->
+    <!--      <div class="q-pa-md q-gutter-sm absolute-center">-->
+    <!--        <q-btn color="red" label="Get Exam" size="xl"/>-->
+    <!--      </div>-->
+    <!--    </div>-->
+    <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
+      <div class="q-gutter-sm" style="display: flex;">
+<!--        <q-markup-table style="width: 570px; margin-right: 20px">-->
+<!--          <thead>-->
+<!--          <div style="margin-top: 10px; margin-bottom: 10px; " class="text-h5 q-ml-md">Listening</div>-->
+<!--          <tr>-->
+<!--            <th class="text-left">STT</th>-->
+<!--            <th class="text-right">Điểm</th>-->
+<!--            <th class="text-right">Ngày Thi</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr v-for="(test, index) in getDataListen">-->
+<!--            <td class="text-left">{{ index + 1 }}</td>-->
+<!--            <td class="text-right">{{ test.point }}</td>-->
+<!--            <td class="text-right">{{ test.created_at }}</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--          <div class="q-pa-lg flex flex-center">-->
+<!--            <q-pagination-->
+<!--              v-model="listenPage"-->
+<!--              :min="listenCurrentPage"-->
+<!--              :max="Math.ceil(listen.length/totalPages)"-->
+<!--              :input="true"-->
+<!--              input-class="text-orange-10"-->
+<!--            >-->
+<!--            </q-pagination>-->
+<!--          </div>-->
+<!--        </q-markup-table>-->
+        <q-table
+          title="Listening"
+          :data="listen"
+          :columns="columns"
+          row-key="name"
+          :filter="filter"
+          style="width: 600px; margin-right: 20px"
+        >
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+        </q-table>
+<!--        <q-markup-table style="width: 570px;">-->
+<!--          <thead>-->
+<!--          <div style="margin-top: 10px; margin-bottom: 10px;" class="text-h5 q-ml-md">Reading</div>-->
+<!--          <tr>-->
+<!--            <th class="text-left">STT</th>-->
+<!--            <th class="text-right">Điểm</th>-->
+<!--            <th class="text-right">Ngày Thi</th>-->
+<!--          </tr>-->
+<!--          </thead>-->
+<!--          <tbody>-->
+<!--          <tr v-for="(test,index) in getDataRead">-->
+<!--            <td class="text-left">{{ index + 1 }}</td>-->
+<!--            <td class="text-right">{{ test.point }}</td>-->
+<!--            <td class="text-right">{{ test.created_at }}</td>-->
+<!--          </tr>-->
+<!--          </tbody>-->
+<!--          <div class="q-pa-lg flex flex-center">-->
+<!--            <q-pagination-->
+<!--              v-model="readPage"-->
+<!--              :min="readCurrentPage"-->
+<!--              :max="Math.ceil(read.length/totalPages)"-->
+<!--              :input="true"-->
+<!--              input-class="text-orange-10"-->
+<!--            >-->
+<!--            </q-pagination>-->
+<!--          </div>-->
+<!--        </q-markup-table>-->
+        <q-table
+          title="Reading"
+          :data="read"
+          :columns="columns"
+          row-key="name"
+          :filter="filter"
+          style="width: 600px;"
+        >
+          <template v-slot:top-right>
+            <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+              <template v-slot:append>
+                <q-icon name="search" />
+              </template>
+            </q-input>
+          </template>
+        </q-table>
       </div>
     </div>
-    <div class="q-pa-md" style="max-width: 1200px; margin: 50px auto">
-      <q-table class="table"
-               title="Listening"
-               :data="data"
-               :columns="columns"
-               row-key="name"
-      />
-      <q-table class="table"
-               title="Reading"
-               :data="data"
-               :columns="columns"
-               row-key="name"
-      />
-      <q-table class="table"
-               title="Speaking"
-               :data="data"
-               :columns="columns"
-               row-key="name"
-      />
-      <q-table class="table1"
-               title="Writing"
-               :data="data"
-               :columns="columns"
-               row-key="name"
-      />
+
+    <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
+<!--      <q-markup-table>-->
+<!--        <thead>-->
+<!--        <div style="margin-top: 10px; margin-bottom: 10px" class="text-h5 q-ml-md">Speaking</div>-->
+<!--        <tr>-->
+<!--          <th class="text-left">STT</th>-->
+<!--          <th class="text-right">Người chấm</th>-->
+<!--          <th class="text-right">Điểm</th>-->
+<!--          <th class="text-right">Ngày Thi</th>-->
+<!--          <th class="text-right">Comment</th>-->
+<!--        </tr>-->
+<!--        </thead>-->
+<!--        <tbody>-->
+<!--        <tr v-for="(test,index) in getDataSpeak">-->
+<!--          <td class="text-left">{{ index + 1 }}</td>-->
+<!--          <td class="text-right"></td>-->
+<!--          <td class="text-right">{{ test.point }}</td>-->
+<!--          <td class="text-right">{{test.created_at}}</td>-->
+<!--          <td class="text-right">{{ test.comment }}</td>-->
+<!--        </tr>-->
+<!--        </tbody>-->
+<!--        <div class="q-pa-lg flex flex-center">-->
+<!--          <q-pagination-->
+<!--            v-model="speakPage"-->
+<!--            :min="speakCurrentPage"-->
+<!--            :max="Math.ceil(speak.length/totalPages)"-->
+<!--            :input="true"-->
+<!--            input-class="text-orange-10"-->
+<!--          >-->
+<!--          </q-pagination>-->
+<!--        </div>-->
+<!--      </q-markup-table>-->
+      <q-table
+        title="Speaking"
+        :data="speak"
+        :columns="speakColumns"
+        row-key="name"
+        :filter="filter"
+        binary-state-sort
+      >
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+      </q-table>
+    </div>
+
+    <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
+      <q-table
+        title="Writing"
+        :data="write"
+        :columns="writeColumns"
+        row-key="name"
+        :filter="filter"
+        binary-state-sort
+      >
+        <template v-slot:top-right>
+          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <template v-slot:append>
+              <q-icon name="search" />
+            </template>
+          </q-input>
+        </template>
+        <template v-slot:body="props">
+          <q-tr :props="props">
+            <q-td key="id" :props="props">
+              {{ props.row.id }}
+
+            </q-td>
+            <q-td key="lecture_name" :props="props">
+              {{ props.row.lecture_name }}
+            </q-td>
+            <q-td key="point" :props="props">
+              <div class="text-pre-wrap">{{ props.row.point }}</div>
+            </q-td>
+            <q-td key="created_at" :props="props">
+              {{props.row.created_at}}
+            </q-td>
+            <q-td key="answer" :props="props">
+              <q-btn flat push style="text-transform: none" label="Detail">
+                <q-popup-proxy>
+                  <q-banner>
+                    {{ props.row.answer }}
+                  </q-banner>
+                </q-popup-proxy>
+              </q-btn>
+            </q-td>
+            <q-td key="comment" :props="props">{{ props.row.comment }}</q-td>
+          </q-tr>
+        </template>
+      </q-table>
+
     </div>
   </div>
 </template>
 
 <script>
+import axios from "axios";
+import {date} from "quasar";
 export default {
   name: "TestHistory",
   data() {
     return {
+      filter: '',
       columns: [
         {
           name: 'id',
           required: true,
-          label: 'STT',
+          label: 'ID',
           align: 'left',
           field: 'id',
           sortable: true
         },
-        {name: 'test_name', align: 'center', label: 'Tên bài test', field: 'test_name', sortable: true},
-        {name: 'point', label: 'Điểm', field: 'point', sortable: true},
-        {name: 'time', label: 'Ngày thi', field: 'time'},
-        {name: 'lecturer_name', label: 'Người chấm', field: 'lecturer_name', sortable: true},
-        {name: 'comment', label: 'Nhận xét', field: 'comment'}
+        { name: 'point', label: 'Điểm', field: 'point', sortable: true },
+        { name: 'created_at', label: 'Ngày thi', field: 'created_at',sortable: true ,format: val=>date.formatDate(val, 'DD-MM-YYYY') },
       ],
+      speakColumns: [
+        {
+          name: 'id',
+          required: true,
+          label: 'ID',
+          align: 'left',
+          field: 'id',
+          sortable: true
+        },
+        { name: 'lecture_name', label: 'Người chấm', field: 'lecture_name', sortable: true },
+        { name: 'point', label: 'Điểm', field: 'point', sortable: true },
+        { name: 'created_at', label: 'Ngày thi', field: 'created_at',sortable: true ,format: val=>date.formatDate(val, 'DD-MM-YYYY') },
+        { name: 'comment', label: 'Nhận xét', field: 'comment',sortable: true ,},
+      ],
+      writeColumns: [
+        {
+          name: 'id',
+          required: true,
+          label: 'ID',
+          align: 'left',
+          field: 'id',
+          sortable: true
+        },
+        { name: 'lecture_name', label: 'Người chấm', field: 'lecture_name', sortable: true },
+        { name: 'point', label: 'Điểm', field: 'point', sortable: true },
+        { name: 'created_at', label: 'Ngày thi', field: 'created_at',sortable: true ,format: created_at=>date.formatDate(created_at, 'DD-MM-YYYY') },
+        { name: 'answer', label: 'Bài thi', field: 'answer'},
+        { name: 'comment', label: 'Nhận xét', field: 'comment'},
+      ],
+      listen: [],
+      read: [],
+      speak: [],
+      write: [],
+
     }
-  }
+  },
+  props: ['user'],
+  created() {
+    axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
+      .then(response => {
+        console.log(response.data)
+        this.listen = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        this.errors = error.response.data.errors
+      })
+
+    axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
+      .then(response => {
+        console.log(response.data)
+        this.read = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        this.errors = error.response.data.errors
+      })
+
+    axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
+      .then(response => {
+        console.log(response.data)
+        this.speak = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        this.errors = error.response.data.errors
+      })
+
+    axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
+      .then(response => {
+        console.log(response.data)
+        this.write = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        this.errors = error.response.data.errors
+      })
+  },
 }
 </script>
 
 <style scoped>
-.table{
+.table {
   margin-bottom: 40px;
 }
+
 .q-banner {
-  background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;
+  /*background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;*/
   background-size: cover;
-  height: 400px;
+  height: 300px;
 }
 </style>

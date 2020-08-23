@@ -25,7 +25,7 @@
                 label="Password *"
               />
               <div>
-                <q-btn label="Login" type="submit" @click="login" color="primary"/>
+                <q-btn label="Login" @click="login" color="primary"/>
                 <q-btn label="Register" to="/register" color="primary" flat class="q-ml-sm"/>
               </div>
             </q-form>
