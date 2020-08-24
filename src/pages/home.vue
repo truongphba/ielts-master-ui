@@ -44,7 +44,7 @@
               <div class="col-10">
                 <div class="text-h6">Total Exam</div>
                 <div class="text-h5">
-                  {{listening_exam.length + reading_exam + writing_exam.length + speaking_exam.length}}
+                  {{listening_exam.length + reading_exam.length + writing_exam.length + speaking_exam.length}}
                 </div>
               </div>
               <div class="col-2">
@@ -122,6 +122,7 @@ export default {
         this.reading_exam = response.data.examReadings
         this.speaking_exam = response.data.examSpeakings
         this.writing_exam = response.data.examWritings
+
       })
       .catch(error => {
         console.log(error.response.data)
