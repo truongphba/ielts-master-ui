@@ -1,12 +1,12 @@
 <template>
-  <q-layout view="lHh lpr lFf">
-    <q-header class="q-py-sm bg-indigo-7"  :style="'border-bottom: 2px solid '">
+  <q-layout view="hHh Lpr fff">
+    <q-header class="q-py-sm bg-indigo-7"  :style="'border-bottom: 2px solid;'">
       <q-toolbar>
         <span :style="'font-size: 35px;color:'" class="my-font text-h6 q-mr-md">LOGO</span>
         <q-space></q-space>
         <div class="text-white">
           <q-list class="bg-indigo-7" style="display: flex;" >
-            <q-item class="item" to="/" exact exact-active-class="my-item" clickable v-ripple>
+            <q-item class="item" to="/home" exact exact-active-class="my-item" clickable v-ripple>
               <q-item-section>Home</q-item-section>
             </q-item>
 
@@ -27,10 +27,10 @@
                 <q-item-label>about us</q-item-label>
               </q-item-section>
             </q-item>
+
           </q-list>
         </div>
-        <div class="q-pa-md q-gutter-sm">
-          <q-btn class="bg-indigo-7" v-if="user" >
+          <q-btn flat class="bg-indigo-7" v-if="user" >
             <q-avatar>
               <img src="https://cdn.quasar.dev/img/avatar.png">
             </q-avatar>
@@ -56,7 +56,6 @@
             </q-menu>
           </q-btn>
           <q-btn v-else color="white" text-color="black" label="Login"/>
-        </div>
       </q-toolbar>
     </q-header>
 
@@ -68,11 +67,13 @@
       </q-page>
     </q-page-container>
 
-    <q-toolbar class="bg-indigo-7" style="color: white; text-transform: uppercase; text-align: center">
-      <q-toolbar-title>
-        Copyright &copy; 2020
-      </q-toolbar-title>
-    </q-toolbar>
+    <q-footer elevated class="bg-grey-8 text-white">
+      <q-toolbar class="bg-indigo-7" style="color: white; text-transform: uppercase; text-align: center">
+        <q-toolbar-title>
+          Copyright &copy; 2020
+        </q-toolbar-title>
+      </q-toolbar>
+    </q-footer>
   </q-layout>
 </template>
 <script>

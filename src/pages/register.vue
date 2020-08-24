@@ -74,7 +74,7 @@
                 label="Register as lecturer"
               />
               <div>
-                <q-btn label="Register" type="submit" color="primary" @click="register"/>
+                <q-btn label="Register" color="primary" @click="register"/>
                 <q-btn label="Back" to="/" color="primary" flat class="q-ml-sm"/>
               </div>
             </q-form>
@@ -119,7 +119,6 @@
             this.success = true;
           })
           .catch(error => {
-            console.log(error.response.data)
             this.errors = error.response.data.errors
           })
       }

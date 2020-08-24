@@ -21,15 +21,13 @@ const routes = [
   { path: '/register', component: () => import('pages/register.vue')},
   { path: '/login', component: () => import('pages/login.vue'), name : 'login' , meta: { auth : false}},
   {
-    path: '', component: () => import('layouts/UserHeader'),
+    path: '', component: () => import('layouts/MainLayout'),
     children: [
-      {path: '/history', component: () => import('pages/TestHistory')},
       {path: '/ielts-test', component: () => import('pages/IeltsTest')},
-      { path: '/home', component: () => import('pages/home') , meta: { auth : true}}
+      {path: '/history', component: () => import('pages/TestHistory')},
+      {path: '/home', component: () => import('pages/home') , meta: { auth : true}}
     ]
   },
-
-
 
 ]
 
