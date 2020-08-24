@@ -69,17 +69,27 @@
         </q-card-section>
       </q-card>
     </div>
-    <div class="q-pa-md row items-start q-gutter-md">
-      <q-card v-for="n in 2" class="my-card col">
-        <img src="https://cdn.quasar.dev/img/mountains.jpg">
+  <div class="q-pa-md" style="padding: 0 10%">
+    <hr>
+  </div>
+    <div class="text-h5 text-weight-bold q-px-md">Top Lecture</div>
+    <div class="q-pa-md row q-gutter-md">
+      <q-card v-for="(lec, index) in lecture" class="my-card col" v-if="lecture.length > 0 && index < 5">
+        <img style="height: 230px;overflow: hidden" :src="lec.avatar" v-if="lec.avatar">
+        <img style="margin-left: 10%;height: 230px;width:80%;overflow: hidden" src="https://r9b7u4m2.stackpathcdn.com/prod/sites/eXfkOOiYH-uoddxClSi52viuasTF1mJ8olZ0u-tOtfFqK66gZCc90Ly_Uoc0VmR1eULwQ0uGf2JhPt4yPTts8A/themes/base/assets/images/avatar-1.png" v-else>
         <q-card-section>
-          <div class="text-h6" v-if="lecture[n-1].full_name != null">{{lecture[n-1].full_name}}</div>
+          <q-rating
+            :value="lec.votes"
+            size="2em"
+            :max="5"
+            color="orange"
+            readonly
+          />
+          <div class="text-h6" v-if="lec.full_name != null">{{lec.full_name}}</div>
           <div class="text-h6" v-else>Unknown</div>
-          <div class="text-subtitle2">{{ lecture[n-1].votes }}</div>
-        </q-card-section>
-
-        <q-card-section class="q-pt-none">
-          {{ lecture[n-1].certificate }}
+          <b>Age: </b> {{lec.age}}<br>
+          <b>Email: </b> {{ lec.email}}<br>
+          <b>Certificate: </b> {{ lec.certificate }}
         </q-card-section>
       </q-card>
     </div>
@@ -105,6 +115,7 @@ export default {
   created() {
     axios.get(process.env.API_URL + '/index')
       .then(response => {
+        console.log(response.data)
         this.lecture = response.data.teacher
         this.member = response.data.student
         this.listening_exam = response.data.examListenings
