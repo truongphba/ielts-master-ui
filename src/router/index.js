@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import axios from "axios";
 
 
 Vue.use(VueRouter)
@@ -20,7 +21,19 @@ Vue.prototype.$getCookie = function(cname) {
   }
   return "";
 }
-
+// Vue.prototype.$user = function (){
+//   axios.get(process.env.API_URL + '/auth', {
+//     headers: {Authorization : this.$getCookie('Authorization')}
+//   })
+//     .then(response => {
+//       return response.data.user;
+//
+//     })
+//     .catch(error => {
+//       document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+//       window.location.href = '/login'
+//     })
+// }
 
 /*
  * If not building with SSR mode, you can
