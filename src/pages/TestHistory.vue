@@ -39,11 +39,11 @@
           :data="listen"
           :columns="columns"
           row-key="name"
-          :filter="filter"
+          :filter="listenFilter"
           style="width: 600px; margin-right: 20px"
         >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <q-input borderless dense debounce="300" v-model="listenFilter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -82,11 +82,11 @@
           :data="read"
           :columns="columns"
           row-key="name"
-          :filter="filter"
+          :filter="readFilter"
           style="width: 600px;"
         >
           <template v-slot:top-right>
-            <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <q-input borderless dense debounce="300" v-model="readFilter" placeholder="Search">
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
@@ -133,11 +133,11 @@
         :data="speak"
         :columns="speakColumns"
         row-key="name"
-        :filter="filter"
+        :filter="speakFilter"
         binary-state-sort
       >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <q-input borderless dense debounce="300" v-model="speakFilter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -152,11 +152,11 @@
         :data="write"
         :columns="writeColumns"
         row-key="name"
-        :filter="filter"
+        :filter="writeFilter"
         binary-state-sort
       >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <q-input borderless dense debounce="300" v-model="writeFilter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -178,13 +178,20 @@
               {{props.row.created_at}}
             </q-td>
             <q-td key="answer" :props="props">
-              <q-btn flat push style="text-transform: none" label="Detail">
-                <q-popup-proxy>
-                  <q-banner>
-                    {{ props.row.answer }}
-                  </q-banner>
-                </q-popup-proxy>
-              </q-btn>
+              <q-btn flat style="text-transform: none"  label="Detail" @click="detail = true" />
+              <q-dialog v-model="detail" persistent>
+                <q-card>
+                  <q-bar>
+                    <q-space />
+                    <q-btn dense flat icon="close" v-close-popup>
+                      <q-tooltip>Close</q-tooltip>
+                    </q-btn>
+                  </q-bar>
+                  <q-card-section>
+                    {{props.row.answer}}
+                  </q-card-section>
+                </q-card>
+              </q-dialog>
             </q-td>
             <q-td key="comment" :props="props">{{ props.row.comment }}</q-td>
           </q-tr>
@@ -202,7 +209,11 @@ export default {
   name: "TestHistory",
   data() {
     return {
-      filter: '',
+      detail: false,
+      readFilter: '',
+      listenFilter: '',
+      speakFilter: '',
+      writeFilter: '',
       columns: [
         {
           name: 'id',
@@ -301,9 +312,9 @@ export default {
   margin-bottom: 40px;
 }
 
-.q-banner {
-  /*background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;*/
-  background-size: cover;
-  height: 300px;
-}
+/*.q-banner {*/
+/*  !*background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;*!*/
+/*  background-size: cover;*/
+/*  height: 300px;*/
+/*}*/
 </style>

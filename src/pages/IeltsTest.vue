@@ -2,7 +2,6 @@
   <div>
     <q-splitter
       v-model="splitterModel"
-      :limits="[20]"
       style="height: 800px"
     >
 
@@ -73,7 +72,7 @@
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong style="color: red">{{read[0].point}}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
-                <q-btn flat color="primary">
+                <q-btn to="/reading-test" flat color="primary">
                   Take an exam
                 </q-btn>
               </q-card-actions>
@@ -99,8 +98,8 @@
               <q-separator />
 
               <q-card-actions>
-                <q-card-section style="padding: 8px" >
-                  <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong style="color: red">{{write[0].point}}</strong></span>
+                <q-card-section v-if="write.length > 0" style="padding: 8px" >
+                  <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong style="color: red">{{ write[0].point }}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
                 <q-btn flat color="primary">
@@ -127,7 +126,7 @@
 
               <q-card-actions>
                 <q-card-section style="padding: 8px" >
-                  <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong style="color: red">{{speak[0].point}}</strong></span>
+                  <span style="text-transform: uppercase;" ><strong>latest test results</strong> - <strong style="color: red">{{speak[0].point}}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
                 <q-btn flat color="primary">
@@ -147,57 +146,55 @@
 <script>
 import axios from 'axios'
 export default {
-  name: "IeltsTest",
   data() {
     return {
       splitterModel: 20,
       listen:[],
       speak: [],
       read: [],
-      write: [],
+      write: []
     }
   },
   props: ['user'],
-
   created() {
-    axios.get(process.env.API_URL + '/listenHistory/'+this.user.id)
+    axios.get(process.env.API_URL + '/listenHistory/'+this.$props.user.id)
       .then(response => {
         console.log(response.data)
         this.listen = response.data
       })
       .catch(error => {
         console.log(error.response.data)
-        this.errors = error.response.data.errors
+        this.errors = error.response.data
       })
 
-    axios.get(process.env.API_URL + '/readHistory/'+this.user.id)
+    axios.get(process.env.API_URL + '/readHistory/'+this.$props.user.id)
       .then(response => {
         console.log(response.data)
          this.read = response.data
       })
       .catch(error => {
         console.log(error.response.data)
-        this.errors = error.response.data.errors
+        this.errors = error.response.data
       })
 
-    axios.get(process.env.API_URL + '/speakHistory/'+this.user.id)
+    axios.get(process.env.API_URL + '/speakHistory/'+this.$props.user.id)
       .then(response => {
         console.log(response.data)
         this.speak = response.data
       })
       .catch(error => {
         console.log(error.response.data)
-        this.errors = error.response.data.errors
+        this.errors = error.response.data
       })
 
-    axios.get(process.env.API_URL +'/writeHistory/'+this.user.id)
+    axios.get(process.env.API_URL +'/writeHistory/'+this.$props.user.id)
       .then(response => {
         console.log(response.data)
         this.write = response.data
       })
       .catch(error => {
         console.log(error.response.data)
-        this.errors = error.response.data.errors
+        this.errors = error.response.data
       })
   },
 

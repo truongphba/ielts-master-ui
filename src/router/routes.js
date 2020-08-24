@@ -25,7 +25,8 @@ const routes = [
     children: [
       {path: '/ielts-test', component: () => import('pages/IeltsTest')},
       {path: '/history', component: () => import('pages/TestHistory')},
-      {path: '/home', component: () => import('pages/home') , meta: { auth : true}}
+      {path: '/home', component: () => import('pages/home') , meta: { auth : true}},
+      {path: 'reading-test', component: () => import('pages/ReadingTest')}
     ]
   },
 
