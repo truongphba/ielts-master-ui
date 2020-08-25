@@ -2,10 +2,12 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import routes from './routes'
+import VueCountdownTimer from 'vuejs-countdown-timer'
 import axios from "axios";
 
 
 Vue.use(VueRouter)
+Vue.use(VueCountdownTimer)
 Vue.prototype.$getCookie = function(cname) {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
