@@ -2,6 +2,7 @@
   <div>
     <q-splitter
       v-model="splitterModel"
+      :limits="20"
       style="height: 800px"
     >
 

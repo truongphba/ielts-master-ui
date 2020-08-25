@@ -7,33 +7,7 @@
     <!--    </div>-->
     <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
       <div class="q-gutter-sm" style="display: flex;">
-<!--        <q-markup-table style="width: 570px; margin-right: 20px">-->
-<!--          <thead>-->
-<!--          <div style="margin-top: 10px; margin-bottom: 10px; " class="text-h5 q-ml-md">Listening</div>-->
-<!--          <tr>-->
-<!--            <th class="text-left">STT</th>-->
-<!--            <th class="text-right">Điểm</th>-->
-<!--            <th class="text-right">Ngày Thi</th>-->
-<!--          </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--          <tr v-for="(test, index) in getDataListen">-->
-<!--            <td class="text-left">{{ index + 1 }}</td>-->
-<!--            <td class="text-right">{{ test.point }}</td>-->
-<!--            <td class="text-right">{{ test.created_at }}</td>-->
-<!--          </tr>-->
-<!--          </tbody>-->
-<!--          <div class="q-pa-lg flex flex-center">-->
-<!--            <q-pagination-->
-<!--              v-model="listenPage"-->
-<!--              :min="listenCurrentPage"-->
-<!--              :max="Math.ceil(listen.length/totalPages)"-->
-<!--              :input="true"-->
-<!--              input-class="text-orange-10"-->
-<!--            >-->
-<!--            </q-pagination>-->
-<!--          </div>-->
-<!--        </q-markup-table>-->
+
         <q-table
           title="Listening"
           :data="listen"
@@ -50,33 +24,7 @@
           </q-input>
         </template>
         </q-table>
-<!--        <q-markup-table style="width: 570px;">-->
-<!--          <thead>-->
-<!--          <div style="margin-top: 10px; margin-bottom: 10px;" class="text-h5 q-ml-md">Reading</div>-->
-<!--          <tr>-->
-<!--            <th class="text-left">STT</th>-->
-<!--            <th class="text-right">Điểm</th>-->
-<!--            <th class="text-right">Ngày Thi</th>-->
-<!--          </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--          <tr v-for="(test,index) in getDataRead">-->
-<!--            <td class="text-left">{{ index + 1 }}</td>-->
-<!--            <td class="text-right">{{ test.point }}</td>-->
-<!--            <td class="text-right">{{ test.created_at }}</td>-->
-<!--          </tr>-->
-<!--          </tbody>-->
-<!--          <div class="q-pa-lg flex flex-center">-->
-<!--            <q-pagination-->
-<!--              v-model="readPage"-->
-<!--              :min="readCurrentPage"-->
-<!--              :max="Math.ceil(read.length/totalPages)"-->
-<!--              :input="true"-->
-<!--              input-class="text-orange-10"-->
-<!--            >-->
-<!--            </q-pagination>-->
-<!--          </div>-->
-<!--        </q-markup-table>-->
+
         <q-table
           title="Reading"
           :data="read"
@@ -97,37 +45,7 @@
     </div>
 
     <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
-<!--      <q-markup-table>-->
-<!--        <thead>-->
-<!--        <div style="margin-top: 10px; margin-bottom: 10px" class="text-h5 q-ml-md">Speaking</div>-->
-<!--        <tr>-->
-<!--          <th class="text-left">STT</th>-->
-<!--          <th class="text-right">Người chấm</th>-->
-<!--          <th class="text-right">Điểm</th>-->
-<!--          <th class="text-right">Ngày Thi</th>-->
-<!--          <th class="text-right">Comment</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr v-for="(test,index) in getDataSpeak">-->
-<!--          <td class="text-left">{{ index + 1 }}</td>-->
-<!--          <td class="text-right"></td>-->
-<!--          <td class="text-right">{{ test.point }}</td>-->
-<!--          <td class="text-right">{{test.created_at}}</td>-->
-<!--          <td class="text-right">{{ test.comment }}</td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--        <div class="q-pa-lg flex flex-center">-->
-<!--          <q-pagination-->
-<!--            v-model="speakPage"-->
-<!--            :min="speakCurrentPage"-->
-<!--            :max="Math.ceil(speak.length/totalPages)"-->
-<!--            :input="true"-->
-<!--            input-class="text-orange-10"-->
-<!--          >-->
-<!--          </q-pagination>-->
-<!--        </div>-->
-<!--      </q-markup-table>-->
+
       <q-table
         title="Speaking"
         :data="speak"
@@ -263,47 +181,57 @@ export default {
     }
   },
   props: ['user'],
-  created() {
-    axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.listen = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
-
-    axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.read = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
-
-    axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.speak = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
-
-    axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.write = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
+  watch: {
+    user() {
+      this.getData();
+    }
   },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.listen = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.read = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.speak = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.write = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+    }
+  }
 }
 </script>
 
