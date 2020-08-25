@@ -25,17 +25,16 @@
           {{listening_question}}
         </div>
       </q-img>
-      <div class="absolute-center countdown">
+      <div class="absolute-center countdown" style="color: white;font-size: 30pt">
         <vue-countdown-timer
           @start_callback="startCallBack('event started')"
           @end_callback="endCallBack('event ended')"
           :start-time="start_time"
           :end-time="end_time"
-          :interval="1000"
+          :end-text="'Time\'s up!'"
           label-position="begin"
-          :end-text="'Event ended!'"
           >
-          <template slot="countdown" slot-scope="scope">
+          <template slot="countdown" slot-scope="scope" >
             <span>{{scope.props.minutes}} : </span>
             <span>{{scope.props.seconds}}</span>
           </template>
@@ -47,35 +46,43 @@
 
 <script>
 import axios from "axios";
-
+import firebase from "src/firebase"
+const db = firebase.firestore()
 export default {
   name: 'Timer',
   data() {
     return {
       listening_question: '',
-      start_time: '',
-      end_time: ''
+      start_time: (new Date).getTime(),
+      end_time: (new Date).getTime()+5000,
+      lecture: []
     }
   },
-  mounted() {
+  created() {
     axios.get(process.env.API_URL + '/speaking-question')
       .then(response => {
-        console.log(response.data.speaking_question)
         this.listening_question = response.data.speaking_question
       })
       .catch(error => {
         console.log(error.response.data)
       })
-    const today = new Date();
-    this.start_time = today.getTime();
-    this.end_time = (today.getTime() + 10*60000);
+    db.collection("lecture")
+      .onSnapshot(snap => {
+        snap.forEach(doc => {
+          this.lecture.push({
+            id: doc.id,
+            lectureId: doc.data().id,
+            status: doc.data().status
+          });
+        });
+      })
   },
   methods: {
     startCallBack: function (x) {
       console.log(x)
     },
     endCallBack: function (x) {
-      console.log(x)
+
     }
   }
 }
