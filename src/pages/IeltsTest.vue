@@ -49,7 +49,7 @@
                     style="color: red">{{ listen[0].point }}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
-                <q-btn flat color="primary">
+                <q-btn flat color="primary" to="/listening-test">
                   Take an exam
                 </q-btn>
               </q-card-actions>
@@ -112,7 +112,7 @@
                     style="color: red">{{ write[0].point }}</strong></span>
                   </q-card-section>
                   <q-space></q-space>
-                  <q-btn flat color="primary">
+                  <q-btn flat color="primary" to="/writing-test">
                     Take an exam
                   </q-btn>
               </q-card-actions>
