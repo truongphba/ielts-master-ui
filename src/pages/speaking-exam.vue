@@ -13,7 +13,8 @@
         <div class="text-h6">Linh</div>
         <b>Age: </b> 25<br>
         <b>Email: </b> linh@gmail.com<br>
-        <b>Certificate: </b> 10.0 Ielts
+        <b>Certificate: </b> 10.0 Ielts<br>
+
       </q-card-section>
       <q-card-section class="q-pt-none">
 
@@ -46,8 +47,7 @@
 
 <script>
 import axios from "axios";
-import firebase from "src/firebase"
-const db = firebase.firestore()
+
 export default {
   name: 'Timer',
   data() {
@@ -58,23 +58,13 @@ export default {
       lecture: []
     }
   },
-  created() {
+  mounted() {
     axios.get(process.env.API_URL + '/speaking-question')
       .then(response => {
         this.listening_question = response.data.speaking_question
       })
       .catch(error => {
         console.log(error.response.data)
-      })
-    db.collection("lecture")
-      .onSnapshot(snap => {
-        snap.forEach(doc => {
-          this.lecture.push({
-            id: doc.id,
-            lectureId: doc.data().id,
-            status: doc.data().status
-          });
-        });
       })
   },
   methods: {
