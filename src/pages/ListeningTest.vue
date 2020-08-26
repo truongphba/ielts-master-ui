@@ -8,7 +8,21 @@
           <div style="display: flex">
             <span class="text-h4 q-mb-md">LISTENING SECTION</span>
             <q-space></q-space>
-            <countdown></countdown>
+            <div class="absolute countdown" style="color: white;font-size: 10pt">
+              <vue-countdown-timer
+                @start_callback="startCallBack('event started')"
+                @end_callback="endCallBack('event ended')"
+                :start-time="start_time"
+                :end-time="end_time"
+                :end-text="'00 : 00'"
+                label-position="begin"
+              >
+                <template slot="countdown" slot-scope="scope" >
+                  <span>{{scope.props.minutes}} : </span>
+                  <span>{{scope.props.seconds}}</span>
+                </template>
+              </vue-countdown-timer>
+            </div>
           </div>
 
           <audio controls>
@@ -36,14 +50,15 @@
 
 <script>
 import axios from "axios";
-import CountDownTime from "pages/CountDownTime";
 export default {
   name: "ListeningTest",
   data() {
     return {
       splitterModel: 50, // start at 50%
       timerCount: 30,
-      listen: []
+      listen: [],
+      start_time: (new Date).getTime(),
+      end_time: (new Date).getTime()+60000,
     }
   },
   created() {
@@ -57,13 +72,31 @@ export default {
         this.errors = error.response.data
       })
   },
-  components: {
-    'countdown': CountDownTime
+  methods: {
+    startCallBack: function (x) {
+      console.log(x)
+    },
+    endCallBack: function (x) {
+
+    }
   }
 }
 </script>
 
 <style scoped>
-
+.countdown{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.47);
+  border-radius: 50%!important;
+  right: 10px;
+}
+.countdown span{
+  font-size: 10pt;
+  color: white;
+}
 
 </style>

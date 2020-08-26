@@ -8,7 +8,23 @@
           <div style="display: flex">
             <span class="text-h4 q-mb-md">READING PASSAGE</span>
             <q-space></q-space>
-            <countdown></countdown>
+            <q-card class="my-card col-md-8">
+              <div class="absolute countdown" style="color: white;font-size: 10pt">
+                <vue-countdown-timer
+                  @start_callback="startCallBack('event started')"
+                  @end_callback="endCallBack('event ended')"
+                  :start-time="start_time"
+                  :end-time="end_time"
+                  :end-text="'00 : 00'"
+                  label-position="begin"
+                >
+                  <template slot="countdown" slot-scope="scope" >
+                    <span>{{scope.props.minutes}} : </span>
+                    <span>{{scope.props.seconds}}</span>
+                  </template>
+                </vue-countdown-timer>
+              </div>
+            </q-card>
           </div>
           <div v-html="read[0].content"></div>
         </div>
@@ -21,7 +37,7 @@
             <br>
             <p style="font-weight: bold">{{ read.title }}</p>
             <div v-for="answer in read.answer.split(',')">
-              <input style="margin-right: 5px;" type="radio" v-bind:value="answer" v-model="read.id"/>
+              <input class="cursor-pointer" style="margin-right: 5px;" type="radio" v-bind:value="answer" v-model="read.id"/>
               <span>{{answer}}</span>
             </div>
             <!--            <span>Picked: {{ read.reading_id }}</span>-->
@@ -43,11 +59,9 @@ export default {
     return {
       splitterModel: 50, // start at 50%
       read: [],
-      timerCount: 30
+      start_time: (new Date).getTime(),
+      end_time: (new Date).getTime()+60000,
     }
-  },
-  components: {
-    'countdown': CountDownTime
   },
   created() {
     axios.get(process.env.API_URL + '/reading/')
@@ -60,10 +74,30 @@ export default {
         this.errors = error.response.data
       })
   },
+  methods: {
+    startCallBack: function (x) {
+      console.log(x)
+    },
+    endCallBack: function (x) {
+
+    }
+  }
 }
 </script>
 
 <style scoped>
-
-
+.countdown{
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.47);
+  border-radius: 50%!important;
+  right: 10px;
+}
+.countdown span{
+  font-size: 10pt;
+  color: white;
+}
 </style>
