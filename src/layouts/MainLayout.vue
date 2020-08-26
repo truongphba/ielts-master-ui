@@ -10,12 +10,14 @@
               <q-item-section>Home</q-item-section>
             </q-item>
 
-            <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple
-                    v-if="!user.is_lecture">
-              <q-item-section>
-                <q-item-label>ielts test</q-item-label>
-              </q-item-section>
-            </q-item>
+           <template v-if="!user.is_lecture">
+             <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple
+             >
+               <q-item-section>
+                 <q-item-label>ielts test</q-item-label>
+               </q-item-section>
+             </q-item>
+           </template>
 
             <q-item class="item" to="/history" exact exact-active-class="my-item" clickable v-ripple
                     v-if="!user.is_lecture">
@@ -91,7 +93,7 @@ export default {
       user: [],
     }
   },
-  created() {
+   beforeCreate() {
     if (this.$getCookie('Authorization') == '') {
       window.location.href = '/login'
     }

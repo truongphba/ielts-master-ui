@@ -65,14 +65,9 @@ export default {
           if (response.data.lecture.is_lecture == 1) {
            await db.collection("lecture").doc(response.data.lecture.id.toString())
               .set({
-                id: response.data.lecture.id,
-                full_name: response.data.lecture.full_name,
-                email: response.data.lecture.email,
-                avatar: response.data.lecture.avatar,
-                age: response.data.lecture.age,
-                votes: response.data.lecture.votes,
-                certificate: response.data.lecture.certificate,
-                status: 1
+                lecture_id: response.data.lecture.id,
+                member_id: null,
+                speaking_id: null
               })
           }
           document.cookie = 'Authorization=Bearer ' + response.data.token + '; max-age=9000';
