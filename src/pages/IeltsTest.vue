@@ -2,7 +2,7 @@
   <div>
     <q-splitter
       v-model="splitterModel"
-      :limits="[20]"
+      :limits="20"
       style="height: 800px"
     >
 
@@ -10,13 +10,13 @@
         <div class="q-pa-md" style="max-width: 350px;">
           <q-list separator>
             <q-item>
-              <q-item-section>Full Name: {{user.full_name}}</q-item-section>
+              <q-item-section>Full Name: {{ user.full_name }}</q-item-section>
             </q-item>
             <q-item>
-              <q-item-section>Age: {{user.age}}</q-item-section>
+              <q-item-section>Age: {{ user.age }}</q-item-section>
             </q-item>
             <q-item>
-              <q-item-section>Email: {{user.email}}</q-item-section>
+              <q-item-section>Email: {{ user.email }}</q-item-section>
             </q-item>
           </q-list>
         </div>
@@ -46,10 +46,10 @@
               <q-card-actions>
                 <q-card-section style="padding: 8px" v-if="listen.length > 0">
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong
-                    style="color: red">{{listen[0].point}}</strong></span>
+                    style="color: red">{{ listen[0].point }}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
-                <q-btn flat color="primary">
+                <q-btn flat color="primary" to="/listening-test">
                   Take an exam
                 </q-btn>
               </q-card-actions>
@@ -76,10 +76,10 @@
               <q-card-actions>
                 <q-card-section style="padding: 8px" v-if="read.length > 0">
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong
-                    style="color: red">{{read[0].point}}</strong></span>
+                    style="color: red">{{ read[0].point }}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
-                <q-btn flat color="primary">
+                <q-btn to="/reading-test" flat color="primary">
                   Take an exam
                 </q-btn>
               </q-card-actions>
@@ -107,14 +107,14 @@
               <q-separator/>
 
               <q-card-actions>
-                <q-card-section style="padding: 8px" v-if="write.length>0">
+                <q-card-section v-if="write.length > 0" style="padding: 8px">
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong
-                    style="color: red">{{write[0].point}}</strong></span>
-                </q-card-section>
-                <q-space></q-space>
-                <q-btn flat color="primary">
-                  Take an exam
-                </q-btn>
+                    style="color: red">{{ write[0].point }}</strong></span>
+                  </q-card-section>
+                  <q-space></q-space>
+                  <q-btn flat color="primary" to="/writing-test">
+                    Take an exam
+                  </q-btn>
               </q-card-actions>
             </q-card>
 
@@ -137,14 +137,15 @@
               <q-separator/>
 
               <q-card-actions>
-                <q-card-section style="padding: 8px" v-if="write.length>0">
+                <q-card-section v-if="write.length > 0" style="padding: 8px">
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong
-                    style="color: red">{{speak[0].point}}</strong></span>
-                </q-card-section>
-                <q-space></q-space>
-                <q-btn flat color="primary">
-                  Take an exam
-                </q-btn>
+                    style="color: red">{{ speak[0].point }}</strong></span>
+
+                  </q-card-section>
+                  <q-space></q-space>
+                  <q-btn flat color="primary">
+                    Take an exam
+                  </q-btn>
               </q-card-actions>
             </q-card>
           </div>
@@ -157,78 +158,78 @@
 </template>
 
 <script>
-  import axios from 'axios'
+import axios from 'axios'
 
-  export default {
-    data() {
-      return {
-        splitterModel: 20,
-        listen: [],
-        speak: [],
-        read: [],
-        write: [],
-      }
-    },
-    props: ['user'],
-    watch:{
-     user(){
-       this.getData();
-     }
-    },
-    mounted() {
-      this.getData();
-    },
-    methods: {
-      getData() {
-        axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
-          .then(response => {
-            console.log(response.data)
-            this.listen = response.data
-          })
-          .catch(error => {
-            console.log(error.response.data)
-            this.errors = error.response.data.errors
-          })
-
-        axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
-          .then(response => {
-            console.log(response.data)
-            this.read = response.data
-          })
-          .catch(error => {
-            console.log(error.response.data)
-            this.errors = error.response.data.errors
-          })
-
-        axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
-          .then(response => {
-            console.log(response.data)
-            this.speak = response.data
-          })
-          .catch(error => {
-            console.log(error.response.data)
-            this.errors = error.response.data.errors
-          })
-
-        axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
-          .then(response => {
-            console.log(response.data)
-            this.write = response.data
-          })
-          .catch(error => {
-            console.log(error.response.data)
-            this.errors = error.response.data.errors
-          })
-      }
+export default {
+  data() {
+    return {
+      splitterModel: 20,
+      listen: [],
+      speak: [],
+      read: [],
+      write: [],
     }
+  },
+  props: ['user'],
+  watch: {
+    user() {
+      this.getData();
+    }
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.listen = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
 
+      axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.read = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.speak = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.write = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+    }
   }
+
+}
 </script>
 
 <style scoped>
-  .my-card {
-    max-width: 500px;
-    margin: 15px 50px 50px 50px;
-  }
+.my-card {
+  max-width: 500px;
+  margin: 15px 50px 50px 50px;
+}
 
 </style>

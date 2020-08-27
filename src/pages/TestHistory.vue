@@ -7,86 +7,34 @@
     <!--    </div>-->
     <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
       <div class="q-gutter-sm" style="display: flex;">
-<!--        <q-markup-table style="width: 570px; margin-right: 20px">-->
-<!--          <thead>-->
-<!--          <div style="margin-top: 10px; margin-bottom: 10px; " class="text-h5 q-ml-md">Listening</div>-->
-<!--          <tr>-->
-<!--            <th class="text-left">STT</th>-->
-<!--            <th class="text-right">Điểm</th>-->
-<!--            <th class="text-right">Ngày Thi</th>-->
-<!--          </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--          <tr v-for="(test, index) in getDataListen">-->
-<!--            <td class="text-left">{{ index + 1 }}</td>-->
-<!--            <td class="text-right">{{ test.point }}</td>-->
-<!--            <td class="text-right">{{ test.created_at }}</td>-->
-<!--          </tr>-->
-<!--          </tbody>-->
-<!--          <div class="q-pa-lg flex flex-center">-->
-<!--            <q-pagination-->
-<!--              v-model="listenPage"-->
-<!--              :min="listenCurrentPage"-->
-<!--              :max="Math.ceil(listen.length/totalPages)"-->
-<!--              :input="true"-->
-<!--              input-class="text-orange-10"-->
-<!--            >-->
-<!--            </q-pagination>-->
-<!--          </div>-->
-<!--        </q-markup-table>-->
+
         <q-table
           title="Listening"
           :data="listen"
           :columns="columns"
           row-key="name"
-          :filter="filter"
+          :filter="listenFilter"
           style="width: 600px; margin-right: 20px"
         >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <q-input borderless dense debounce="300" v-model="listenFilter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
           </q-input>
         </template>
         </q-table>
-<!--        <q-markup-table style="width: 570px;">-->
-<!--          <thead>-->
-<!--          <div style="margin-top: 10px; margin-bottom: 10px;" class="text-h5 q-ml-md">Reading</div>-->
-<!--          <tr>-->
-<!--            <th class="text-left">STT</th>-->
-<!--            <th class="text-right">Điểm</th>-->
-<!--            <th class="text-right">Ngày Thi</th>-->
-<!--          </tr>-->
-<!--          </thead>-->
-<!--          <tbody>-->
-<!--          <tr v-for="(test,index) in getDataRead">-->
-<!--            <td class="text-left">{{ index + 1 }}</td>-->
-<!--            <td class="text-right">{{ test.point }}</td>-->
-<!--            <td class="text-right">{{ test.created_at }}</td>-->
-<!--          </tr>-->
-<!--          </tbody>-->
-<!--          <div class="q-pa-lg flex flex-center">-->
-<!--            <q-pagination-->
-<!--              v-model="readPage"-->
-<!--              :min="readCurrentPage"-->
-<!--              :max="Math.ceil(read.length/totalPages)"-->
-<!--              :input="true"-->
-<!--              input-class="text-orange-10"-->
-<!--            >-->
-<!--            </q-pagination>-->
-<!--          </div>-->
-<!--        </q-markup-table>-->
+
         <q-table
           title="Reading"
           :data="read"
           :columns="columns"
           row-key="name"
-          :filter="filter"
+          :filter="readFilter"
           style="width: 600px;"
         >
           <template v-slot:top-right>
-            <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+            <q-input borderless dense debounce="300" v-model="readFilter" placeholder="Search">
               <template v-slot:append>
                 <q-icon name="search" />
               </template>
@@ -97,47 +45,17 @@
     </div>
 
     <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
-<!--      <q-markup-table>-->
-<!--        <thead>-->
-<!--        <div style="margin-top: 10px; margin-bottom: 10px" class="text-h5 q-ml-md">Speaking</div>-->
-<!--        <tr>-->
-<!--          <th class="text-left">STT</th>-->
-<!--          <th class="text-right">Người chấm</th>-->
-<!--          <th class="text-right">Điểm</th>-->
-<!--          <th class="text-right">Ngày Thi</th>-->
-<!--          <th class="text-right">Comment</th>-->
-<!--        </tr>-->
-<!--        </thead>-->
-<!--        <tbody>-->
-<!--        <tr v-for="(test,index) in getDataSpeak">-->
-<!--          <td class="text-left">{{ index + 1 }}</td>-->
-<!--          <td class="text-right"></td>-->
-<!--          <td class="text-right">{{ test.point }}</td>-->
-<!--          <td class="text-right">{{test.created_at}}</td>-->
-<!--          <td class="text-right">{{ test.comment }}</td>-->
-<!--        </tr>-->
-<!--        </tbody>-->
-<!--        <div class="q-pa-lg flex flex-center">-->
-<!--          <q-pagination-->
-<!--            v-model="speakPage"-->
-<!--            :min="speakCurrentPage"-->
-<!--            :max="Math.ceil(speak.length/totalPages)"-->
-<!--            :input="true"-->
-<!--            input-class="text-orange-10"-->
-<!--          >-->
-<!--          </q-pagination>-->
-<!--        </div>-->
-<!--      </q-markup-table>-->
+
       <q-table
         title="Speaking"
         :data="speak"
         :columns="speakColumns"
         row-key="name"
-        :filter="filter"
+        :filter="speakFilter"
         binary-state-sort
       >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <q-input borderless dense debounce="300" v-model="speakFilter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -152,11 +70,11 @@
         :data="write"
         :columns="writeColumns"
         row-key="name"
-        :filter="filter"
+        :filter="writeFilter"
         binary-state-sort
       >
         <template v-slot:top-right>
-          <q-input borderless dense debounce="300" v-model="filter" placeholder="Search">
+          <q-input borderless dense debounce="300" v-model="writeFilter" placeholder="Search">
             <template v-slot:append>
               <q-icon name="search" />
             </template>
@@ -178,13 +96,20 @@
               {{props.row.created_at}}
             </q-td>
             <q-td key="answer" :props="props">
-              <q-btn flat push style="text-transform: none" label="Detail">
-                <q-popup-proxy>
-                  <q-banner>
-                    {{ props.row.answer }}
-                  </q-banner>
-                </q-popup-proxy>
-              </q-btn>
+              <q-btn flat style="text-transform: none"  label="Detail" @click="detail = true" />
+              <q-dialog v-model="detail" persistent>
+                <q-card>
+                  <q-bar>
+                    <q-space />
+                    <q-btn dense flat icon="close" v-close-popup>
+                      <q-tooltip>Close</q-tooltip>
+                    </q-btn>
+                  </q-bar>
+                  <q-card-section>
+                    {{props.row.answer}}
+                  </q-card-section>
+                </q-card>
+              </q-dialog>
             </q-td>
             <q-td key="comment" :props="props">{{ props.row.comment }}</q-td>
           </q-tr>
@@ -202,7 +127,11 @@ export default {
   name: "TestHistory",
   data() {
     return {
-      filter: '',
+      detail: false,
+      readFilter: '',
+      listenFilter: '',
+      speakFilter: '',
+      writeFilter: '',
       columns: [
         {
           name: 'id',
@@ -252,47 +181,57 @@ export default {
     }
   },
   props: ['user'],
-  created() {
-    axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.listen = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
-
-    axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.read = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
-
-    axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.speak = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
-
-    axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
-      .then(response => {
-        console.log(response.data)
-        this.write = response.data
-      })
-      .catch(error => {
-        console.log(error.response.data)
-        this.errors = error.response.data.errors
-      })
+  watch: {
+    user() {
+      this.getData();
+    }
   },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    getData() {
+      axios.get(process.env.API_URL + '/listenHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.listen = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/readHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.read = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/speakHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.speak = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+
+      axios.get(process.env.API_URL + '/writeHistory/' + this.user.id)
+        .then(response => {
+          console.log(response.data)
+          this.write = response.data
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+    }
+  }
 }
 </script>
 
@@ -301,9 +240,9 @@ export default {
   margin-bottom: 40px;
 }
 
-.q-banner {
-  /*background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;*/
-  background-size: cover;
-  height: 300px;
-}
+/*.q-banner {*/
+/*  !*background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;*!*/
+/*  background-size: cover;*/
+/*  height: 300px;*/
+/*}*/
 </style>

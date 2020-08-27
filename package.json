@@ -32,7 +32,8 @@
     "@quasar/quasar-app-extension-qcalendar": "^1.5.3",
     "@websanova/vue-auth": "^3.2.4-beta",
     "axios": "^0.19.2",
-    "vue-router": "^3.4.3"
+    "vue-router": "^3.4.3",
+    "vuejs-countdown-timer": "^2.1.2"
   },
   "engines": {
     "node": ">= 10.18.1",
