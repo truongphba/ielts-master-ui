@@ -137,7 +137,7 @@
               <q-separator/>
 
               <q-card-actions>
-                <q-card-section style="padding: 8px">
+                <q-card-section v-if="write.length > 0" style="padding: 8px">
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong
                     style="color: red">{{ speak[0].point }}</strong></span>
 
