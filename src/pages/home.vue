@@ -2,7 +2,7 @@
   <div>
     <div class="q-banner text-center relative-position">
       <div class="q-pa-md q-gutter-sm absolute-center">
-        <q-btn color="red" label="Get Exam" size="xl"/>
+        <q-btn color="red" to="/ielts-test" label="Get Exam" size="xl"/>
       </div>
     </div>
     <div class="row q-col-gutter-sm q-ma-xs q-mr-sm">

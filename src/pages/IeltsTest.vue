@@ -197,7 +197,7 @@
                     <b>Certificate: </b> {{ onlineLecture.certificate }}<br>
                   </q-card-section>
                   <q-card-actions align="right">
-                    <q-btn label="Accept" color="green"/>
+                    <q-btn label="Accept" color="green" @click="startExam()"/>
                     <q-btn label="Decline" color="red" v-close-popup/>
                   </q-card-actions>
                 </q-card>
@@ -260,26 +260,37 @@
                 lectureId: doc.data().lecture_id
               })
             })
-            axios.get(process.env.API_URL + '/lecture/' + lectureData[Math.floor(Math.random() * lectureData.length)].lectureId)
-              .then( response => {
-                this.onlineLecture = response.data.lecture
-                this.idLoading = false
-              })
-              .catch(error => {
-                this.idLoading = false
-                alert(error)
-              })
+           if (lectureData.length > 0){
+             axios.get(process.env.API_URL + '/lecture/' + lectureData[Math.floor(Math.random() * lectureData.length)].lectureId)
+               .then( response => {
+                 this.onlineLecture = response.data.lecture
+                 this.idLoading = false
+               })
+               .catch(error => {
+                 this.idLoading = false
+                 console.log(error)
+               })
+           }
+           else {
+             this.idLoading = false
+           }
           })
-
-
             this.connectLecture = true
             this.start_time = (new Date).getTime()
             this.end_time = (new Date).getTime() + 60000
       },
       startExam(){
-        db.collection("lecture").doc(this.onlineLecture.id.toString())
-          .set({
-
+        axios.get(process.env.API_URL + '/speaking-question')
+          .then(response => {
+            let speaking_question = response.data.speaking_question;
+            db.collection("lecture").doc(this.onlineLecture.id.toString())
+              .update({
+                member_id: this.user.id,
+                speaking_id: speaking_question
+              })
+          })
+          .catch(error => {
+            console.log(error)
           })
       },
       getData() {
