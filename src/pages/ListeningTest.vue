@@ -37,11 +37,35 @@
           <div v-for="test in listen[1]">
             <br>
             <p style="font-weight: bold">{{ test.title }}</p>
-            <div v-for="answer in test.answer.split(',')">
-              <input style="margin-right: 5px;" type="radio" v-bind:value="answer" v-model="test.id"/>
+            <div v-for="answer in test.answer.split(';')">
+              <input class="cursor-pointer" style="margin-right: 5px;" type="radio" v-bind:value="answer" v-model="test.id"/>
               <span>{{answer}}</span>
             </div>
           </div>
+          <br>
+          <q-btn label="Submit" color="primary" @click="confirm = true" />
+          <q-dialog v-model="confirm" persistent>
+            <q-card>
+              <q-card-section class="row items-center">
+                <span class="q-ml-sm" style="text-transform: uppercase; width: 300px">are you sure to submit !</span>
+              </q-card-section>
+              <q-card-actions align="right">
+                <q-btn flat label="Cancel" color="primary" v-close-popup />
+                <q-btn flat label="Submit" color="primary" @click="checkAnswer"/>
+              </q-card-actions>
+            </q-card>
+          </q-dialog>
+          <q-dialog v-model="detail" persistent>
+            <q-card>
+              <q-bar>
+                <q-space />
+              </q-bar>
+              <q-card-section style="width: 350px; height: 100px">
+                Your point: {{point}}
+              </q-card-section>
+              <q-btn style="float: right" to="/ielts-test" label="OK"></q-btn>
+            </q-card>
+          </q-dialog>
         </div>
       </template>
     </q-splitter>
@@ -55,12 +79,16 @@ export default {
   data() {
     return {
       splitterModel: 50, // start at 50%
-      timerCount: 30,
       listen: [],
       start_time: (new Date).getTime(),
       end_time: (new Date).getTime()+60000,
+      answer: [],
+      point: 0,
+      detail: false,
+      confirm: false,
     }
   },
+  props: ['user'],
   created() {
     axios.get(process.env.API_URL + '/listening/')
       .then(response => {
@@ -71,13 +99,57 @@ export default {
         console.log(error.response.data)
         this.errors = error.response.data
       })
+
   },
   methods: {
     startCallBack: function (x) {
       console.log(x)
     },
-    endCallBack: function (x) {
-
+    endCallBack: async function (x) {
+      this.point = 0;
+      this.answer = [];
+      for (const ans of this.listen[1]) {
+        await this.answer.push(ans.id);
+      }
+      for (let i = 0; i < this.answer.length; i++) {
+        if (this.listen[1][i].correct_answer == this.answer[i]){
+          this.point++;
+        }
+      }
+      axios.post(process.env.API_URL +'/storeListen',{
+        student_id: this.user.id,
+        point: this.point
+      })
+        .then(response => {
+          this.success = true;
+        })
+        .catch(error => {
+          this.errors = error.response.data
+        })
+      this.detail = true
+    },
+    checkAnswer: async function (){
+      this.point = 0;
+      this.answer = [];
+      for (const ans of this.listen[1]) {
+        await this.answer.push(ans.id);
+      }
+      for (let i = 0; i < this.answer.length; i++) {
+        if (this.listen[1][i].correct_answer == this.answer[i]){
+         this.point++;
+        }
+      }
+      axios.post(process.env.API_URL +'/storeListen',{
+        student_id: this.user.id,
+        point: this.point
+      })
+        .then(response => {
+          this.success = true;
+        })
+        .catch(error => {
+          this.errors = error.response.data
+        })
+      this.detail = true
     }
   }
 }
