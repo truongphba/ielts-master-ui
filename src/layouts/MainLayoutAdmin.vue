@@ -117,14 +117,14 @@
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/employee_salary_list" class="q-ma-sm navigation-item" clickable
+              <q-item active-class="tab-active" to="/user-management" class="q-ma-sm navigation-item" clickable
                       v-ripple>
                 <q-item-section avatar>
                   <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  Employee Salary List
+                  User Management
                 </q-item-section>
               </q-item>
 
