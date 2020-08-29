@@ -13,7 +13,7 @@ const routes = [
       {path: '/sales_invoices', component: () => import('pages/admin/sales_invoices.vue')},
       {path: '/quotes', component: () => import('pages/admin/quotes.vue')},
       {path: '/transactions', component: () => import('pages/admin/transactions.vue')},
-      {path: '/employee_salary_list', component: () => import('pages/admin/user_management.vue')},
+      {path: '/user-management', component: () => import('pages/admin/user_management.vue')},
       {path: '/calendar', component: () => import('pages/admin/calendar.vue')},
       {path: '/department', component: () => import('pages/admin/department.vue')}
     ]

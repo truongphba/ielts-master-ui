@@ -55,103 +55,193 @@
             <q-td key="certificate" :props="props">
               {{ props.row.certificate }}
             </q-td>
-            <q-td key="position" :props="props" v-if="props.row.is_lecture === 1 && props.row.is_admin === 0">
-              <span>Lecturer</span>
-            </q-td>
-            <q-td key="position" :props="props" v-if="props.row.is_lecture === 0 && props.row.is_admin === 0">
-              <span>Student</span>
-            </q-td>
-            <q-td key="position" :props="props" v-if="props.row.is_admin === 1 && props.row.is_lecture === 0">
-              <span>Admin</span>
+            <q-td key="position" :props="props">
+              <span>{{ props.row.position }}</span>
             </q-td>
             <q-td key="balance" :props="props">
               <span>{{ props.row.balance }}</span>
             </q-td>
-            <q-td key="status" :props="props" v-if="props.row.status === 1">
-              <span>Active</span>
-            </q-td>
-            <q-td key="status" :props="props" v-if="props.row.status === 0">
-              <span>Deactive</span>
-            </q-td>
-            <q-td key="status" :props="props" v-if="props.row.status === -1">
-              <span>Lock</span>
+            <q-td key="status" :props="props">
+              <span>{{ props.row.textStatus }}</span>
             </q-td>
             <q-td key="created_at" :props="props">
               <span>{{ props.row.format_date }}</span>
             </q-td>
             <q-td key="actions" :props="props">
-              <q-btn color="blue" label="Update" size=sm no-caps></q-btn>
-              <q-btn color="red" label="Delete" size=sm no-caps></q-btn>
+              <q-btn color="blue" label="Update" size=sm no-caps @click="editData(props.row)"></q-btn>
             </q-td>
           </q-tr>
         </template>
 
       </q-table>
     </q-card>
+
+    <!--    add user-->
     <q-dialog v-model="new_user">
-      <q-card style="width: 600px; max-width: 60vw;">
+      <q-card class="my-card flex-center">
         <q-card-section>
-          <div class="text-h6">
-            Add new user
-            <q-btn round flat dense icon="close" class="float-right" color="grey-8" v-close-popup></q-btn>
+          <div class="text-h6">Add new user</div>
+        </q-card-section>
+        <q-card-section class="q-pt-none">
+          <q-form v-if="!success"
+                  class="q-gutter-md"
+                  @reset="onReset"
+          >
+            <q-input
+              filled
+              v-model="user.name"
+              label="Username *"
+            />
+            <div class="error" v-if="errors.name && errors.name.length">
+              <span>{{ errors.name[0] }}</span>
+              <hr>
+            </div>
+            <q-input
+              filled
+              v-model="user.email"
+              label="Email *"
+            />
+            <div class="error" v-if="errors.email && errors.email.length">
+              <span>{{ errors.email[0] }}</span>
+              <hr>
+            </div>
+            <q-input
+              filled
+              v-model="user.full_name"
+              label="Full Name"
+            />
+            <q-input
+              filled
+              type="number"
+              v-model="user.age"
+              label="Age"
+            />
+            <div class="error" v-if="errors.age && errors.age.length">
+              <span>{{ errors.age[0] }}</span>
+              <hr>
+            </div>
+            <q-input v-if="user.is_lecture"
+                     v-model="user.certificate"
+                     filled
+                     type="textarea"
+                     label="Certificate *"
+            />
+            <div class="error" v-if="errors.certificate && errors.certificate.length">
+              <span>{{ errors.certificate[0] }}</span>
+              <hr>
+            </div>
+            <q-input
+              filled
+              type="password"
+              v-model="user.password"
+              autocomplete="new-password"
+              label="Password *"
+            />
+            <div class="error" v-if="errors.password && errors.password.length">
+              <span>{{ errors.password[0] }}</span>
+              <hr>
+            </div>
+            <q-toggle
+              v-model="user.is_lecture"
+              checked-icon="check"
+              color="green"
+              unchecked-icon="clear"
+              label="Add user as lecturer"
+            />
+            <div>
+              <q-btn label="Register" color="primary" @click="register"/>
+              <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
+              <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
+            </div>
+          </q-form>
+          <q-dialog v-model="success" persistent>
+            <q-card>
+              <q-card-section style="width: 350px; height: 100px">
+                Add Success
+              </q-card-section>
+              <q-btn style="float: right" v-close-popup label="OK"></q-btn>
+            </q-card>
+          </q-dialog>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
+
+    <!--    update user-->
+    <q-dialog
+      v-model="edit"
+    >
+      <q-card style="width: 700px; max-width: 80vw;">
+        <q-card-section>
+          <div class="text-h6">Edit user</div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <label>Username</label>
+          <q-input filled v-model="selected_data.name" dense/>
+          <div class="error" v-if="errors.name && errors.name.length">
+            <span>{{ errors.name[0] }}</span>
+            <hr>
           </div>
         </q-card-section>
-        <q-separator></q-separator>
+
         <q-card-section class="q-pt-none">
-          <q-form class="q-gutter-md">
-            <q-list>
-              <q-item>
-                <q-item-section>
-                  <q-item-label class="q-pb-xs">Customer Name</q-item-label>
-                  <q-input dense outlined  label="Customer Name"/>
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section>
-                  <q-item-label class="q-pb-xs">City</q-item-label>
-                  <q-input dense outlined  label="City"/>
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section>
-                  <q-item-label class="q-pb-xs">State</q-item-label>
-                  <q-input dense outlined label="State"/>
-                </q-item-section>
-              </q-item>
-              <q-item>
-                <q-item-section>
-                  <q-item-label class="q-pb-xs">Last Call</q-item-label>
-                  <q-input
-                    dense
-                    outlined
-
-                    mask="date"
-                    label="Last Call"
-                  >
-                    <template v-slot:append>
-                      <q-icon name="event" class="cursor-pointer">
-                        <q-popup-proxy
-                          ref="lastCallProxy"
-                          transition-show="scale"
-                          transition-hide="scale"
-                        >
-                          <q-date
-
-                            @input="() => $refs.lastCallProxy.hide()"
-                          />
-                        </q-popup-proxy>
-                      </q-icon>
-                    </template>
-                  </q-input>
-                </q-item-section>
-              </q-item>
-            </q-list>
-          </q-form>
+          <label>Full Name</label>
+          <q-input filled v-model="selected_data.full_name" dense/>
         </q-card-section>
 
-        <q-card-actions align="right" class="text-teal">
-          <q-btn label="Save" type="submit" color="primary" v-close-popup/>
+        <q-card-section class="q-pt-none">
+          <label>Email</label>
+          <q-input filled v-model="selected_data.email" dense/>
+          <div class="error" v-if="errors.email && errors.email.length">
+            <span>{{ errors.email[0] }}</span>
+            <hr>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <label>Age</label>
+          <q-input filled v-model="selected_data.age" dense/>
+          <div class="error" v-if="errors.age && errors.age.length">
+            <span>{{ errors.age[0] }}</span>
+            <hr>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <label>Certificate</label>
+          <q-input filled v-model="selected_data.certificate" dense/>
+          <div class="error" v-if="errors.certificate && errors.certificate.length">
+            <span>{{ errors.certificate[0] }}</span>
+            <hr>
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <label>Position</label>
+          <q-select filled v-model="selected_data.position" :options="lecturer_opt" dense/>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <label>Status</label>
+          <q-select filled v-model="selected_data.textStatus" :options="status_opt" dense/>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none">
+          <label>Balance</label>
+          <q-input filled v-model="selected_data.balance" dense/>
+        </q-card-section>
+
+        <q-card-actions align="right" class="bg-white text-teal">
+          <q-btn flat label="Update" @click="updateData(selected_data.id)"/>
         </q-card-actions>
+      </q-card>
+    </q-dialog>
+    <q-dialog v-model="success" persistent>
+      <q-card>
+        <q-card-section style="width: 350px; height: 100px">
+          Update Success
+        </q-card-section>
+        <q-btn style="float: right" v-close-popup label="OK"></q-btn>
       </q-card>
     </q-dialog>
   </q-page>
@@ -159,12 +249,32 @@
 
 <script>
 import axios from 'axios'
+
 export default {
   data() {
     return {
       new_user: false,
       filter: "",
       mode: "list",
+      success: false,
+      errors: [],
+      selected_data: '',
+      edit: false,
+      status_opt: [
+        "Active", "Deactive", "Lock"
+      ],
+      lecturer_opt: [
+        "Lecturer", "Student", "Admin"
+      ],
+      user: {
+        name: '',
+        email: '',
+        full_name: '',
+        certificate: '',
+        age: '',
+        password: '',
+        is_lecture: false,
+      },
       columns: [
         {
           name: "id",
@@ -255,7 +365,7 @@ export default {
   created() {
     axios.get(process.env.API_URL + '/getUser/')
       .then(response => {
-        // console.log(response.data)
+        console.log(response.data)
         this.users = response.data
       })
       .catch(error => {
@@ -265,6 +375,73 @@ export default {
 
   },
 
+  methods: {
+    register() {
+      axios.post(process.env.API_URL + '/createUser', {
+        name: this.user.name,
+        full_name: this.user.full_name,
+        email: this.user.email,
+        password: this.user.password,
+        age: this.user.age,
+        certificate: this.user.certificate,
+        is_lecture: this.user.is_lecture
+      })
+        .then(response => {
+          this.success = true;
+          this.new_user = false;
+          axios.get(process.env.API_URL + '/getUser/')
+            .then(response => {
+              console.log(response.data)
+              this.users = response.data
+            })
+            .catch(error => {
+              console.log(error.response.data)
+              this.errors = error.response.data
+            })
+        })
+        .catch(error => {
+          this.errors = error.response.data.errors
+        })
+    },
+    onReset() {
+      this.user.name = null
+      this.user.full_name = null
+      this.user.email = null
+      this.user.password = null
+      this.user.age = null
+      this.user.certificate = null
+    },
+    editData(row) {
+      // alert(row.id)
+      // console.log(row)
+      // let index = this.data.indexOf(row);
+      // console.log(index);
+      this.selected_data = row;
+      this.edit = true;
+
+    },
+
+    updateData(id) {
+      axios.post(process.env.API_URL + '/updateUser/' + id, {
+        name: this.selected_data.name,
+        full_name: this.selected_data.full_name,
+        email: this.selected_data.email,
+        age: this.selected_data.age,
+        certificate: this.selected_data.certificate,
+        balance: this.selected_data.balance,
+        position: this.selected_data.position,
+        textStatus: this.selected_data.textStatus
+      })
+        .then(response => {
+          this.edit = false;
+          this.success = true;
+        })
+        .catch(error => {
+          console.log(error.response.data)
+          this.errors = error.response.data.errors
+        })
+    }
+  }
 
 };
 </script>
@@ -272,5 +449,14 @@ export default {
 .q-chip__content {
   display: block;
   text-align: center;
+}
+
+.error span {
+  color: red;
+}
+
+.my-card {
+  width: 100%;
+  max-width: 700px;
 }
 </style>
