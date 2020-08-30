@@ -138,13 +138,13 @@
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/department" class="q-ma-sm navigation-item" clickable v-ripple>
+              <q-item active-class="tab-active" to="/reading-management" class="q-ma-sm navigation-item" clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="business"/>
+                  <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  Department
+                  Reading Management
                 </q-item-section>
               </q-item>
 
