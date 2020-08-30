@@ -48,7 +48,7 @@
                     style="color: red">{{ listen[0].point }}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
-                <q-btn flat color="primary">
+                <q-btn flat color="primary" to="/listening-test">
                   Take an exam
                 </q-btn>
               </q-card-actions>
@@ -78,7 +78,7 @@
                     style="color: red">{{ read[0].point }}</strong></span>
                 </q-card-section>
                 <q-space></q-space>
-                <q-btn flat color="primary">
+                <q-btn to="/reading-test" flat color="primary">
                   Take an exam
                 </q-btn>
               </q-card-actions>
@@ -106,14 +106,14 @@
               <q-separator/>
 
               <q-card-actions>
-                <q-card-section style="padding: 8px" v-if="write.length>0">
+                <q-card-section v-if="write.length > 0" style="padding: 8px">
                   <span style="text-transform: uppercase;"><strong>latest test results</strong> - <strong
                     style="color: red">{{ write[0].point }}</strong></span>
-                </q-card-section>
-                <q-space></q-space>
-                <q-btn flat color="primary">
-                  Take an exam
-                </q-btn>
+                  </q-card-section>
+                  <q-space></q-space>
+                  <q-btn flat color="primary" to="/writing-test">
+                    Take an exam
+                  </q-btn>
               </q-card-actions>
             </q-card>
 
@@ -331,16 +331,15 @@
       endCallBack: function (x) {
         this.connectLecture = false
       }
-    }
-
   }
+}
 </script>
 
 <style scoped>
-  .my-card {
-    max-width: 500px;
-    margin: 15px 50px 50px 50px;
-  }
+.my-card {
+  max-width: 500px;
+  margin: 15px 50px 50px 50px;
+}
 
   .countdown {
     right: 20px;

@@ -10,14 +10,14 @@
               <q-item-section>Home</q-item-section>
             </q-item>
 
-           <template v-if="!user.is_lecture">
-             <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple
-             >
-               <q-item-section>
-                 <q-item-label>ielts test</q-item-label>
-               </q-item-section>
-             </q-item>
-           </template>
+            <template v-if="!user.is_lecture">
+              <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple
+              >
+                <q-item-section>
+                  <q-item-label>ielts test</q-item-label>
+                </q-item-section>
+              </q-item>
+            </template>
 
             <q-item class="item" to="/history" exact exact-active-class="my-item" clickable v-ripple
                     v-if="!user.is_lecture">
@@ -82,66 +82,61 @@
   </q-layout>
 </template>
 <script>
-import axios from 'axios';
-import firebase from "src/api/firebaseConfig"
-
-const db = firebase.firestore()
-export default {
-  name: "UserHeader",
-  data() {
-    return {
-      user: [],
-    }
-  },
-   beforeCreate() {
-    if (this.$getCookie('Authorization') == '') {
-      window.location.href = '/login'
-    }
-    axios.get(process.env.API_URL + '/auth', {
-      headers: {Authorization: this.$getCookie('Authorization')}
-    })
-      .then(response => {
-        this.user = response.data.user
-      })
-      .catch(error => {
-        document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+  import axios from 'axios';
+  import firebase from "src/api/firebaseConfig"
+  const db = firebase.firestore()
+  export default {
+    name: "UserHeader",
+    data() {
+      return {
+        user: [],
+      }
+    },
+    beforeCreate() {
+      if (this.$getCookie('Authorization') == '') {
         window.location.href = '/login'
-      })
-  },
-  methods: {
-    logout() {
-      var token = this.$getCookie('Authorization').replace('Bearer ', '')
-      console.log(this.$getCookie('Authorization'))
-      axios.post(process.env.API_URL + '/logout', {
-        token: token
+      }
+      axios.get(process.env.API_URL + '/auth', {
+        headers: {Authorization: this.$getCookie('Authorization')}
       })
         .then(response => {
-          db.collection("lecture")
-            .doc(this.user.id.toString())
-            .delete()
-            .then(() => {
-              document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-              window.location.href = '/login'
-            })
-
+          this.user = response.data.user
         })
         .catch(error => {
-          alert(error)
+          document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+          window.location.href = '/login'
         })
+    },
+    methods: {
+      logout() {
+        var token = this.$getCookie('Authorization').replace('Bearer ', '')
+        console.log(this.$getCookie('Authorization'))
+        axios.post(process.env.API_URL + '/logout', {
+          token: token
+        })
+          .then(response => {
+            db.collection("lecture")
+              .doc(this.user.id.toString())
+              .delete()
+              .then(() => {
+                document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+                window.location.href = '/login'
+              })
+          })
+          .catch(error => {
+            alert(error)
+          })
+      }
     }
   }
-}
 </script>
 
 <style scoped>
-.item {
-  text-transform: uppercase;
-}
-
-.my-item {
-  color: white;
-  border-bottom: solid white 2px;
-}
-
-
+  .item {
+    text-transform: uppercase;
+  }
+  .my-item {
+    color: white;
+    border-bottom: solid white 2px;
+  }
 </style>

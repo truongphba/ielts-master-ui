@@ -1,0 +1,150 @@
+<template xmlns="http://www.w3.org/1999/html">
+  <div>
+    <q-splitter
+      v-model="splitterModel"
+    >
+      <template v-slot:before>
+        <div class="q-pa-md">
+          <div style="display: flex">
+            <span class="text-h4 q-mb-md">WRITING SECTION</span>
+            <q-space></q-space>
+            <div class="absolute countdown" style="color: white;font-size: 10pt">
+              <vue-countdown-timer
+                @start_callback="startCallBack('event started')"
+                @end_callback="endCallBack('event ended')"
+                :start-time="start_time"
+                :end-time="end_time"
+                :end-text="'00 : 00'"
+                label-position="begin"
+              >
+                <template slot="countdown" slot-scope="scope">
+                  <span>{{ scope.props.minutes }} : </span>
+                  <span>{{ scope.props.seconds }}</span>
+                </template>
+              </vue-countdown-timer>
+            </div>
+          </div>
+          <div v-html="write.content"></div>
+        </div>
+      </template>
+
+      <template v-slot:after>
+        <div class="q-pa-md">
+          <div class="q-pa-md q-gutter-sm">
+            <q-editor
+              v-model="write_answer"
+              :definitions="{bold: {label: 'Bold', icon: null, tip: 'My bold tooltip'} }"
+            />
+            <q-btn label="Submit" color="primary" @click="confirm = true" />
+            <q-dialog v-model="confirm" persistent>
+              <q-card>
+                <q-card-section class="row items-center">
+                  <span class="q-ml-sm" style="text-transform: uppercase; width: 300px">are you sure to submit !</span>
+                </q-card-section>
+                <q-card-actions align="right">
+                  <q-btn flat label="Cancel" color="primary" v-close-popup />
+                  <q-btn flat label="Submit" color="primary" @click="checkAnswer"/>
+                </q-card-actions>
+              </q-card>
+            </q-dialog>
+            <q-dialog v-model="detail" persistent>
+              <q-card>
+                <q-bar>
+                  <q-space />
+                </q-bar>
+                <q-card-section style="width: 350px; height: 100px">
+                  Submit Success
+                </q-card-section>
+                <q-btn style="float: right" to="/ielts-test" label="OK"></q-btn>
+              </q-card>
+            </q-dialog>
+          </div>
+        </div>
+      </template>
+    </q-splitter>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+
+export default {
+  name: "WritingTest",
+  data() {
+    return {
+      splitterModel: 50, // start at 50%
+      timerCount: 30,
+      write: [],
+      start_time: (new Date).getTime(),
+      end_time: (new Date).getTime() + 60000,
+      write_answer: '',
+      detail: false,
+      confirm: false,
+    }
+  },
+  props: ['user'],
+  created() {
+    axios.get(process.env.API_URL + '/writing/')
+      .then(response => {
+        console.log(response.data)
+        this.write = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        this.errors = error.response.data
+      })
+  },
+  methods: {
+    startCallBack: function (x) {
+      console.log(x)
+    },
+    endCallBack: function (x) {
+      axios.post(process.env.API_URL +'/storeWrite',{
+        writing_id: this.write.id,
+        student_id: this.user.id,
+        answer: this.write_answer
+      })
+        .then(response => {
+          this.success = true;
+        })
+        .catch(error => {
+          this.errors = error.response.data
+        })
+      this.detail = true
+    },
+    checkAnswer(){
+      axios.post(process.env.API_URL +'/storeWrite',{
+        writing_id: this.write.id,
+        student_id: this.user.id,
+        answer: this.write_answer
+      })
+        .then(response => {
+          this.success = true;
+        })
+        .catch(error => {
+          this.errors = error.response.data
+        })
+      this.detail = true
+    }
+  }
+}
+</script>
+
+<style scoped>
+.countdown {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background: rgba(0, 0, 0, 0.47);
+  border-radius: 50% !important;
+  right: 10px;
+}
+
+.countdown span {
+  font-size: 10pt;
+  color: white;
+}
+
+</style>

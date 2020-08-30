@@ -33,7 +33,7 @@
           <hr/>
           <q-scroll-area style="height:100%;">
             <q-list padding>
-              <q-item active-class="tab-active" to="/dashboard" exact class="q-ma-sm navigation-item" clickable
+              <q-item active-class="tab-active" to="/admin/dashboard" exact class="q-ma-sm navigation-item" clickable
                       v-ripple>
                 <q-item-section avatar>
                   <q-icon name="dashboard"/>
@@ -66,95 +66,54 @@
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/customer_management" class="q-ma-sm navigation-item" clickable
-                      v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="star"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Customer Management
-                </q-item-section>
-              </q-item>
-
-              <q-item active-class="tab-active" to="/change_request" class="q-ma-sm navigation-item" clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="send"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Change Request
-                </q-item-section>
-              </q-item>
-
-              <q-item active-class="tab-active" to="/sales_invoices" class="q-ma-sm navigation-item" clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="attach_money"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Sales Invoices
-                </q-item-section>
-              </q-item>
-
-              <q-item active-class="tab-active" to="/quotes" class="q-ma-sm navigation-item" clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="money"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Quotes
-                </q-item-section>
-              </q-item>
-
-              <q-item active-class="tab-active" to="/transactions" class="q-ma-sm navigation-item" clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="assignment"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Transactions
-                </q-item-section>
-              </q-item>
-
-              <q-item active-class="tab-active" to="/employee_salary_list" class="q-ma-sm navigation-item" clickable
+              <q-item active-class="tab-active" to="/admin/user-management" class="q-ma-sm navigation-item" clickable
                       v-ripple>
                 <q-item-section avatar>
                   <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  Employee Salary List
+                  User Management
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/calendar" class="q-ma-sm navigation-item" clickable v-ripple>
+              <q-item active-class="tab-active" to="/admin/listening-management" class="q-ma-sm navigation-item" clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="calendar_today"/>
+                  <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  Calendar
+                  Listening Management
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/department" class="q-ma-sm navigation-item" clickable v-ripple>
+              <q-item active-class="tab-active" to="/admin/reading-management" class="q-ma-sm navigation-item" clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="business"/>
+                  <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  Department
+                  Reading Management
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/my_profile" class="q-ma-sm navigation-item" clickable v-ripple>
+              <q-item active-class="tab-active" to="/admin/writing-management" class="q-ma-sm navigation-item" clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="drafts"/>
+                  <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  My Profile
+                  Writing Management
+                </q-item-section>
+              </q-item>
+
+              <q-item active-class="tab-active" to="/admin/writing-answer-management" class="q-ma-sm navigation-item" clickable v-ripple>
+                <q-item-section avatar>
+                  <q-icon name="list"/>
+                </q-item-section>
+
+                <q-item-section>
+                  Writing Answer Management
                 </q-item-section>
               </q-item>
             </q-list>
