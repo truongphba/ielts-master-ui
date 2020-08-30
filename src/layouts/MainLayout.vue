@@ -1,22 +1,24 @@
 <template>
   <q-layout view="hHh Lpr fff">
-    <q-header class="q-py-sm bg-indigo-7"  :style="'border-bottom: 2px solid;'">
+    <q-header class="q-py-sm bg-indigo-7" :style="'border-bottom: 2px solid;'">
       <q-toolbar>
         <span :style="'font-size: 35px;color:'" class="my-font text-h6 q-mr-md">LOGO</span>
         <q-space></q-space>
         <div class="text-white">
-          <q-list class="bg-indigo-7" style="display: flex;" >
+          <q-list class="bg-indigo-7" style="display: flex;">
             <q-item class="item" to="/home" exact exact-active-class="my-item" clickable v-ripple>
               <q-item-section>Home</q-item-section>
             </q-item>
 
-            <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple v-if="!user.is_lecture">
+            <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple
+                    v-if="user.is_lecture === 0">
               <q-item-section>
                 <q-item-label>ielts test</q-item-label>
               </q-item-section>
             </q-item>
 
-            <q-item class="item" to="/history" exact exact-active-class="my-item" clickable v-ripple v-if="!user.is_lecture">
+            <q-item class="item" to="/history" exact exact-active-class="my-item" clickable v-ripple
+                    v-if="user.is_lecture === 0">
               <q-item-section>
                 <q-item-label>test history</q-item-label>
               </q-item-section>
@@ -30,32 +32,33 @@
 
           </q-list>
         </div>
-          <q-btn flat class="bg-indigo-7" v-if="user" >
-            <q-avatar>
-              <img src="https://cdn.quasar.dev/img/avatar.png">
-            </q-avatar>
-            <q-item>
-              <q-item-section>
-                <q-item-label>{{ user.name }}</q-item-label>
-              </q-item-section>
-            </q-item>
-            <q-menu>
-              <q-list style="width: 150px">
-                <q-item clickable v-close-popup>
-                  <q-item-section><p style="margin: 0">Balance: <span style="color: green">{{ user.balance }} $</span></p></q-item-section>
-                </q-item>
-                <q-separator/>
-                <q-item clickable v-close-popup>
-                  <q-item-section>Add Fund</q-item-section>
-                </q-item>
-                <q-separator/>
-                <q-item clickable v-close-popup>
-                  <q-item-section @click="logout">Logout</q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
-          <q-btn v-else color="white" text-color="black" label="Login"/>
+        <q-btn flat class="bg-indigo-7" v-if="user.length !== 0">
+          <q-avatar>
+            <img src="https://cdn.quasar.dev/img/avatar.png">
+          </q-avatar>
+          <q-item>
+            <q-item-section>
+              <q-item-label>{{ user.name }}</q-item-label>
+            </q-item-section>
+          </q-item>
+          <q-menu>
+            <q-list style="width: 150px">
+              <q-item clickable v-close-popup>
+                <q-item-section><p style="margin: 0">Balance: <span style="color: green">{{ user.balance }} $</span></p>
+                </q-item-section>
+              </q-item>
+              <q-separator/>
+              <q-item clickable v-close-popup>
+                <q-item-section>Add Fund</q-item-section>
+              </q-item>
+              <q-separator/>
+              <q-item clickable v-close-popup>
+                <q-item-section @click="logout">Logout</q-item-section>
+              </q-item>
+            </q-list>
+          </q-menu>
+        </q-btn>
+        <q-btn v-if="user.length === 0" to="/login" color="white" text-color="black" label="Login"/>
       </q-toolbar>
     </q-header>
 
@@ -78,38 +81,39 @@
 </template>
 <script>
 import axios from 'axios';
+
 export default {
   name: "UserHeader",
-  data(){
-    return{
+  data() {
+    return {
       user: [],
     }
   },
   created() {
     if(this.$getCookie('Authorization') == ''){
-      window.location.href = '/login'
+      // window.location.href = '/login'
     }
     axios.get(process.env.API_URL + '/auth', {
-      headers: {Authorization : this.$getCookie('Authorization')}
+      headers: {Authorization: this.$getCookie('Authorization')}
     })
       .then(response => {
         this.user = response.data.user
       })
       .catch(error => {
         document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-        window.location.href = '/login'
+        // window.location.href = '/login'
       })
   },
-  methods :{
-    logout(){
-      var token = this.$getCookie('Authorization').replace('Bearer ','')
-      console.log( this.$getCookie('Authorization'))
+  methods: {
+    logout() {
+      var token = this.$getCookie('Authorization').replace('Bearer ', '')
+      console.log(this.$getCookie('Authorization'))
       axios.post(process.env.API_URL + '/logout', {
         token: token
       })
         .then(response => {
-          document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-          window.location.href = '/login'
+          document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+          window.location.href = '/home'
         })
         .catch(error => {
           console.log(error.response)
@@ -126,7 +130,7 @@ export default {
 
 .my-item {
   color: white;
-  border-bottom:solid white 2px;
+  border-bottom: solid white 2px;
 }
 
 
