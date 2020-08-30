@@ -354,7 +354,7 @@ export default {
         {
           name: "updated_at",
           align: "left",
-          label: "Created Date",
+          label: "Updated Date",
           field: "format_updated_at",
           sortable: true
         },
