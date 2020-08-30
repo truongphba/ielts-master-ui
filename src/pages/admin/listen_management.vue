@@ -57,8 +57,18 @@
             </q-td>
           </q-tr>
         </template>
-
       </q-table>
+<!--      <q-dialog v-model="confirm" persistent>-->
+<!--        <q-card>-->
+<!--          <q-card-section class="row items-center">-->
+<!--            <span class="q-ml-sm" style="text-transform: uppercase; width: 300px">are you sure to submit !</span>-->
+<!--          </q-card-section>-->
+<!--          <q-card-actions align="right">-->
+<!--            <q-btn flat label="Cancel" color="primary" v-close-popup />-->
+<!--            <q-btn flat label="Confirm" color="primary"  />-->
+<!--          </q-card-actions>-->
+<!--        </q-card>-->
+<!--      </q-dialog>-->
     </q-card>
 
     <!--    add new listening question-->
@@ -321,6 +331,7 @@ import axios from 'axios'
 export default {
   data() {
     return {
+      confirm: false,
       new_listen: false,
       add_listen: {
         audio: ''
