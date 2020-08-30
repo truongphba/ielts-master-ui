@@ -14,7 +14,7 @@ const routes = [
       {path: '/quotes', component: () => import('pages/admin/quotes.vue')},
       {path: '/transactions', component: () => import('pages/admin/transactions.vue')},
       {path: '/user-management', component: () => import('pages/admin/user_management.vue')},
-      {path: '/calendar', component: () => import('pages/admin/calendar.vue')},
+      {path: '/listening-management', component: () => import('pages/admin/listen_management.vue')},
       {path: '/department', component: () => import('pages/admin/department.vue')}
     ]
   },

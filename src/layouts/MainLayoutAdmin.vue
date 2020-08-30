@@ -128,13 +128,13 @@
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/calendar" class="q-ma-sm navigation-item" clickable v-ripple>
+              <q-item active-class="tab-active" to="/listening-management" class="q-ma-sm navigation-item" clickable v-ripple>
                 <q-item-section avatar>
-                  <q-icon name="calendar_today"/>
+                  <q-icon name="list"/>
                 </q-item-section>
 
                 <q-item-section>
-                  Calendar
+                  Listening Management
                 </q-item-section>
               </q-item>
 
