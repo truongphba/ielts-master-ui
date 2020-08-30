@@ -2,7 +2,8 @@
   <div>
     <div class="q-banner text-center relative-position">
       <div class="q-pa-md q-gutter-sm absolute-center">
-        <q-btn to="/ielts-test" color="red" label="Get Exam" size="xl" />
+        <q-btn v-if="user.is_lecture === 0" to="/ielts-test" color="red" label="Get Exam" size="xl" />
+        <q-btn v-if="user.is_lecture === 1" to="/ielts-test" color="red" label="Get Work" size="xl" />
       </div>
     </div>
     <div class="row q-col-gutter-sm q-ma-xs q-mr-sm">
