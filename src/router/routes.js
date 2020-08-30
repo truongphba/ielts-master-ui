@@ -15,7 +15,7 @@ const routes = [
       {path: '/transactions', component: () => import('pages/admin/transactions.vue')},
       {path: '/user-management', component: () => import('pages/admin/user_management.vue')},
       {path: '/listening-management', component: () => import('pages/admin/listen_management.vue')},
-      {path: '/department', component: () => import('pages/admin/department.vue')}
+      {path: '/reading-management', component: () => import('pages/admin/read_management')}
     ]
   },
   { path: '/register', component: () => import('pages/register.vue')},

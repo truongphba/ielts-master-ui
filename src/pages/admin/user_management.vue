@@ -65,7 +65,10 @@
               <span>{{ props.row.textStatus }}</span>
             </q-td>
             <q-td key="created_at" :props="props">
-              <span>{{ props.row.format_date }}</span>
+              <span>{{ props.row.format_created_at }}</span>
+            </q-td>
+            <q-td key="updated_at" :props="props">
+              <span>{{ props.row.format_updated_at }}</span>
             </q-td>
             <q-td key="actions" :props="props">
               <q-btn color="blue" label="Update" size=sm no-caps @click="editData(props.row)"></q-btn>
@@ -345,7 +348,14 @@ export default {
           name: "created_at",
           align: "left",
           label: "Created Date",
-          field: "format_date",
+          field: "format_created_at",
+          sortable: true
+        },
+        {
+          name: "updated_at",
+          align: "left",
+          label: "Created Date",
+          field: "format_updated_at",
           sortable: true
         },
         {
