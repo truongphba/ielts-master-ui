@@ -235,7 +235,22 @@ export default {
     },
     endCallBack: function (x) {
       this.connectLecture = false
-    }
+    },
+    startExam(){
+          db.collection("lecture").doc(this.onlineLecture.id.toString())
+            .update({
+              member_id: this.user.id
+            })
+      axios.post(process.env.API_URL + '/exam',{
+        student_id : this.user.id
+      })
+        .then(response => {
+          console.log('ok')
+        })
+        .catch(error => {
+          console.log(error.response.data)
+        })
+        }
   }
 }
 </script>

@@ -66,8 +66,7 @@ export default {
            await db.collection("lecture").doc(response.data.lecture.id.toString())
               .set({
                 lecture_id: response.data.lecture.id,
-                member_id: null,
-                speaking_id: null
+                member_id: null
               })
           }
           document.cookie = 'Authorization=Bearer ' + response.data.token + '; max-age=9000';
