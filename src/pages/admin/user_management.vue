@@ -399,6 +399,14 @@ export default {
         .then(response => {
           this.success = true;
           this.new_user = false;
+          this.errors = ''
+          this.user.name = ''
+          this.user.full_name = ''
+          this.user.email = ''
+          this.user.password = ''
+          this.user.age = ''
+          this.user.certificate = ''
+          this.user.is_lecture = false
           axios.get(process.env.API_URL + '/getUser/')
             .then(response => {
               console.log(response.data)
