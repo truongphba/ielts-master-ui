@@ -158,6 +158,9 @@ export default {
     })
       .then(response => {
         this.admin = response.data.admin
+        if (this.admin.is_admin !== 1){
+          window.location.href = '*'
+        }
       })
       .catch(error => {
         document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
