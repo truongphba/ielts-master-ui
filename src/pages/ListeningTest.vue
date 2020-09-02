@@ -25,9 +25,10 @@
             </div>
           </div>
 
-          <audio controls>
+          <audio controls >
             <source v-bind:src="listen[0].audio" type="audio/ogg">
           </audio>
+<!--          <audio v-bind:src="listen[0].audio" autoplay="true"></audio>-->
         </div>
       </template>
 

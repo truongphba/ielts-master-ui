@@ -28,9 +28,10 @@ const routes = [
       {path: '/ielts-test', component: () => import('pages/IeltsTest')},
       {path: '/history', component: () => import('pages/TestHistory')},
       {path: '/home', component: () => import('pages/home') , meta: { auth : true}},
-      {path: 'reading-test', component: () => import('pages/ReadingTest')},
-      {path: 'listening-test', component: () => import('pages/ListeningTest')},
-      {path: 'writing-test', component: () => import('pages/WritingTest')}
+      {path: '/reading-test', component: () => import('pages/ReadingTest')},
+      {path: '/listening-test', component: () => import('pages/ListeningTest')},
+      {path: '/writing-test', component: () => import('pages/WritingTest')},
+      {path: '/addfund', component: () => import('pages/Addfund')},
     ]
   },
 
