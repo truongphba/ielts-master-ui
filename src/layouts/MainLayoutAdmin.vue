@@ -153,14 +153,14 @@ export default {
     if(this.$getCookie('Authorization') === ''){
       window.location.href = '/admin'
     }
-    if (this.admin.is_admin !== 1){
-      window.location.href = '*'
-    }
     axios.get(process.env.API_URL + '/admin-auth', {
       headers: {Authorization: this.$getCookie('Authorization')}
     })
       .then(response => {
         this.admin = response.data.admin
+        if (this.admin.is_admin !== 1){
+          window.location.href = '*'
+        }
       })
       .catch(error => {
         document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
