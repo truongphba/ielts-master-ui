@@ -170,6 +170,7 @@ export default {
 
   methods: {
     deleteDataQuestion(data){
+      if (confirm("Are you sure ?"))
       axios.post(process.env.API_URL + '/deleteWritingAnswer/' + data.id)
         .then(response => {
           this.editQuestion = false;

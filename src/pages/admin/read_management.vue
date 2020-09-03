@@ -87,11 +87,14 @@
               v-model="add_read.content"
               label="Content"
             />
-
-            <div>
+            <div class="error" v-if="errors.content && errors.content.length">
+              <span>{{ errors.content[0] }}</span>
+              <hr>
+            </div>
+            <div align="right">
               <q-btn label="Add" color="primary" @click="createNew"/>
+              <q-btn label="Reset" color="primary" @click="onReset" flat class="q-ml-sm"/>
               <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
-              <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
             </div>
           </q-form>
           <q-dialog v-model="success" persistent>
@@ -118,10 +121,15 @@
         <q-card-section class="q-pt-none">
           <label>Content</label>
           <q-editor  filled v-model:v-html="selected_data.content" dense/>
+          <div class="error" v-if="errors.content && errors.content.length">
+            <span>{{ errors.content[0] }}</span>
+            <hr>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="Update" @click="updateData(selected_data.id)"/>
+          <q-btn color="primary" label="Update" @click="updateData(selected_data.id)"/>
+          <q-btn flat color="primary" label="Back" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -243,26 +251,42 @@
                     v-model="add_question.reading_id"
                     label="Reading ID"
                   />
+                  <div class="error" v-if="errors.reading_id && errors.reading_id.length">
+                    <span>{{ errors.reading_id[0] }}</span>
+                    <hr>
+                  </div>
                   <q-input
                     filled
                     v-model="add_question.question"
                     label="Question"
                   />
+                  <div class="error" v-if="errors.title && errors.title.length">
+                    <span>{{ errors.title[0] }}</span>
+                    <hr>
+                  </div>
                   <q-input
                     filled
                     v-model="add_question.answer"
                     type="textarea"
                     label="List Answer"
                   />
+                  <div class="error" v-if="errors.answer && errors.answer.length">
+                    <span>{{ errors.answer[0] }}</span>
+                    <hr>
+                  </div>
                   <q-input
                     filled
                     v-model="add_question.correct_answer"
                     label="Correct Answer"
                   />
-                  <div>
+                  <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
+                    <span>{{ errors.correct_answer[0] }}</span>
+                    <hr>
+                  </div>
+                  <div align="right">
                     <q-btn label="Add" color="primary" @click="createNewQuestion"/>
-                    <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
                     <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
+                    <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
                   </div>
                 </q-form>
                 <q-dialog v-model="success" persistent>
@@ -279,6 +303,7 @@
 
           <!--          update reading question-->
           <q-dialog
+            persistent
             v-model="editQuestion"
           >
             <q-card style="width: 700px; max-width: 80vw;">
@@ -289,25 +314,42 @@
               <q-card-section class="q-pt-none">
                 <label>Reading ID</label>
                 <q-input filled v-model="selected_question.reading_id" dense/>
+                <div class="error" v-if="errors.reading_id && errors.reading_id.length">
+                  <span>{{ errors.reading_id[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Question</label>
                 <q-input filled v-model="selected_question.title" dense/>
+                <div class="error" v-if="errors.title && errors.title.length">
+                  <span>{{ errors.title[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>List Answer</label>
                 <q-input type="textarea" filled v-model="selected_question.answer" dense/>
+                <div class="error" v-if="errors.answer && errors.answer.length">
+                  <span>{{ errors.answer[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Correct Answer</label>
                 <q-input type="textarea" filled v-model="selected_question.correct_answer" dense/>
+                <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
+                  <span>{{ errors.correct_answer[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
 
               <q-card-actions align="right" class="bg-white text-teal">
-                <q-btn flat label="Update" @click="updateDataQuestion(selected_question)"/>
+                <q-btn  color="primary" label="Update" @click="updateDataQuestion(selected_question)"/>
+                <q-btn flat color="primary" label="Back" v-close-popup/>
               </q-card-actions>
             </q-card>
           </q-dialog>
@@ -502,6 +544,8 @@ export default {
         .then(response => {
           this.success = true;
           this.new_read = false;
+          this.errors = ''
+          this.add_read.content = ''
           axios.get(process.env.API_URL + '/getRead/')
             .then(response => {
               console.log(response.data)
@@ -524,6 +568,7 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getRead/')
             .then(response => {
               console.log(response.data)
@@ -541,6 +586,7 @@ export default {
     },
 
     deleteData(id) {
+      if (confirm("Are you sure ?"))
       axios.post(process.env.API_URL + '/deleteReading/' + id)
         .then(response => {
           this.edit = false;
@@ -564,13 +610,17 @@ export default {
     createNewQuestion() {
       axios.post(process.env.API_URL + '/createReadingQuestion/', {
         reading_id: this.add_question.reading_id,
-        question: this.add_question.question,
+        title: this.add_question.question,
         answer: this.add_question.answer,
         correct_answer: this.add_question.correct_answer
       })
         .then(response => {
           this.success = true;
           this.new_question = false;
+          this.errors = ''
+          this.add_question.question = ''
+          this.add_question.answer = ''
+          this.add_question.correct_answer = ''
           axios.get(process.env.API_URL + '/getReadingQuestion/' + this.add_question.reading_id)
             .then(response => {
               console.log(response.data)
@@ -583,7 +633,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          this.errors = error.response.data
+          this.errors = error.response.data.errors
         })
     },
 
@@ -595,13 +645,14 @@ export default {
     updateDataQuestion(data) {
       axios.post(process.env.API_URL + '/updateReadingQuestion/' + data.id, {
         reading_id: this.selected_question.reading_id,
-        question: this.selected_question.title,
+        title: this.selected_question.title,
         answer: this.selected_question.answer,
         correct_answer: this.selected_question.correct_answer,
       })
         .then(response => {
           this.editQuestion = false;
           this.success = true;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getReadingQuestion/' + data.reading_id)
             .then(response => {
               console.log(response.data)
@@ -619,6 +670,7 @@ export default {
     },
 
     deleteDataQuestion(data){
+      if (confirm("Are you sure ?"))
       axios.post(process.env.API_URL + '/deleteReadingQuestion/' + data.id)
         .then(response => {
           this.editQuestion = false;
@@ -640,6 +692,7 @@ export default {
     },
 
     onReset() {
+      this.errors = ''
       this.add_read.content = null
       this.add_question.listening_id = null
       this.add_question.question = null

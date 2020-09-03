@@ -87,11 +87,14 @@
               v-model="add_write.content"
               label="Content"
             />
-
-            <div>
+            <div class="error" v-if="errors.content && errors.content.length">
+              <span>{{ errors.content[0] }}</span>
+              <hr>
+            </div>
+            <div align="right">
               <q-btn label="Add" color="primary" @click="createNew"/>
+              <q-btn label="Reset" color="primary" @click="onReset" flat class="q-ml-sm"/>
               <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
-              <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
             </div>
           </q-form>
           <q-dialog v-model="success" persistent>
@@ -109,6 +112,7 @@
     <!--    update writing-->
     <q-dialog
       v-model="edit"
+      persistent
     >
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
@@ -118,10 +122,15 @@
         <q-card-section class="q-pt-none">
           <label>Content</label>
           <q-editor  filled v-model:v-html="selected_data.content" dense/>
+          <div class="error" v-if="errors.content && errors.content.length">
+            <span>{{ errors.content[0] }}</span>
+            <hr>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="Update" @click="updateData(selected_data.id)"/>
+          <q-btn color="primary" label="Update" @click="updateData(selected_data.id)"/>
+          <q-btn flat color="primary" label="Back" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -397,6 +406,8 @@ export default {
         .then(response => {
           this.success = true;
           this.new_write = false;
+          this.add_write.content = ''
+          this.errors = ''
           axios.get(process.env.API_URL + '/getWrite/')
             .then(response => {
               console.log(response.data)
@@ -420,6 +431,7 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getWrite/')
             .then(response => {
               console.log(response.data)
@@ -437,6 +449,7 @@ export default {
     },
 
     deleteData(id) {
+      if (confirm("Are you sure ?"))
       axios.post(process.env.API_URL + '/deleteWriting/' + id)
         .then(response => {
           this.edit = false;
@@ -457,28 +470,29 @@ export default {
         })
     },
 
-    deleteDataQuestion(data){
-      axios.post(process.env.API_URL + '/deleteWritingAnswer/' + data.id)
-        .then(response => {
-          this.editQuestion = false;
-          this.success = true;
-          axios.get(process.env.API_URL + '/getWritingAnswer/' + data.writing_id)
-            .then(response => {
-              console.log(response.data)
-              this.question = response.data
-            })
-            .catch(error => {
-              console.log(error.response.data)
-              this.errors = error.response.data
-            })
-        })
-        .catch(error => {
-          console.log(error.response.data)
-          this.errors = error.response.data.errors
-        })
-    },
+    // deleteDataQuestion(data){
+    //   axios.post(process.env.API_URL + '/deleteWritingAnswer/' + data.id)
+    //     .then(response => {
+    //       this.editQuestion = false;
+    //       this.success = true;
+    //       axios.get(process.env.API_URL + '/getWritingAnswer/' + data.writing_id)
+    //         .then(response => {
+    //           console.log(response.data)
+    //           this.question = response.data
+    //         })
+    //         .catch(error => {
+    //           console.log(error.response.data)
+    //           this.errors = error.response.data
+    //         })
+    //     })
+    //     .catch(error => {
+    //       console.log(error.response.data)
+    //       this.errors = error.response.data.errors
+    //     })
+    // },
 
     onReset() {
+      this.errors = ''
       this.add_write.content = null
     },
   }

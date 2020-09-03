@@ -41,28 +41,6 @@
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/dashboard_v2" exact class="q-ma-sm navigation-item" clickable
-                      v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="dashboard"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Dashboard v2
-                </q-item-section>
-              </q-item>
-
-              <q-item active-class="tab-active" to="/dashboard_v3" exact class="q-ma-sm navigation-item" clickable
-                      v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="dashboard"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Dashboard v3
-                </q-item-section>
-              </q-item>
-
               <q-item active-class="tab-active" to="/admin/user-management" class="q-ma-sm navigation-item" clickable
                       v-ripple>
                 <q-item-section avatar>
