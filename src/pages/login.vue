@@ -62,13 +62,14 @@ export default {
         password: this.user.password,
       })
         .then(async response => {
-          if (response.data.lecture.is_lecture == 1) {
-           await db.collection("lecture").doc(response.data.lecture.id.toString())
-              .set({
-                lecture_id: response.data.lecture.id,
-                member_id: null
-              })
-          }
+          // if (response.data.lecture.is_lecture == 1) {
+          //  await db.collection("lecture").doc(response.data.lecture.id.toString())
+          //     .set({
+          //       lecture_id: response.data.lecture.id,
+          //       member_id: null,
+          //       status: 1
+          //     })
+          // }
           document.cookie = 'Authorization=Bearer ' + response.data.token + '; max-age=9000';
           window.location.href = '/home';
         })

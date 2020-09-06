@@ -31,7 +31,8 @@ const routes = [
       {path: '/speaking-exam', component: () => import('pages/speaking-exam')},
       {path: 'reading-test', component: () => import('pages/ReadingTest')},
       {path: 'listening-test', component: () => import('pages/ListeningTest')},
-      {path: 'writing-test', component: () => import('pages/WritingTest')}
+      {path: 'writing-test', component: () => import('pages/WritingTest')},
+      {path: 'lecture-exam', component: () => import('pages/lecture-exam')}
     ]
   },
 

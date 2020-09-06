@@ -10,17 +10,8 @@
               <q-item-section>Home</q-item-section>
             </q-item>
 
-            <template v-if="!user.is_lecture">
-              <q-item class="item" to="/ielts-test" exact exact-active-class="my-item" clickable v-ripple
-              >
-                <q-item-section>
-                  <q-item-label>ielts test</q-item-label>
-                </q-item-section>
-              </q-item>
-            </template>
-
             <q-item class="item" to="/history" exact exact-active-class="my-item" clickable v-ripple
-                    v-if="!user.is_lecture">
+                    v-if="Object.keys(user).length > 0 && !user.is_lecture">
               <q-item-section>
                 <q-item-label>test history</q-item-label>
               </q-item-section>
@@ -34,7 +25,7 @@
 
           </q-list>
         </div>
-        <q-btn flat class="bg-indigo-7" v-if="user">
+        <q-btn flat class="bg-indigo-7" v-if="Object.keys(user).length > 0">
           <q-avatar>
             <img src="https://cdn.quasar.dev/img/avatar.png">
           </q-avatar>
@@ -50,7 +41,7 @@
                 </q-item-section>
               </q-item>
               <q-separator/>
-              <q-item clickable v-close-popup>
+              <q-item clickable v-close-popup v-if="!user.is_lecture">
                 <q-item-section>Add Fund</q-item-section>
               </q-item>
               <q-separator/>
@@ -60,7 +51,7 @@
             </q-list>
           </q-menu>
         </q-btn>
-        <q-btn v-else color="white" text-color="black" label="Login"/>
+        <q-btn v-else color="white" to="/login" text-color="black" label="Login"/>
       </q-toolbar>
     </q-header>
 
@@ -84,28 +75,27 @@
 <script>
   import axios from 'axios';
   import firebase from "src/api/firebaseConfig"
+
   const db = firebase.firestore()
   export default {
     name: "UserHeader",
     data() {
       return {
-        user: [],
+        user: {},
       }
     },
-    beforeCreate() {
-      if (this.$getCookie('Authorization') == '') {
-        window.location.href = '/login'
+    created() {
+      if (this.user) {
+        axios.get(process.env.API_URL + '/auth', {
+          headers: {Authorization: this.$getCookie('Authorization')}
+        })
+          .then(response => {
+            this.user = response.data.user
+          })
+          .catch(error => {
+            document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+          })
       }
-      axios.get(process.env.API_URL + '/auth', {
-        headers: {Authorization: this.$getCookie('Authorization')}
-      })
-        .then(response => {
-          this.user = response.data.user
-        })
-        .catch(error => {
-          document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-          window.location.href = '/login'
-        })
     },
     methods: {
       logout() {
@@ -115,13 +105,8 @@
           token: token
         })
           .then(response => {
-            db.collection("lecture")
-              .doc(this.user.id.toString())
-              .delete()
-              .then(() => {
-                document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
-                window.location.href = '/login'
-              })
+            document.cookie = 'Authorization=' + this.$getCookie('Authorization') + '; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+            window.location.href = '/login'
           })
           .catch(error => {
             alert(error)
@@ -135,6 +120,7 @@
   .item {
     text-transform: uppercase;
   }
+
   .my-item {
     color: white;
     border-bottom: solid white 2px;
