@@ -91,10 +91,10 @@
               <span>{{ errors.audio[0] }}</span>
               <hr>
             </div>
-            <div>
+            <div align="right">
               <q-btn label="Add" color="primary" @click="createNewListen"/>
+              <q-btn label="Reset" color="primary" @click="onReset" flat class="q-ml-sm"/>
               <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
-              <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
             </div>
           </q-form>
           <q-dialog v-model="success" persistent>
@@ -111,6 +111,7 @@
 
     <!--    update listening question-->
     <q-dialog
+      persistent
       v-model="edit"
     >
       <q-card style="width: 700px; max-width: 80vw;">
@@ -121,10 +122,15 @@
         <q-card-section class="q-pt-none">
           <label>Audio</label>
           <q-input filled v-model="selected_data.audio" dense/>
+          <div class="error" v-if="errors.audio && errors.audio.length">
+            <span>{{ errors.audio[0] }}</span>
+            <hr>
+          </div>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="Update" @click="updateDataListen(selected_data.id)"/>
+          <q-btn  label="Update" color="primary" @click="updateDataListen(selected_data.id)"/>
+          <q-btn flat label="Back" color="primary" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -246,23 +252,57 @@
                     v-model="add_question.listening_id"
                     label="Listening ID"
                   />
+                  <div class="error" v-if="errors.listening_id && errors.listening_id.length">
+                    <span>{{ errors.listening_id[0] }}</span>
+                    <hr>
+                  </div>
                   <q-input
                     filled
                     v-model="add_question.question"
                     label="Question"
                   />
+                  <div class="error" v-if="errors.title && errors.title.length">
+                    <span>{{ errors.title[0] }}</span>
+                    <hr>
+                  </div>
                   <q-input
                     filled
-                    v-model="add_question.answer"
-                    type="textarea"
-                    label="List Answer"
+                    v-model="add_question.answer1"
+                    type="input"
+                    label="Answer Option"
                   />
+                  <q-input
+                    filled
+                    v-model="add_question.answer2"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer3"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer4"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <div class="error" v-if="errors.answer4 && errors.answer4.length">
+                    <span>{{ errors.answer4[0] }}</span>
+                    <hr>
+                  </div>
                   <q-input
                     filled
                     v-model="add_question.correct_answer"
                     label="Correct Answer"
                   />
-                  <div>
+                  <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
+                    <span>{{ errors.correct_answer[0] }}</span>
+                    <hr>
+                  </div>
+                  <div align="right">
                     <q-btn label="Add" color="primary" @click="createNewQuestion"/>
                     <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
                     <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
@@ -290,22 +330,45 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none">
-                <label>Question</label>
-                <q-input filled v-model="selected_question.title" dense/>
+                <label>Listening ID</label>
+                <q-input filled v-model="selected_question.listening_id" dense/>
+                <div class="error" v-if="errors.listening_id && errors.listening_id.length">
+                  <span>{{ errors.listening_id[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
-                <label>List Answer</label>
-                <q-input type="textarea" filled v-model="selected_question.answer" dense/>
+                <label>Question</label>
+                <q-input type="textarea" filled v-model="selected_question.title" dense/>
+                <div class="error" v-if="errors.title && errors.title.length">
+                  <span>{{ errors.title[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="textarea" filled v-model="selected_question.answer" dense/>
+                <div class="error" v-if="errors.answer && errors.answer.length">
+                  <span>{{ errors.answer[0] }}</span>
+                  <hr>
+                </div>
+              </q-card-section>
+
 
               <q-card-section class="q-pt-none">
                 <label>Correct Answer</label>
                 <q-input type="textarea" filled v-model="selected_question.correct_answer" dense/>
+                <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
+                  <span>{{ errors.correct_answer[0] }}</span>
+                  <hr>
+                </div>
               </q-card-section>
 
               <q-card-actions align="right" class="bg-white text-teal">
-                <q-btn flat label="Update" @click="updateDataQuestion(selected_question)"/>
+                <q-btn label="Update" color="primary" @click="updateDataQuestion(selected_question)"/>
+                <q-btn flat label="Back" color="primary" v-close-popup/>
               </q-card-actions>
             </q-card>
           </q-dialog>
@@ -340,7 +403,10 @@ export default {
       add_question: {
         listening_id: '',
         question: '',
-        answer: '',
+        answer1: '',
+        answer2: '',
+        answer3: '',
+        answer4: '',
         correct_answer: ''
       },
       filter: "",
@@ -457,8 +523,9 @@ export default {
       question: [],
       pagination: {
         rowsPerPage: 10
-      }
+      },
     };
+
   },
 
   created() {
@@ -500,7 +567,9 @@ export default {
         .then(response => {
           this.success = true;
           this.new_listen = false;
-          axios.get(process.env.API_URL + '/getListen/')
+          this.errors = ''
+          this.add_listen.audio = ''
+            axios.get(process.env.API_URL + '/getListen/')
             .then(response => {
               console.log(response.data)
               this.listen = response.data
@@ -522,6 +591,7 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getListen/')
             .then(response => {
               console.log(response.data)
@@ -539,6 +609,7 @@ export default {
     },
 
     deleteDataListen(id) {
+      if (confirm("Are you sure ?"))
       axios.post(process.env.API_URL + '/deleteListening/' + id)
         .then(response => {
           this.edit = false;
@@ -562,13 +633,14 @@ export default {
     createNewQuestion() {
       axios.post(process.env.API_URL + '/createListeningQuestion/', {
         listening_id: this.add_question.listening_id,
-        question: this.add_question.question,
-        answer: this.add_question.answer,
+        title: this.add_question.question,
+        answer: this.add_question.answer1 + '; ' + this.add_question.answer2 + '; ' + this.add_question.answer3 + '; ' + this.add_question.answer4,
         correct_answer: this.add_question.correct_answer
       })
         .then(response => {
           this.success = true;
           this.new_question = false;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getListeningQuestion/' + this.add_question.listening_id)
             .then(response => {
               console.log(response.data)
@@ -581,7 +653,7 @@ export default {
         })
         .catch(error => {
           console.log(error.response.data)
-          this.errors = error.response.data
+          this.errors = error.response.data.errors
         })
     },
 
@@ -592,13 +664,15 @@ export default {
 
     updateDataQuestion(data) {
       axios.post(process.env.API_URL + '/updateListeningQuestion/' + data.id, {
-        question: this.selected_question.title,
+        listening_id : this.selected_question.listening_id,
+        title: this.selected_question.title,
         answer: this.selected_question.answer,
         correct_answer: this.selected_question.correct_answer,
       })
         .then(response => {
           this.editQuestion = false;
           this.success = true;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getListeningQuestion/' + data.listening_id)
             .then(response => {
               console.log(response.data)
@@ -616,6 +690,7 @@ export default {
     },
 
     deleteDataQuestion(data){
+      if (confirm("Are you sure ?"))
       axios.post(process.env.API_URL + '/deleteListeningQuestion/' + data.id)
         .then(response => {
           this.editQuestion = false;
@@ -637,13 +712,17 @@ export default {
     },
 
     onReset() {
+      this.errors = ''
       this.add_listen.audio = null
       this.add_question.listening_id = null
       this.add_question.question = null
-      this.add_question.answer = null
+      this.add_question.answer1 = null
+      this.add_question.answer2 = null
+      this.add_question.answer3 = null
+      this.add_question.answer4 = null
       this.add_question.correct_answer = null
     },
-  }
+  },
 
 };
 </script>

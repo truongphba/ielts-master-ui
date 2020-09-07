@@ -151,10 +151,10 @@
               unchecked-icon="clear"
               label="Add user as lecturer"
             />
-            <div>
+            <div align="right">
               <q-btn label="Register" color="primary" @click="register"/>
+              <q-btn label="Reset" color="primary" @click="onReset" flat class="q-ml-sm"/>
               <q-btn label="Back" v-close-popup color="primary" flat class="q-ml-sm"/>
-              <q-btn label="Reset" color="primary" type="reset" flat class="q-ml-sm"/>
             </div>
           </q-form>
           <q-dialog v-model="success" persistent>
@@ -172,6 +172,7 @@
     <!--    update user-->
     <q-dialog
       v-model="edit"
+      persistent
     >
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
@@ -235,7 +236,8 @@
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
-          <q-btn flat label="Update" @click="updateData(selected_data.id)"/>
+          <q-btn color="primary" label="Update" @click="updateData(selected_data.id)"/>
+          <q-btn flat color="primary" label="Back" v-close-popup/>
         </q-card-actions>
       </q-card>
     </q-dialog>
@@ -399,6 +401,14 @@ export default {
         .then(response => {
           this.success = true;
           this.new_user = false;
+          this.errors = ''
+          this.user.name = ''
+          this.user.full_name = ''
+          this.user.email = ''
+          this.user.password = ''
+          this.user.age = ''
+          this.user.certificate = ''
+          this.user.is_lecture = false
           axios.get(process.env.API_URL + '/getUser/')
             .then(response => {
               console.log(response.data)
@@ -414,6 +424,7 @@ export default {
         })
     },
     onReset() {
+      this.errors= ''
       this.user.name = null
       this.user.full_name = null
       this.user.email = null

@@ -1,4 +1,5 @@
 <template xmlns="http://www.w3.org/1999/html">
+<<<<<<< HEAD
   <div v-if="isLoading" class="absolute-center">
     <q-spinner-hourglass
       color="purple"

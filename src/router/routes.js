@@ -5,7 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayoutAdmin.vue'),
     children: [
       {path: 'dashboard', component: () => import('pages/admin/dashboard.vue')},
-      {path: '/dashboard_v2', component: () => import('pages/admin/dashboard_v2.vue')},
+      {path: 'user-wallet', component: () => import('pages/admin/user_wallet')},
       {path: '/dashboard_v3', component: () => import('pages/admin/dashboard_v3.vue')},
       {path: '/customer_management', component: () => import('pages/admin/customer_management.vue')},
       {path: '/change_request', component: () => import('pages/admin/change_request.vue')},
@@ -23,16 +23,18 @@ const routes = [
   { path: '/register', component: () => import('pages/register.vue')},
   { path: '/login', component: () => import('pages/login.vue'), name : 'login' , meta: { auth : false}},
   {
-    path: '', component: () => import('layouts/MainLayout'),
+    path: '/home', component: () => import('layouts/MainLayout'),
     children: [
       {path: '/ielts-test', component: () => import('pages/IeltsTest')},
       {path: '/history', component: () => import('pages/TestHistory')},
+
       {path: '/home', component: () => import('pages/home')},
       {path: '/speaking-exam', component: () => import('pages/speaking-exam')},
       {path: 'reading-test', component: () => import('pages/ReadingTest')},
       {path: 'listening-test', component: () => import('pages/ListeningTest')},
       {path: 'writing-test', component: () => import('pages/WritingTest')},
-      {path: 'lecture-exam', component: () => import('pages/lecture-exam')}
+      {path: 'lecture-exam', component: () => import('pages/lecture-exam')},
+      {path: '/addfund', component: () => import('pages/Addfund')}
     ]
   },
 
