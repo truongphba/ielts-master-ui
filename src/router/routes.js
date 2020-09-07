@@ -32,6 +32,7 @@ const routes = [
       {path: '/listening-test', component: () => import('pages/ListeningTest')},
       {path: '/writing-test', component: () => import('pages/WritingTest')},
       {path: '/addfund', component: () => import('pages/Addfund')},
+      {path: '/about-us', component: () => import('pages/about_us')},
     ]
   },
 

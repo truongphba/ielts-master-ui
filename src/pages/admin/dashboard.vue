@@ -169,7 +169,6 @@
                   <q-icon name="search"/>
                 </template>
               </q-input>
-
               <q-btn
                 flat
                 round
@@ -199,14 +198,6 @@
                 >{{ mode === 'grid' ? 'List' : 'Grid' }}
                 </q-tooltip>
               </q-btn>
-
-              <q-btn
-                color="primary"
-                icon-right="archive"
-                label="Export to csv"
-                no-caps
-                @click="exportTable"
-              />
             </template>
             <template v-slot:body="props">
               <q-tr :props="props">
@@ -225,7 +216,6 @@
                 <q-td key="created_at" :props="props">
                   {{props.row.created_at_format}}
                 </q-td>
-
               </q-tr>
             </template>
           </q-table>
@@ -260,9 +250,9 @@ function wrapCsvValue(val, formatFn) {
 export default {
   data() {
     return {
+      date: (new Date).getTime(),
       filter: '',
       mode: 'list',
-
       gaugeOptions: {
         tooltip: {
           formatter: '{a} <br/>{b} : {c}%'

@@ -37,7 +37,7 @@
                 </q-item-section>
 
                 <q-item-section>
-                  Dashboard v1
+                  Dashboard
                 </q-item-section>
               </q-item>
 
@@ -152,7 +152,7 @@ export default {
         }
       })
       .catch(error => {
-        document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
         window.location.href = '/admin'
       })
   },
