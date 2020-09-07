@@ -1,5 +1,4 @@
 <template xmlns="http://www.w3.org/1999/html">
-<<<<<<< HEAD
   <div v-if="isLoading" class="absolute-center">
     <q-spinner-hourglass
       color="purple"
@@ -242,6 +241,7 @@
     methods: {
       endCallBack: async function () {
         await this.checkAnswer();
+        await this.updateStatus();
         await axios.post(process.env.API_URL + '/meetings')
           .then(response => {
             this.meeting = response.data.data.join_url;
@@ -353,6 +353,7 @@
       },
       submitAnswer:async function () {
         await this.checkAnswer();
+        await this.updateStatus();
         await axios.post(process.env.API_URL + '/meetings')
           .then(response => {
             this.meeting = response.data.data.join_url;

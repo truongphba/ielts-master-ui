@@ -27,13 +27,12 @@ const routes = [
     children: [
       {path: '/ielts-test', component: () => import('pages/IeltsTest')},
       {path: '/history', component: () => import('pages/TestHistory')},
-
       {path: '/home', component: () => import('pages/home')},
       {path: '/speaking-exam', component: () => import('pages/speaking-exam')},
-      {path: 'reading-test', component: () => import('pages/ReadingTest')},
-      {path: 'listening-test', component: () => import('pages/ListeningTest')},
-      {path: 'writing-test', component: () => import('pages/WritingTest')},
-      {path: 'lecture-exam', component: () => import('pages/lecture-exam')},
+      {path: '/reading-test', component: () => import('pages/ReadingTest')},
+      {path: '/listening-test', component: () => import('pages/ListeningTest')},
+      {path: '/writing-test', component: () => import('pages/WritingTest')},
+      {path: '/lecture-exam', component: () => import('pages/lecture-exam')},
       {path: '/addfund', component: () => import('pages/Addfund')}
     ]
   },
