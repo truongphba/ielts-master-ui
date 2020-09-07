@@ -266,9 +266,27 @@
                   </div>
                   <q-input
                     filled
-                    v-model="add_question.answer"
-                    type="textarea"
-                    label="List Answer"
+                    v-model="add_question.answer1"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer2"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer3"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer4"
+                    type="input"
+                    label="Answer Option"
                   />
                   <div class="error" v-if="errors.answer && errors.answer.length">
                     <span>{{ errors.answer[0] }}</span>
@@ -611,7 +629,7 @@ export default {
       axios.post(process.env.API_URL + '/createReadingQuestion/', {
         reading_id: this.add_question.reading_id,
         title: this.add_question.question,
-        answer: this.add_question.answer,
+        answer: this.add_question.answer1 + '; ' + this.add_question.answer2 + '; ' + this.add_question.answer3 + '; ' + this.add_question.answer4,
         correct_answer: this.add_question.correct_answer
       })
         .then(response => {
@@ -696,7 +714,10 @@ export default {
       this.add_read.content = null
       this.add_question.listening_id = null
       this.add_question.question = null
-      this.add_question.answer = null
+      this.add_question.answer1 = null
+      this.add_question.answer2 = null
+      this.add_question.answer3 = null
+      this.add_question.answer4 = null
       this.add_question.correct_answer = null
     },
   }

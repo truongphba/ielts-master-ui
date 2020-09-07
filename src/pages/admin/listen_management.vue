@@ -267,12 +267,30 @@
                   </div>
                   <q-input
                     filled
-                    v-model="add_question.answer"
-                    type="textarea"
-                    label="List Answer"
+                    v-model="add_question.answer1"
+                    type="input"
+                    label="Answer Option"
                   />
-                  <div class="error" v-if="errors.answer && errors.answer.length">
-                    <span>{{ errors.answer[0] }}</span>
+                  <q-input
+                    filled
+                    v-model="add_question.answer2"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer3"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <q-input
+                    filled
+                    v-model="add_question.answer4"
+                    type="input"
+                    label="Answer Option"
+                  />
+                  <div class="error" v-if="errors.answer4 && errors.answer4.length">
+                    <span>{{ errors.answer4[0] }}</span>
                     <hr>
                   </div>
                   <q-input
@@ -330,13 +348,14 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none">
-                <label>List Answer</label>
+                <label>Answer Option</label>
                 <q-input type="textarea" filled v-model="selected_question.answer" dense/>
                 <div class="error" v-if="errors.answer && errors.answer.length">
                   <span>{{ errors.answer[0] }}</span>
                   <hr>
                 </div>
               </q-card-section>
+
 
               <q-card-section class="q-pt-none">
                 <label>Correct Answer</label>
@@ -384,7 +403,10 @@ export default {
       add_question: {
         listening_id: '',
         question: '',
-        answer: '',
+        answer1: '',
+        answer2: '',
+        answer3: '',
+        answer4: '',
         correct_answer: ''
       },
       filter: "",
@@ -612,12 +634,13 @@ export default {
       axios.post(process.env.API_URL + '/createListeningQuestion/', {
         listening_id: this.add_question.listening_id,
         title: this.add_question.question,
-        answer: this.add_question.answer,
+        answer: this.add_question.answer1 + '; ' + this.add_question.answer2 + '; ' + this.add_question.answer3 + '; ' + this.add_question.answer4,
         correct_answer: this.add_question.correct_answer
       })
         .then(response => {
           this.success = true;
           this.new_question = false;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getListeningQuestion/' + this.add_question.listening_id)
             .then(response => {
               console.log(response.data)
@@ -649,6 +672,7 @@ export default {
         .then(response => {
           this.editQuestion = false;
           this.success = true;
+          this.errors = ''
           axios.get(process.env.API_URL + '/getListeningQuestion/' + data.listening_id)
             .then(response => {
               console.log(response.data)
@@ -692,7 +716,10 @@ export default {
       this.add_listen.audio = null
       this.add_question.listening_id = null
       this.add_question.question = null
-      this.add_question.answer = null
+      this.add_question.answer1 = null
+      this.add_question.answer2 = null
+      this.add_question.answer3 = null
+      this.add_question.answer4 = null
       this.add_question.correct_answer = null
     },
   },

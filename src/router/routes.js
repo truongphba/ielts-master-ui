@@ -5,7 +5,7 @@ const routes = [
     component: () => import('layouts/MainLayoutAdmin.vue'),
     children: [
       {path: 'dashboard', component: () => import('pages/admin/dashboard.vue')},
-      {path: '/dashboard_v2', component: () => import('pages/admin/dashboard_v2.vue')},
+      {path: 'user-wallet', component: () => import('pages/admin/user_wallet')},
       {path: '/dashboard_v3', component: () => import('pages/admin/dashboard_v3.vue')},
       {path: '/customer_management', component: () => import('pages/admin/customer_management.vue')},
       {path: '/change_request', component: () => import('pages/admin/change_request.vue')},
