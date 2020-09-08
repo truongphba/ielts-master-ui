@@ -6,7 +6,6 @@
         <!--          <q-avatar>-->
         <!--            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">-->
         <!--          </q-avatar>-->
-
         <q-toolbar-title>CRM Admin</q-toolbar-title>
         <q-btn class="q-mr-xs" flat round @click="$q.dark.toggle()"
                :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"/>
@@ -37,7 +36,7 @@
                 </q-item-section>
 
                 <q-item-section>
-                  Dashboard v1
+                  Dashboard
                 </q-item-section>
               </q-item>
 
@@ -95,17 +94,6 @@
                   Writing Management
                 </q-item-section>
               </q-item>
-
-              <q-item active-class="tab-active" to="/admin/writing-answer-management" class="q-ma-sm navigation-item"
-                      clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="list"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Writing Answer Management
-                </q-item-section>
-              </q-item>
             </q-list>
           </q-scroll-area>
         </div>
@@ -152,7 +140,7 @@ export default {
         }
       })
       .catch(error => {
-        document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC';
+        document.cookie = 'Authorization=' + this.$getCookie('Authorization') +'; expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/';
         window.location.href = '/admin'
       })
   },
