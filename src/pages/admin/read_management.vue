@@ -348,12 +348,23 @@
               </q-card-section>
 
               <q-card-section class="q-pt-none">
-                <label>List Answer</label>
-                <q-input type="textarea" filled v-model="selected_question.answer" dense/>
-                <div class="error" v-if="errors.answer && errors.answer.length">
-                  <span>{{ errors.answer[0] }}</span>
-                  <hr>
-                </div>
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer1" dense/>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer2" dense/>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer3" dense/>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer4" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
@@ -411,6 +422,12 @@ export default {
       errors: [],
       selected_data: '',
       selected_question: '',
+      row_data:{
+        answer1: '',
+        answer2: '',
+        answer3: '',
+        answer4: '',
+      },
       edit: false,
       editQuestion: false,
       dialog: false,
@@ -657,6 +674,11 @@ export default {
 
     editDataQuestion(row) {
       this.selected_question = row;
+      this.row_data.answer1 = row.answer.split(';')[0]
+      this.row_data.answer2 = row.answer.split(';')[1]
+      this.row_data.answer3 = row.answer.split(';')[2]
+      this.row_data.answer4 = row.answer.split(';')[3]
+
       this.editQuestion = true;
     },
 
@@ -664,7 +686,7 @@ export default {
       axios.post(process.env.API_URL + '/updateReadingQuestion/' + data.id, {
         reading_id: this.selected_question.reading_id,
         title: this.selected_question.title,
-        answer: this.selected_question.answer,
+        answer: this.row_data.answer1 + ';' + this.row_data.answer2 + ';' + this.row_data.answer3 + ';' + this.row_data.answer4,
         correct_answer: this.selected_question.correct_answer,
       })
         .then(response => {

@@ -12,7 +12,7 @@
             :grid="mode==='grid'"
             :filter="filter"
             :pagination.sync="pagination"
-            :class="$q.dark.isActive?'text-white':'text-grey-8'"
+            :class="$q.dark.isActive?'text-white':'text-black'"
           >
             <template v-slot:top-right="props">
               <q-input outlined dense debounce="300" v-model="filter" placeholder="Search">

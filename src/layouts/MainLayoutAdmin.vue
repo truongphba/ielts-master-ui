@@ -96,16 +96,6 @@
                 </q-item-section>
               </q-item>
 
-              <q-item active-class="tab-active" to="/admin/writing-answer-management" class="q-ma-sm navigation-item"
-                      clickable v-ripple>
-                <q-item-section avatar>
-                  <q-icon name="list"/>
-                </q-item-section>
-
-                <q-item-section>
-                  Writing Answer Management
-                </q-item-section>
-              </q-item>
             </q-list>
           </q-scroll-area>
         </div>

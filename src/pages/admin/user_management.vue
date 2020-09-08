@@ -332,13 +332,13 @@ export default {
           field: "is_lecture",
           sortable: true
         },
-        {
-          name: "balance",
-          align: "left",
-          label: "Balance",
-          field: "balance",
-          sortable: true
-        },
+        // {
+        //   name: "balance",
+        //   align: "left",
+        //   label: "Balance",
+        //   field: "balance",
+        //   sortable: true
+        // },
         {
           name: "status",
           align: "left",

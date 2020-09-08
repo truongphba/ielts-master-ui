@@ -349,13 +349,23 @@
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="textarea" filled v-model="selected_question.answer" dense/>
-                <div class="error" v-if="errors.answer && errors.answer.length">
-                  <span>{{ errors.answer[0] }}</span>
-                  <hr>
-                </div>
+                <q-input type="input" filled v-model="row_data.answer1" dense/>
               </q-card-section>
 
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer2" dense/>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer3" dense/>
+              </q-card-section>
+
+              <q-card-section class="q-pt-none">
+                <label>Answer Option</label>
+                <q-input type="input" filled v-model="row_data.answer4" dense/>
+              </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Correct Answer</label>
@@ -413,7 +423,13 @@ export default {
       mode: "list",
       success: false,
       errors: [],
-      selected_data: '',
+      selected_data: [],
+      row_data:{
+        answer1: '',
+        answer2: '',
+        answer3: '',
+        answer4: '',
+      },
       selected_question: '',
       edit: false,
       editQuestion: false,
@@ -545,7 +561,7 @@ export default {
     openDialog(id) {
       axios.get(process.env.API_URL + '/getListeningQuestion/' + id)
         .then(response => {
-          console.log(response.data)
+          // console.log(response.data)
           this.question = response.data
         })
         .catch(error => {
@@ -634,7 +650,7 @@ export default {
       axios.post(process.env.API_URL + '/createListeningQuestion/', {
         listening_id: this.add_question.listening_id,
         title: this.add_question.question,
-        answer: this.add_question.answer1 + '; ' + this.add_question.answer2 + '; ' + this.add_question.answer3 + '; ' + this.add_question.answer4,
+        answer: this.add_question.answer1 + ';' + this.add_question.answer2 + ';' + this.add_question.answer3 + ';' + this.add_question.answer4,
         correct_answer: this.add_question.correct_answer
       })
         .then(response => {
@@ -659,14 +675,19 @@ export default {
 
     editDataQuestion(row) {
       this.selected_question = row;
+      this.row_data.answer1 = row.answer.split(';')[0]
+      this.row_data.answer2 = row.answer.split(';')[1]
+      this.row_data.answer3 = row.answer.split(';')[2]
+      this.row_data.answer4 = row.answer.split(';')[3]
+
       this.editQuestion = true;
     },
 
     updateDataQuestion(data) {
       axios.post(process.env.API_URL + '/updateListeningQuestion/' + data.id, {
-        listening_id : this.selected_question.listening_id,
+        listening_id: this.selected_question.listening_id,
         title: this.selected_question.title,
-        answer: this.selected_question.answer,
+        answer: this.row_data.answer1 + ';' + this.row_data.answer2 + ';' + this.row_data.answer3 + ';' + this.row_data.answer4,
         correct_answer: this.selected_question.correct_answer,
       })
         .then(response => {

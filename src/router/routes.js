@@ -6,18 +6,10 @@ const routes = [
     children: [
       {path: 'dashboard', component: () => import('pages/admin/dashboard.vue')},
       {path: 'user-wallet', component: () => import('pages/admin/user_wallet')},
-      {path: '/dashboard_v3', component: () => import('pages/admin/dashboard_v3.vue')},
-      {path: '/customer_management', component: () => import('pages/admin/customer_management.vue')},
-      {path: '/change_request', component: () => import('pages/admin/change_request.vue')},
-      {path: '/my_profile', component: () => import('pages/admin/my_profile.vue')},
-      {path: '/sales_invoices', component: () => import('pages/admin/sales_invoices.vue')},
-      {path: '/quotes', component: () => import('pages/admin/quotes.vue')},
-      {path: '/transactions', component: () => import('pages/admin/transactions.vue')},
       {path: 'user-management', component: () => import('pages/admin/user_management.vue')},
       {path: 'listening-management', component: () => import('pages/admin/listen_management.vue')},
       {path: 'reading-management', component: () => import('pages/admin/read_management')},
       {path: 'writing-management', component: () => import('pages/admin/write_management')},
-      {path: 'writing-answer-management', component: () => import('pages/admin/write_answer_management')}
     ]
   },
   {path: '/register', component: () => import('pages/register.vue')},
