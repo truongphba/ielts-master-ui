@@ -176,11 +176,11 @@
           </q-dialog>
           <q-dialog v-model="pre" persistent full-width full-height>
             <q-card class="bg-teal">
-              <q-card-section class="row" style="padding-top: 30px">
+              <q-card-section class="row" style="padding-top: 100px">
                 <h4 style="text-align: center;text-transform: uppercase;width: 100%;color: white">Ready for the reading
                   exam.</h4>
                 <div class="countdown absolute-center pre-countdown"
-                     style="color: white;font-size: 20pt;margin-top: 170px">
+                     style="color: white;font-size: 20pt">
                   <vue-countdown-timer
                     @end_callback="endPreCallBack()"
                     :start-time="start_time"

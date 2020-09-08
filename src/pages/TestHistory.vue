@@ -1,9 +1,6 @@
 <template>
   <div>
         <div class="q-banner text-center relative-position">
-          <div class="q-pa-md q-gutter-sm absolute-center">
-            <q-btn color="red" label="Get Exam" size="xl"/>
-          </div>
         </div>
 
     <div class="q-pa-md" style="width: 1200px; margin: 20px auto">
@@ -176,7 +173,7 @@ export default {
 }
 
 .q-banner {
-  background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;
+  background: url("https://www.broadmindgroup.com/images/course-banners/ielts-banner-new.jpg") center;
   background-size: cover;
   height: 300px;
 }
