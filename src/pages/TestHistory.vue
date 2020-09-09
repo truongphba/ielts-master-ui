@@ -53,60 +53,6 @@
         </template>
       </q-table>
     </div>
-
-<!--    <div class="q-pa-md" style="width: 1200px; margin: 20px auto">-->
-<!--      <q-table-->
-<!--        title="Writing"-->
-<!--        :data="write"-->
-<!--        :columns="writeColumns"-->
-<!--        row-key="name"-->
-<!--        :filter="writeFilter"-->
-<!--        binary-state-sort-->
-<!--      >-->
-<!--        <template v-slot:top-right>-->
-<!--          <q-input borderless dense debounce="300" v-model="writeFilter" placeholder="Search">-->
-<!--            <template v-slot:append>-->
-<!--              <q-icon name="search" />-->
-<!--            </template>-->
-<!--          </q-input>-->
-<!--        </template>-->
-<!--        <template v-slot:body="props">-->
-<!--          <q-tr :props="props">-->
-<!--            <q-td key="id" :props="props">-->
-<!--              {{ props.row.id }}-->
-
-<!--            </q-td>-->
-<!--            <q-td key="lecture_name" :props="props">-->
-<!--              {{ props.row.lecture_name }}-->
-<!--            </q-td>-->
-<!--            <q-td key="point" :props="props">-->
-<!--              <div class="text-pre-wrap">{{ props.row.point }}</div>-->
-<!--            </q-td>-->
-<!--            <q-td key="created_at" :props="props">-->
-<!--              {{props.row.created_at}}-->
-<!--            </q-td>-->
-<!--            <q-td key="answer" :props="props">-->
-<!--              <q-btn flat style="text-transform: none"  label="Detail" @click="detail = true" />-->
-<!--              <q-dialog v-model="detail" persistent>-->
-<!--                <q-card>-->
-<!--                  <q-bar>-->
-<!--                    <q-space />-->
-<!--                    <q-btn dense flat icon="close" v-close-popup>-->
-<!--                      <q-tooltip>Close</q-tooltip>-->
-<!--                    </q-btn>-->
-<!--                  </q-bar>-->
-<!--                  <q-card-section>-->
-<!--                    {{props.row.answer}}-->
-<!--                  </q-card-section>-->
-<!--                </q-card>-->
-<!--              </q-dialog>-->
-<!--            </q-td>-->
-<!--            <q-td key="comment" :props="props">{{ props.row.comment }}</q-td>-->
-<!--          </q-tr>-->
-<!--        </template>-->
-<!--      </q-table>-->
-
-<!--    </div>-->
   </div>
 </template>
 
@@ -132,7 +78,7 @@ export default {
         { name: 'listen_point', label: 'Listening Point', field: 'listen_point', sortable: true, align: 'center', },
         { name: 'speak_point', label: 'Speaking Point', field: 'speak_point', sortable: true, align: 'center', },
         { name: 'write_point', label: 'Writing Point', field: 'write_point', sortable: true, align: 'center', },
-        { name: 'read_point', label: 'Reading Poing', field: 'read_point', sortable: true, align: 'center', },
+        { name: 'read_point', label: 'Reading Point', field: 'read_point', sortable: true, align: 'center', },
         { name: 'created_at', label: 'Ngày thi', field: 'created_at_format',sortable: true , align: 'left',},
         { name: 'speak_comment', label: 'Speaking Comment', field: 'speak_comment',sortable: true , align: 'left',},
         { name: 'write_comment', label: 'Writing Comment', field: 'write_comment',sortable: true , align: 'left',},
@@ -175,6 +121,6 @@ export default {
 .q-banner {
   background: url("https://www.broadmindgroup.com/images/course-banners/ielts-banner-new.jpg") center;
   background-size: cover;
-  height: 300px;
+  height: 400px;
 }
 </style>

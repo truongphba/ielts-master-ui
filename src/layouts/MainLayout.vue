@@ -17,7 +17,7 @@
               </q-item-section>
             </q-item>
 
-            <q-item class="item" exact-active-class="my-item" clickable v-ripple>
+            <q-item class="item" to="/about-us" exact-active-class="my-item" clickable v-ripple>
               <q-item-section>
                 <q-item-label>about us</q-item-label>
               </q-item-section>
@@ -41,8 +41,10 @@
                 </q-item-section>
               </q-item>
               <q-separator/>
+
               <q-item clickable v-close-popup v-if="!user.is_lecture">
                 <q-item-section @click="addFund()">Add Fund</q-item-section>
+
               </q-item>
               <q-separator/>
               <q-item clickable v-close-popup>

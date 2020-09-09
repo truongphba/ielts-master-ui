@@ -59,7 +59,7 @@
               <span>{{ props.row.position }}</span>
             </q-td>
             <q-td key="balance" :props="props">
-              <span>{{ props.row.balance }}</span>
+              <span>${{ props.row.balance }}</span>
             </q-td>
             <q-td key="status" :props="props">
               <span>{{ props.row.textStatus }}</span>
@@ -103,6 +103,7 @@
               filled
               v-model="user.email"
               label="Email *"
+
             />
             <div class="error" v-if="errors.email && errors.email.length">
               <span>{{ errors.email[0] }}</span>
@@ -118,6 +119,7 @@
               type="number"
               v-model="user.age"
               label="Age"
+
             />
             <div class="error" v-if="errors.age && errors.age.length">
               <span>{{ errors.age[0] }}</span>
@@ -181,7 +183,7 @@
 
         <q-card-section class="q-pt-none">
           <label>Username</label>
-          <q-input filled v-model="selected_data.name" dense/>
+          <q-input  readonly filled v-model="selected_data.name" dense/>
           <div class="error" v-if="errors.name && errors.name.length">
             <span>{{ errors.name[0] }}</span>
             <hr>
@@ -423,23 +425,9 @@ export default {
           this.errors = error.response.data.errors
         })
     },
-    onReset() {
-      this.errors= ''
-      this.user.name = null
-      this.user.full_name = null
-      this.user.email = null
-      this.user.password = null
-      this.user.age = null
-      this.user.certificate = null
-    },
     editData(row) {
-      // alert(row.id)
-      // console.log(row)
-      // let index = this.data.indexOf(row);
-      // console.log(index);
       this.selected_data = row;
       this.edit = true;
-
     },
 
     updateData(id) {
@@ -456,11 +444,22 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
+          this.errors = ''
         })
         .catch(error => {
           console.log(error.response.data)
           this.errors = error.response.data.errors
         })
+    },
+    onReset() {
+      this.user.name = null
+      this.user.full_name = null
+      this.user.email = null
+      this.user.password = null
+      this.user.age = null
+      this.user.certificate = null
+      this.user.is_lecture = false
+      this.errors= ''
     }
   }
 
