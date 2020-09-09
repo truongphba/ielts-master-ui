@@ -48,22 +48,36 @@
         </q-card>
       </div>
     </div>
+    <div style="display: flex">
+      <q-card flat bordered class="shadow q-pa-none q-ma-none" style="width: 780px; margin: 20px 10px 20px 12px ">
+        <q-card-section class="row">
+          <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="text-h6 col-12">Revenue By Day
 
-    <q-card flat bordered class="shadow q-pa-none q-ma-none" style="width: 1590px; margin: 20px auto">
-      <q-card-section class="row">
-        <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="text-h6 col-12">Revenue
+          </div>
+        </q-card-section>
 
-        </div>
-      </q-card-section>
+        <q-separator class="full-width"></q-separator>
 
-      <q-separator class="full-width"></q-separator>
+        <q-card-section v-if="revenue.length > 0">
+          <line-chart :chartData="revenue" :options="chartOptions" :chart-colors="revenueChartColor"
+                      label="Revenue"></line-chart>
+        </q-card-section>
+      </q-card>
+      <q-card flat bordered class="shadow q-pa-none q-ma-none" style="width: 780px; margin: 20px 2px 20px 10px">
+        <q-card-section class="row">
+          <div :class="!$q.dark.isActive? 'text-grey-7':'text-white'" class="text-h6 col-12">Revenue By Month
 
-      <q-card-section v-if="revenue.length > 0">
-        <line-chart :chartData="revenue" :options="chartOptions" :chart-colors="revenueChartColor"
-                    label="Revenue"></line-chart>
-      </q-card-section>
-    </q-card>
+          </div>
+        </q-card-section>
 
+        <q-separator class="full-width"></q-separator>
+
+        <q-card-section v-if="revenue_month.length > 0">
+          <bar-chart :chartData="revenue_month" :options="chartOptions" :chart-colors="revenueChartColor"
+                     label="Revenue"></bar-chart>
+        </q-card-section>
+      </q-card>
+    </div>
     <div class="row q-col-gutter-sm q-ma-xs">
       <div class="col-12">
         <q-card flat bordered class="bg-white">
@@ -153,10 +167,12 @@
 <script>
 import axios from "axios";
 import LineChart from "components/LineChart";
+import BarChart from "components/BarChart";
 
 export default {
   components: {
-    LineChart
+    LineChart,
+    BarChart
   },
   data() {
     return {
@@ -222,7 +238,8 @@ export default {
       chartOptions: {
         responsive: true,
         maintainAspectRatio: false
-      }
+      },
+      revenue_month: [],
     }
   },
   computed: {
@@ -234,15 +251,9 @@ export default {
 
 
   },
-  async created() {
-    const {data} = await axios.get(process.env.API_URL + '/getTotal/')
-    data.forEach(d => {
-      const date = d.date
-      const {total} = d;
-      this.revenue.push({date, total: total});
-      console.log(this.revenue)
-    })
-
+  created() {
+    this.getChartByDate()
+    this.getChartByMonth()
     axios.get(process.env.API_URL + '/money/')
       .then(response => {
         console.log(response.data)
@@ -263,6 +274,25 @@ export default {
         console.log(error.response.data)
       })
   },
+  methods: {
+    async getChartByDate() {
+      const {data} = await axios.get(process.env.API_URL + '/getTotal/')
+      data.forEach(d => {
+        const date = d.date
+        const {total} = d;
+        this.revenue.push({date, total: total});
+      })
+    },
+    async getChartByMonth() {
+      const {data} = await axios.get(process.env.API_URL + '/getTotalMonth/')
+      data.forEach(d => {
+        const month = d.month
+        const {total} = d;
+        this.revenue_month.push({month, total: total});
+        console.log(this.revenue_month)
+      })
+    }
+  }
 }
 </script>
 
