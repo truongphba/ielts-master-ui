@@ -15,69 +15,81 @@
         <q-btn v-if="Object.keys(user).length > 0 && user.is_lecture && isWorking && isConnect" color="primary"
                label="Examining" size="xl"/>
         <q-dialog v-model="connectLecture">
-          <div v-if="idLoading">
-            <q-card>
-              <q-card-section>
-                <div class="text-h6">Connect lecture to get exam</div>
-              </q-card-section>
-              <q-card-section>
-                <q-spinner
-                  color="primary"
-                  size="3em"
-                />
-              </q-card-section>
-            </q-card>
-          </div>
-          <div v-else>
-            <q-card v-if="Object.keys(onlineLecture).length > 0">
-              <q-card-section class="row">
-                <div class="text-h6">Connect lecture to get exam</div>
-                <div class="countdown absolute" style="color: black;font-size: 15pt" v-if="connectLecture == true">
-                  <vue-countdown-timer
-                    @end_callback="endCallBack()"
-                    :start-time="start_time"
-                    :end-time="end_time"
-                    :end-text="'00 : 00'"
-                    label-position="begin"
-                  >
-                    <template slot="countdown" slot-scope="scope">
-                      <span>{{ scope.props.seconds }}</span>
-                    </template>
-                  </vue-countdown-timer>
-                </div>
-              </q-card-section>
+         <div v-if="user.balance > 21">
+           <div v-if="idLoading">
+             <q-card>
+               <q-card-section>
+                 <div class="text-h6">Connect lecture to get exam</div>
+               </q-card-section>
+               <q-card-section>
+                 <q-spinner
+                   color="primary"
+                   size="3em"
+                 />
+               </q-card-section>
+             </q-card>
+           </div>
+           <div v-else>
+             <q-card v-if="Object.keys(onlineLecture).length > 0">
+               <q-card-section class="row">
+                 <div class="text-h6">Connect lecture to get exam</div>
+                 <div class="countdown absolute" style="color: black;font-size: 15pt" v-if="connectLecture == true">
+                   <vue-countdown-timer
+                     @end_callback="endCallBack()"
+                     :start-time="start_time"
+                     :end-time="end_time"
+                     :end-text="'00 : 00'"
+                     label-position="begin"
+                   >
+                     <template slot="countdown" slot-scope="scope">
+                       <span>{{ scope.props.seconds }}</span>
+                     </template>
+                   </vue-countdown-timer>
+                 </div>
+               </q-card-section>
 
-              <img v-if="onlineLecture.avatar" style="width: 400px;height: auto"
-                   :src="onlineLecture.avatar">
-              <img style="width: 400px;height: auto" v-else
-                   src="https://r9b7u4m2.stackpathcdn.com/prod/sites/eXfkOOiYH-uoddxClSi52viuasTF1mJ8olZ0u-tOtfFqK66gZCc90Ly_Uoc0VmR1eULwQ0uGf2JhPt4yPTts8A/themes/base/assets/images/avatar-1.png">
-              <q-card-section>
-                <q-rating v-if="onlineLecture.votes"
-                          :value="onlineLecture.votes"
-                          size="2em"
-                          :max="5"
-                          color="orange"
-                          readonly
-                />
-                <div class="text-h6">{{onlineLecture.full_name}}</div>
-                <b>Age: </b> {{onlineLecture.age}}<br>
-                <b>Email: </b> {{ onlineLecture.email }}<br>
-                <b>Certificate: </b> {{ onlineLecture.certificate }}<br>
-              </q-card-section>
-              <q-card-actions align="right">
-                <q-btn label="Accept" color="green" @click="startExam()"/>
-                <q-btn label="Decline" color="red" v-close-popup/>
-              </q-card-actions>
-            </q-card>
-            <q-card v-else>
-              <q-card-section>
-                <div class="text-h6">Connect lecture to get exam</div>
-              </q-card-section>
-              <q-card-section>
-                No lecture is online at this moment!
-              </q-card-section>
-            </q-card>
-          </div>
+               <img v-if="onlineLecture.avatar" style="width: 400px;height: auto"
+                    :src="onlineLecture.avatar">
+               <img style="width: 400px;height: auto" v-else
+                    src="https://r9b7u4m2.stackpathcdn.com/prod/sites/eXfkOOiYH-uoddxClSi52viuasTF1mJ8olZ0u-tOtfFqK66gZCc90Ly_Uoc0VmR1eULwQ0uGf2JhPt4yPTts8A/themes/base/assets/images/avatar-1.png">
+               <q-card-section>
+                 <q-rating v-if="onlineLecture.votes"
+                           :value="onlineLecture.votes"
+                           size="2em"
+                           :max="5"
+                           color="orange"
+                           readonly
+                 />
+                 <div class="text-h6">{{onlineLecture.full_name}}</div>
+                 <b>Age: </b> {{onlineLecture.age}}<br>
+                 <b>Email: </b> {{ onlineLecture.email }}<br>
+                 <b>Certificate: </b> {{ onlineLecture.certificate }}<br>
+               </q-card-section>
+               <q-card-actions align="right">
+                 <q-btn label="Accept" color="green" @click="startExam()"/>
+                 <q-btn label="Decline" color="red" v-close-popup/>
+               </q-card-actions>
+             </q-card>
+             <q-card v-else>
+               <q-card-section>
+                 <div class="text-h6">Connect lecture to get exam</div>
+               </q-card-section>
+               <q-card-section>
+                 No lecture is online at this moment!
+               </q-card-section>
+             </q-card>
+           </div>
+         </div>
+        <div v-else>
+          <q-card>
+            <q-card-section>
+              <div class="text-h6">Connect lecture to get exam</div>
+            </q-card-section>
+            <q-card-section>
+              <p>Your balance not enough to get exam.</p>
+            </q-card-section>
+          </q-card>
+        </div>
         </q-dialog>
       </div>
     </div>
@@ -260,20 +272,20 @@
         this.connectLecture = false
       },
       startExam() {
-        db.collection("lecture").doc(this.onlineLecture.id.toString())
-          .update({
-            member_id: this.user.id,
-            status: 1,
-          })
         axios.post(process.env.API_URL + '/exam', {
           student_id: this.user.id,
           lecture_id: this.onlineLecture.id
         })
           .then(response => {
+            db.collection("lecture").doc(this.onlineLecture.id.toString())
+              .update({
+                member_id: this.user.id,
+                status: 1,
+              })
             window.location.href = '/writing-test'
           })
           .catch(error => {
-            console.log(error.response.data)
+            console.log(error.response.data.msg)
           })
       },
       startWork() {
@@ -357,7 +369,7 @@
 
 <style scoped>
   .q-banner {
-    background: url("https://insenglish.org/wp-content/uploads/2018/05/banner-IELTS.jpg") center;
+    background: url("https://www.broadmindgroup.com/images/course-banners/ielts-banner-new.jpg") center;
     background-size: cover;
     height: 400px;
   }

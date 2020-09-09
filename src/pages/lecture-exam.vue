@@ -91,7 +91,7 @@
             <div class="q-pa-md">
               <br>
               <div class="q-gutter-md">
-                <q-input filled type="number" v-model.number="writing_point" :min="0" :max="10" label="Point"/>
+                <q-input filled type="number" v-model.number="writing_point" :min="0" :max="9" label="Point" :rules="[val => val < 10 || 'Point must be less than 10']"/>
                 <q-editor placeholder="Leave comment here..." v-model="writing_comment" min-height="13rem"/>
               </div>
               <div>
@@ -106,8 +106,8 @@
         <div style="margin: 0 10% 20px 10%; border-bottom: solid 1px gray"></div>
         <h5 style="text-align: center;text-transform: uppercase; margin: 0;padding-bottom: 10px">Speaking Mark</h5>
         <div class="q-gutter-md">
-          <q-input style="max-width: 40%" filled type="number" v-model.number="speaking_point" :min="0" :max="10"
-                   label="Point"/>
+          <q-input style="max-width: 40%" filled type="number" v-model.number="speaking_point" :min="0" :max="9"
+                   label="Point"  :rules="[val => val < 10 || 'Point must be less than 10']"/>
           <q-editor placeholder="Leave comment here..." v-model="speaking_comment" min-height="13rem"/>
           <q-btn :color="'green'" @click="submitMark()" label="Submit"></q-btn>
         </div>

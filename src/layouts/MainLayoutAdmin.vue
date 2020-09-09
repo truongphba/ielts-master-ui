@@ -6,7 +6,6 @@
         <!--          <q-avatar>-->
         <!--            <img src="https://cdn.quasar.dev/logo/svg/quasar-logo.svg">-->
         <!--          </q-avatar>-->
-
         <q-toolbar-title>CRM Admin</q-toolbar-title>
         <q-btn class="q-mr-xs" flat round @click="$q.dark.toggle()"
                :icon="$q.dark.isActive ? 'nights_stay' : 'wb_sunny'"/>
@@ -95,7 +94,6 @@
                   Writing Management
                 </q-item-section>
               </q-item>
-
             </q-list>
           </q-scroll-area>
         </div>

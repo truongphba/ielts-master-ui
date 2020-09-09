@@ -41,8 +41,10 @@
                 </q-item-section>
               </q-item>
               <q-separator/>
-              <q-item to="/addfund" clickable v-close-popup v-if="!user.is_lecture">
-                <q-item-section>Add Fund</q-item-section>
+
+              <q-item clickable v-close-popup v-if="!user.is_lecture">
+                <q-item-section @click="addFund()">Add Fund</q-item-section>
+
               </q-item>
               <q-separator/>
               <q-item clickable v-close-popup>
@@ -111,6 +113,9 @@
           .catch(error => {
             alert(error)
           })
+      },
+      addFund() {
+        window.location.href = '/addfund'
       }
     }
   }
