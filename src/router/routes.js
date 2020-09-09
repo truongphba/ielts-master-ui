@@ -19,6 +19,7 @@ const routes = [
     children: [
       {path: '/ielts-test', component: () => import('pages/IeltsTest')},
       {path: '/history', component: () => import('pages/TestHistory')},
+      {path: '/lecturer-history', component: () => import('pages/LecturerTestHistory')},
       {path: '/home', component: () => import('pages/home')},
       {path: '/speaking-exam', component: () => import('pages/speaking-exam')},
       {path: '/reading-test', component: () => import('pages/ReadingTest')},

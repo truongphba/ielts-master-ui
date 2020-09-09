@@ -59,7 +59,7 @@
               <span>{{ props.row.position }}</span>
             </q-td>
             <q-td key="balance" :props="props">
-              <span>${{ props.row.balance }}</span>
+              <span>${{ new Intl.NumberFormat().format(props.row.balance) }}</span>
             </q-td>
             <q-td key="status" :props="props">
               <span>{{ props.row.textStatus }}</span>
@@ -222,19 +222,21 @@
           </div>
         </q-card-section>
 
-        <q-card-section class="q-pt-none">
+        <q-card-section class="q-pt-none" >
           <label>Position</label>
-          <q-select filled v-model="selected_data.position" :options="lecturer_opt" dense/>
+          <q-select v-if="selected_data.name === admin.name" readonly filled v-model="selected_data.position" :options="lecturer_opt" dense/>
+          <q-select v-else filled v-model="selected_data.position" :options="lecturer_opt" dense/>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
           <label>Status</label>
-          <q-select filled v-model="selected_data.textStatus" :options="status_opt" dense/>
+          <q-select v-if="selected_data.name === admin.name" readonly  filled v-model="selected_data.textStatus" :options="status_opt" dense/>
+          <q-select v-else filled v-model="selected_data.textStatus" :options="status_opt" dense/>
         </q-card-section>
 
         <q-card-section class="q-pt-none">
           <label>Balance</label>
-          <q-input filled v-model="selected_data.balance" dense/>
+          <q-input readonly filled v-model="selected_data.balance" dense/>
         </q-card-section>
 
         <q-card-actions align="right" class="bg-white text-teal">
@@ -375,7 +377,7 @@ export default {
       }
     };
   },
-
+  props:['admin'],
   created() {
     axios.get(process.env.API_URL + '/getUser/')
       .then(response => {
@@ -425,6 +427,7 @@ export default {
           this.errors = error.response.data.errors
         })
     },
+
     editData(row) {
       this.selected_data = row;
       this.edit = true;

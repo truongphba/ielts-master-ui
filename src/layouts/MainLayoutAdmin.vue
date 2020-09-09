@@ -105,7 +105,7 @@
         <div class="col">
           <div class="full-height">
             <q-scroll-area class="col q-pr-sm full-height" visible>
-              <router-view/>
+              <router-view :admin="admin"/>
             </q-scroll-area>
           </div>
         </div>

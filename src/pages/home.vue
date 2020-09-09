@@ -162,7 +162,7 @@
     </div>
     <div class="text-h5 text-weight-bold q-px-md">Top Lecture</div>
     <div class="q-pa-md row q-gutter-md">
-      <q-card v-for="(lec, index) in lecture" class="my-card col" v-if="lecture.length > 0 && index < 5">
+      <q-card v-for="(lec, index) in lecture" class="my-card col" v-if="lecture.length > 0 && index < 4">
         <img style="height: 230px;overflow: hidden" :src="lec.avatar" v-if="lec.avatar">
         <img style="margin-left: 10%;height: 230px;width:80%;overflow: hidden"
              src="https://r9b7u4m2.stackpathcdn.com/prod/sites/eXfkOOiYH-uoddxClSi52viuasTF1mJ8olZ0u-tOtfFqK66gZCc90Ly_Uoc0VmR1eULwQ0uGf2JhPt4yPTts8A/themes/base/assets/images/avatar-1.png"

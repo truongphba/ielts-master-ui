@@ -71,9 +71,9 @@
                 <q-td key="updated_at" :props="props">
                   {{props.row.format_updated_at}}
                 </q-td>
-                <q-td key="actions" :props="props">
-                  <q-btn color="blue" label="Update" size=sm no-caps @click="editData(props.row)"></q-btn>
-                  <q-btn color="red" label="Delete" size=sm no-caps @click="deleteData(props.row.id)"></q-btn>
+                <q-td key="actions" :props="props"  >
+                  <q-btn v-if="props.row.status === 1"  color="blue" label="Update" size=sm no-caps @click="editData(props.row)"></q-btn>
+                  <q-btn v-if="props.row.status === 1"  color="red" label="Reject" size=sm no-caps @click="deleteData(props.row.id)"></q-btn>
                 </q-td>
               </q-tr>
             </template>
@@ -179,13 +179,8 @@ export default {
   },
   methods: {
     editData(row) {
-      // alert(row.id)
-      // console.log(row)
-      // let index = this.data.indexOf(row);
-      // console.log(index);
       this.selected_data = row;
       this.edit = true;
-
     },
     updateData(id) {
       axios.post(process.env.API_URL + '/updateFund/' + id, {

@@ -17,6 +17,13 @@
               </q-item-section>
             </q-item>
 
+            <q-item class="item" to="/lecturer-history" exact exact-active-class="my-item" clickable v-ripple
+                    v-if="Object.keys(user).length > 0 && user.is_lecture">
+              <q-item-section>
+                <q-item-label>test history</q-item-label>
+              </q-item-section>
+            </q-item>
+
             <q-item class="item" to="/about-us" exact-active-class="my-item" clickable v-ripple>
               <q-item-section>
                 <q-item-label>about us</q-item-label>

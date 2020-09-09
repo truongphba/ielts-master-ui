@@ -25,14 +25,8 @@
             <q-td key="id" :props="props">
               {{ props.row.id }}
             </q-td>
-            <q-td key="lecture_name" :props="props">
-              {{ props.row.lecture_name }}
-            </q-td>
-            <q-td key="listen_point" :props="props">
-              <div class="text-pre-wrap">{{ props.row.listen_point }}</div>
-            </q-td>
-            <q-td key="read_point" :props="props">
-              <div class="text-pre-wrap">{{ props.row.read_point }}</div>
+            <q-td key="student_name" :props="props">
+              {{ props.row.student_name }}
             </q-td>
             <q-td key="write_point" :props="props">
               <div class="text-pre-wrap">{{ props.row.write_point }}</div>
@@ -58,7 +52,7 @@
 import axios from "axios";
 import {date} from "quasar";
 export default {
-  name: "TestHistory",
+  name: "LecturerTestHistory",
   data() {
     return {
       detail: false,
@@ -72,11 +66,9 @@ export default {
           field: 'id',
           sortable: true
         },
-        { name: 'lecture_name', label: 'Lecturer Name', field: 'lecture_name', sortable: true, align: 'left', },
-        { name: 'listen_point', label: 'Listening Point', field: 'listen_point', sortable: true, align: 'center', },
+        { name: 'student_name', label: 'Student Name', field: 'student_name', sortable: true, align: 'left', },
         { name: 'speak_point', label: 'Speaking Point', field: 'speak_point', sortable: true, align: 'center', },
         { name: 'write_point', label: 'Writing Point', field: 'write_point', sortable: true, align: 'center', },
-        { name: 'read_point', label: 'Reading Point', field: 'read_point', sortable: true, align: 'center', },
         { name: 'created_at', label: 'Ngày thi', field: 'created_at_format',sortable: true , align: 'left',},
         { name: 'speak_comment', label: 'Speaking Comment', field: 'speak_comment',sortable: true , align: 'left',},
         { name: 'write_comment', label: 'Writing Comment', field: 'write_comment',sortable: true , align: 'left',},
@@ -96,7 +88,7 @@ export default {
   methods: {
     getData() {
 
-      axios.get(process.env.API_URL + '/history/' + this.user.id)
+      axios.get(process.env.API_URL + '/lecturer-history/' + this.user.id)
         .then(response => {
           console.log(response.data)
           this.history = response.data

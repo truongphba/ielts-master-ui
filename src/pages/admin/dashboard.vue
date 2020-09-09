@@ -7,7 +7,7 @@
             <div class="row">
               <div class="col-10">
                 <div class="text-h6">Total Revenue</div>
-                <div class="text-h5">$ {{ total }}</div>
+                <div class="text-h5">$ {{ new Intl.NumberFormat().format(total) }} </div>
               </div>
               <div class="col-2">
                 <q-icon size="62px" name="trending_up"/>
@@ -180,29 +180,6 @@ export default {
       member: [],
       filter: '',
       mode: 'list',
-      gaugeOptions: {
-        tooltip: {
-          formatter: '{a} <br/>{b} : {c}%'
-        },
-        series: [
-          {
-            type: 'gauge',
-            name: "Sale",
-            detail: {formatter: '{value}%'},
-            data: [{value: 30}],
-            min: 0,
-            radius: '100%',
-            axisLine: {
-              show: true,
-              lineStyle: {
-                color: [[0.35, '#293c55'], [0.65, '#61a0a8'], [1, '#c23731']],
-                width: 20
-              },
-            },
-
-          }
-        ]
-      },
       columns: [
         {name: 'id', align: 'left', label: 'ID', field: 'id', sortable: true},
         {
@@ -248,8 +225,6 @@ export default {
         return sum + item.money
       }, 0)
     },
-
-
   },
   created() {
     this.getChartByDate()

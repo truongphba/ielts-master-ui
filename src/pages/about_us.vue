@@ -46,7 +46,8 @@
         </h2>
       </div>
       <div style="margin: auto auto; width: 1500px;">
-        <q-btn size="20px" color="primary" to="/register" style="text-transform: uppercase">get started</q-btn>
+        <q-btn v-if="!user.id" size="20px" color="primary" to="/login" style="text-transform: uppercase">get started</q-btn>
+        <q-btn v-if="user.id" size="20px" color="primary" to="/home" style="text-transform: uppercase">get started</q-btn>
       </div>
     </div>
   </div>
@@ -55,9 +56,7 @@
 <script>
 export default {
   name: "about_us",
-  data() {
-    return {}
-  }
+  props: ['user'],
 }
 </script>
 
