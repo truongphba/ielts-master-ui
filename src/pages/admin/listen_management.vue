@@ -86,6 +86,7 @@
               filled
               v-model="add_listen.audio"
               label="Audio"
+              :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
             <div class="error" v-if="errors.audio && errors.audio.length">
               <span>{{ errors.audio[0] }}</span>
@@ -121,7 +122,7 @@
 
         <q-card-section class="q-pt-none">
           <label>Audio</label>
-          <q-input filled v-model="selected_data.audio" dense/>
+          <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" filled v-model="selected_data.audio" dense/>
           <div class="error" v-if="errors.audio && errors.audio.length">
             <span>{{ errors.audio[0] }}</span>
             <hr>
@@ -249,8 +250,10 @@
                 >
                   <q-input
                     filled
+                    type="number"
                     v-model="add_question.listening_id"
                     label="Listening ID"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.listening_id && errors.listening_id.length">
                     <span>{{ errors.listening_id[0] }}</span>
@@ -260,6 +263,7 @@
                     filled
                     v-model="add_question.question"
                     label="Question"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.title && errors.title.length">
                     <span>{{ errors.title[0] }}</span>
@@ -270,24 +274,28 @@
                     v-model="add_question.answer1"
                     type="input"
                     label="Answer Option"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <q-input
                     filled
                     v-model="add_question.answer2"
                     type="input"
                     label="Answer Option"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <q-input
                     filled
                     v-model="add_question.answer3"
                     type="input"
                     label="Answer Option"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <q-input
                     filled
                     v-model="add_question.answer4"
                     type="input"
                     label="Answer Option"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.answer4 && errors.answer4.length">
                     <span>{{ errors.answer4[0] }}</span>
@@ -297,6 +305,7 @@
                     filled
                     v-model="add_question.correct_answer"
                     label="Correct Answer"
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
                     <span>{{ errors.correct_answer[0] }}</span>
@@ -323,6 +332,7 @@
           <!--          update listening question-->
           <q-dialog
             v-model="editQuestion"
+            persistent
           >
             <q-card style="width: 700px; max-width: 80vw;">
               <q-card-section>
@@ -331,7 +341,7 @@
 
               <q-card-section class="q-pt-none">
                 <label>Listening ID</label>
-                <q-input filled v-model="selected_question.listening_id" dense/>
+                <q-input type="number" filled v-model="selected_question.listening_id" dense/>
                 <div class="error" v-if="errors.listening_id && errors.listening_id.length">
                   <span>{{ errors.listening_id[0] }}</span>
                   <hr>
@@ -340,7 +350,7 @@
 
               <q-card-section class="q-pt-none">
                 <label>Question</label>
-                <q-input type="textarea" filled v-model="selected_question.title" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="textarea" filled v-model="selected_question.title" dense/>
                 <div class="error" v-if="errors.title && errors.title.length">
                   <span>{{ errors.title[0] }}</span>
                   <hr>
@@ -349,27 +359,27 @@
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer1" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer1" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer2" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer2" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer3" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer3" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer4" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer4" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Correct Answer</label>
-                <q-input type="textarea" filled v-model="selected_question.correct_answer" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="textarea" filled v-model="selected_question.correct_answer" dense/>
                 <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
                   <span>{{ errors.correct_answer[0] }}</span>
                   <hr>
@@ -561,7 +571,7 @@ export default {
     openDialog(id) {
       axios.get(process.env.API_URL + '/getListeningQuestion/' + id)
         .then(response => {
-          // console.log(response.data)
+          console.log(response.data)
           this.question = response.data
         })
         .catch(error => {
@@ -571,8 +581,6 @@ export default {
       this.dialog = true
     },
     editDataListen(row) {
-      // alert(row.id)
-      // console.log(row)
       this.selected_data = row;
       this.edit = true;
     },
@@ -647,6 +655,12 @@ export default {
     },
 
     createNewQuestion() {
+      if(this.add_question.listening_id > this.listen.length){
+        this.add_question.listening_id = this.listen.length
+      }
+      if (this.add_question.listening_id < 1){
+        this.add_question.listening_id = 1
+      }
       axios.post(process.env.API_URL + '/createListeningQuestion/', {
         listening_id: this.add_question.listening_id,
         title: this.add_question.question,
@@ -684,6 +698,12 @@ export default {
     },
 
     updateDataQuestion(data) {
+      if(this.selected_question.listening_id > this.listen.length){
+        this.selected_question.listening_id = this.listen.length
+      }
+      if (this.selected_question.listening_id < 1){
+        this.selected_question.listening_id = 1
+      }
       axios.post(process.env.API_URL + '/updateListeningQuestion/' + data.id, {
         listening_id: this.selected_question.listening_id,
         title: this.selected_question.title,

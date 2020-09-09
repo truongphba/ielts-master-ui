@@ -58,17 +58,6 @@
           </q-tr>
         </template>
       </q-table>
-<!--      <q-dialog v-model="confirm" persistent>-->
-<!--        <q-card>-->
-<!--          <q-card-section class="row items-center">-->
-<!--            <span class="q-ml-sm" style="text-transform: uppercase; width: 300px">are you sure to submit !</span>-->
-<!--          </q-card-section>-->
-<!--          <q-card-actions align="right">-->
-<!--            <q-btn flat label="Cancel" color="primary" v-close-popup />-->
-<!--            <q-btn flat label="Confirm" color="primary"  />-->
-<!--          </q-card-actions>-->
-<!--        </q-card>-->
-<!--      </q-dialog>-->
     </q-card>
 
     <!--    add new reading -->
@@ -86,6 +75,7 @@
               filled
               v-model="add_read.content"
               label="Content"
+              :rules="[ val => val && val.length > 0 || 'Please type something']"
             />
             <div class="error" v-if="errors.content && errors.content.length">
               <span>{{ errors.content[0] }}</span>
@@ -112,6 +102,7 @@
     <!--    update reading-->
     <q-dialog
       v-model="edit"
+      persistent
     >
       <q-card style="width: 700px; max-width: 80vw;">
         <q-card-section>
@@ -120,7 +111,7 @@
 
         <q-card-section class="q-pt-none">
           <label>Content</label>
-          <q-editor  filled v-model:v-html="selected_data.content" dense/>
+          <q-editor :rules="[ val => val && val.length > 0 || 'Please type something']" filled v-model:v-html="selected_data.content" dense/>
           <div class="error" v-if="errors.content && errors.content.length">
             <span>{{ errors.content[0] }}</span>
             <hr>
@@ -250,6 +241,8 @@
                     filled
                     v-model="add_question.reading_id"
                     label="Reading ID"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.reading_id && errors.reading_id.length">
                     <span>{{ errors.reading_id[0] }}</span>
@@ -259,6 +252,8 @@
                     filled
                     v-model="add_question.question"
                     label="Question"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.title && errors.title.length">
                     <span>{{ errors.title[0] }}</span>
@@ -269,24 +264,32 @@
                     v-model="add_question.answer1"
                     type="input"
                     label="Answer Option"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <q-input
                     filled
                     v-model="add_question.answer2"
                     type="input"
                     label="Answer Option"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <q-input
                     filled
                     v-model="add_question.answer3"
                     type="input"
                     label="Answer Option"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <q-input
                     filled
                     v-model="add_question.answer4"
                     type="input"
                     label="Answer Option"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.answer && errors.answer.length">
                     <span>{{ errors.answer[0] }}</span>
@@ -296,6 +299,8 @@
                     filled
                     v-model="add_question.correct_answer"
                     label="Correct Answer"
+                    lazy-rules
+                    :rules="[ val => val && val.length > 0 || 'Please type something']"
                   />
                   <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
                     <span>{{ errors.correct_answer[0] }}</span>
@@ -331,7 +336,7 @@
 
               <q-card-section class="q-pt-none">
                 <label>Reading ID</label>
-                <q-input filled v-model="selected_question.reading_id" dense/>
+                <q-input type="number" filled v-model="selected_question.reading_id" dense/>
                 <div class="error" v-if="errors.reading_id && errors.reading_id.length">
                   <span>{{ errors.reading_id[0] }}</span>
                   <hr>
@@ -340,7 +345,7 @@
 
               <q-card-section class="q-pt-none">
                 <label>Question</label>
-                <q-input filled v-model="selected_question.title" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" filled v-model="selected_question.title" dense/>
                 <div class="error" v-if="errors.title && errors.title.length">
                   <span>{{ errors.title[0] }}</span>
                   <hr>
@@ -349,27 +354,27 @@
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer1" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer1" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer2" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer2" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer3" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer3" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Answer Option</label>
-                <q-input type="input" filled v-model="row_data.answer4" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="input" filled v-model="row_data.answer4" dense/>
               </q-card-section>
 
               <q-card-section class="q-pt-none">
                 <label>Correct Answer</label>
-                <q-input type="textarea" filled v-model="selected_question.correct_answer" dense/>
+                <q-input :rules="[ val => val && val.length > 0 || 'Please type something']" type="textarea" filled v-model="selected_question.correct_answer" dense/>
                 <div class="error" v-if="errors.correct_answer && errors.correct_answer.length">
                   <span>{{ errors.correct_answer[0] }}</span>
                   <hr>
