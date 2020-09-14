@@ -379,7 +379,7 @@ export default {
   },
   props:['admin'],
   created() {
-    axios.get(process.env.API_URL + '/getUser/')
+    axios.get(process.env.API_URL + '/getUser')
       .then(response => {
         console.log(response.data)
         this.users = response.data
@@ -413,7 +413,7 @@ export default {
           this.user.age = ''
           this.user.certificate = ''
           this.user.is_lecture = false
-          axios.get(process.env.API_URL + '/getUser/')
+          axios.get(process.env.API_URL + '/getUser')
             .then(response => {
               console.log(response.data)
               this.users = response.data

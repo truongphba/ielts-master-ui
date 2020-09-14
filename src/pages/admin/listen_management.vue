@@ -555,7 +555,7 @@ export default {
   },
 
   created() {
-    axios.get(process.env.API_URL + '/getListen/')
+    axios.get(process.env.API_URL + '/getListen')
       .then(response => {
         console.log(response.data)
         this.listen = response.data
@@ -593,7 +593,7 @@ export default {
           this.new_listen = false;
           this.errors = ''
           this.add_listen.audio = ''
-            axios.get(process.env.API_URL + '/getListen/')
+            axios.get(process.env.API_URL + '/getListen')
             .then(response => {
               console.log(response.data)
               this.listen = response.data
@@ -616,7 +616,7 @@ export default {
           this.edit = false;
           this.success = true;
           this.errors = ''
-          axios.get(process.env.API_URL + '/getListen/')
+          axios.get(process.env.API_URL + '/getListen')
             .then(response => {
               console.log(response.data)
               this.listen = response.data
@@ -638,7 +638,7 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
-          axios.get(process.env.API_URL + '/getListen/')
+          axios.get(process.env.API_URL + '/getListen')
             .then(response => {
               console.log(response.data)
               this.listen = response.data
@@ -661,12 +661,12 @@ export default {
       if (this.add_question.listening_id < 1){
         this.add_question.listening_id = 1
       }
-      axios.post(process.env.API_URL + '/createListeningQuestion/', {
+      axios.post(process.env.API_URL + '/createListeningQuestion', {
         listening_id: this.add_question.listening_id,
         title: this.add_question.question,
         answer: this.add_question.answer1 + ';' + this.add_question.answer2 + ';' + this.add_question.answer3 + ';' + this.add_question.answer4,
         correct_answer: this.add_question.correct_answer
-      })
+      },)
         .then(response => {
           this.success = true;
           this.new_question = false;

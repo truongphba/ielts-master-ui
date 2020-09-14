@@ -366,8 +366,8 @@
         axios.post(process.env.API_URL + '/exam/update-time', {}, {
           headers: {Authorization: this.$getCookie('Authorization')}
         })
-          .then(response => {
-            this.checkAnswer();
+          .then(async response => {
+            await this.checkAnswer();
             window.location.href = '/speaking-exam'
           })
           .catch(error => {

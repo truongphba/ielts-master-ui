@@ -546,7 +546,7 @@ export default {
   },
 
   created() {
-    axios.get(process.env.API_URL + '/getRead/')
+    axios.get(process.env.API_URL + '/getRead')
       .then(response => {
         console.log(response.data)
         this.read = response.data
@@ -586,7 +586,7 @@ export default {
           this.new_read = false;
           this.errors = ''
           this.add_read.content = ''
-          axios.get(process.env.API_URL + '/getRead/')
+          axios.get(process.env.API_URL + '/getRead')
             .then(response => {
               console.log(response.data)
               this.read = response.data
@@ -609,7 +609,7 @@ export default {
           this.edit = false;
           this.success = true;
           this.errors = ''
-          axios.get(process.env.API_URL + '/getRead/')
+          axios.get(process.env.API_URL + '/getRead')
             .then(response => {
               console.log(response.data)
               this.read = response.data
@@ -631,7 +631,7 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
-          axios.get(process.env.API_URL + '/getRead/')
+          axios.get(process.env.API_URL + '/getRead')
             .then(response => {
               console.log(response.data)
               this.read = response.data
@@ -648,7 +648,7 @@ export default {
     },
 
     createNewQuestion() {
-      axios.post(process.env.API_URL + '/createReadingQuestion/', {
+      axios.post(process.env.API_URL + '/createReadingQuestion', {
         reading_id: this.add_question.reading_id,
         title: this.add_question.question,
         answer: this.add_question.answer1 + '; ' + this.add_question.answer2 + '; ' + this.add_question.answer3 + '; ' + this.add_question.answer4,

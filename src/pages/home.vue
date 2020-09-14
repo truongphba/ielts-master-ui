@@ -65,6 +65,7 @@
                   <b>Age: </b> {{ onlineLecture.age }}<br>
                   <b>Email: </b> {{ onlineLecture.email }}<br>
                   <b>Certificate: </b> {{ onlineLecture.certificate }}<br>
+                  <b style="color: red">(Get the exam will subtract your balance from 22$)</b>
                 </q-card-section>
                 <q-card-actions align="right">
                   <q-btn label="Accept" color="green" @click="startExam()"/>
@@ -304,8 +305,8 @@ export default {
         student_id: this.user.id,
         lecture_id: this.onlineLecture.id
       })
-        .then(response => {
-          db.collection("lecture").doc(this.onlineLecture.id.toString())
+        .then(async response => {
+         await db.collection("lecture").doc(this.onlineLecture.id.toString())
             .update({
               member_id: this.user.id,
               status: 1,

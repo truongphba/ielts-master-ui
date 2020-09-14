@@ -238,7 +238,6 @@
               axios.get(process.env.API_URL + '/lecture-exam?member_id=' + data[0].member_id)
                 .then(response => {
                   this.end_time = response.data.end_time;
-                  console.log(this.end_time)
                   this.writing_question_1 = response.data.writing_question_1;
                   this.writing_question_2 = response.data.writing_question_2;
                   this.writing_answer_1 = response.data.writing_answer_1;
@@ -255,13 +254,13 @@
           });
       },
       submitMark() {
-        if (this.speaking_point > 10) {
-          this.speaking_point = 10;
+        if (this.speaking_point > 9) {
+          this.speaking_point = 9;
         } else if (this.speaking_point < 0) {
           this.speaking_point = 0;
         }
-        if (this.writing_point > 10) {
-          this.speaking_point = 10;
+        if (this.writing_point > 9) {
+          this.speaking_point = 9;
         } else if (this.writing_point < 0) {
           this.speaking_point = 0;
         }

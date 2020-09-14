@@ -166,7 +166,7 @@ export default {
   },
 
   created() {
-    axios.get(process.env.API_URL + '/getFundAdmin/')
+    axios.get(process.env.API_URL + '/getFundAdmin')
       .then(response => {
         console.log(response.data)
         this.data = response.data
@@ -189,7 +189,7 @@ export default {
         .then(response => {
           this.edit = false;
           this.success = true;
-          axios.get(process.env.API_URL + '/getFundAdmin/')
+          axios.get(process.env.API_URL + '/getFundAdmin')
             .then(response => {
               console.log(response.data)
               this.data = response.data
@@ -210,7 +210,7 @@ export default {
           .then(response => {
             this.edit = false;
             this.success = true;
-            axios.get(process.env.API_URL + '/getFundAdmin/')
+            axios.get(process.env.API_URL + '/getFundAdmin')
               .then(response => {
                 console.log(response.data)
                 this.data = response.data

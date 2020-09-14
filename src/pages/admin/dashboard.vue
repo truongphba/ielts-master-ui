@@ -231,7 +231,20 @@ export default {
   created() {
     this.getChartByDate()
     this.getChartByMonth()
-    axios.get(process.env.API_URL + '/money/')
+    axios.get(process.env.API_URL + '/getHelloTotal',{
+      headers: {"Access-Control-Allow-Origin": "https://equal-itelt-master.herokuapp.com/"}
+    })
+      .then(response => {
+        console.log(response.data)
+        this.data = response.data
+      })
+      .catch(error => {
+        console.log(error.response.data)
+        this.errors = error.response.data.errors
+      })
+    axios.get(process.env.API_URL + '/money',{
+      headers: {"Access-Control-Allow-Origin": "https://equal-itelt-master.herokuapp.com/"}
+    })
       .then(response => {
         console.log(response.data)
         this.data = response.data
@@ -253,7 +266,9 @@ export default {
   },
   methods: {
     async getChartByDate() {
-      const {data} = await axios.get(process.env.API_URL + '/getTotal/')
+      const {data} = await axios.get(process.env.API_URL + '/getTotal',{
+        headers: {"Access-Control-Allow-Origin": "https://equal-itelt-master.herokuapp.com/"}
+      })
       data.forEach(d => {
         const date = d.date
         const {total} = d;
@@ -261,7 +276,9 @@ export default {
       })
     },
     async getChartByMonth() {
-      const {data} = await axios.get(process.env.API_URL + '/getTotalMonth/')
+      const {data} = await axios.get(process.env.API_URL + '/getTotalMonth',{
+        headers: {"Access-Control-Allow-Origin": "https://equal-itelt-master.herokuapp.com/"}
+      })
       data.forEach(d => {
         const month = d.month
         const {total} = d;

@@ -215,8 +215,6 @@
                   });
 
               }
-            } else {
-              window.location.href = '/home'
             }
 
             axios.get(process.env.API_URL + '/speaking', {
@@ -252,7 +250,7 @@
                 status: 6,
                 member_id: null
               }).then(response => {
-              // window.location.href = '/home'
+              window.location.href = '/home'
             })
           })
           .catch(error => {

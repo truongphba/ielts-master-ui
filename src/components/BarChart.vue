@@ -18,8 +18,8 @@ export default {
     }
   },
   mounted() {
-    const months = this.chartData.map(d=>d.month);
-    const totals = this.chartData.map(d=>d.total);
+    const months = this.chartData.map(d=>d.month).reverse();
+    const totals = this.chartData.map(d=>d.total).reverse();
     const { borderColor, pointColor, pointBackgroundColor, backgroundColor} = this.chartColors
     this.renderChart({
         labels: months,
